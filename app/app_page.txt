@@ -1,0 +1,859 @@
+'use client'
+
+import { useEffect, useMemo, useState } from 'react'
+import { supabase } from '../lib/supabase'
+
+type Venda = {
+  id: number
+  created_at: string
+  data_venda: string | null
+  ordem_venda: string
+  cliente: string
+  observacao: string | null
+}
+
+type ItemVenda = {
+  id: number
+  venda_id: number
+  produto: string
+  tipo_caixa: string
+  classificacao: string
+  qtd_caixas: number
+  kg_por_caixa: number
+  valor_kg: number
+  peso_total: number
+  valor_total: number
+  created_at: string
+}
+
+type Cliente = {
+  id: number
+  nome: string
+  ativo: boolean
+}
+
+type Produto = {
+  id: number
+  nome: string
+  ativo: boolean
+}
+
+type TipoCaixa = {
+  id: number
+  nome: string
+  peso_padrao: number | null
+  ativo: boolean
+}
+
+type Classificacao = {
+  id: number
+  nome: string
+  ativo: boolean
+}
+
+export default function Home() {
+  const [dataVenda, setDataVenda] = useState('')
+  const [ordemVenda, setOrdemVenda] = useState('')
+  const [cliente, setCliente] = useState('')
+  const [observacao, setObservacao] = useState('')
+
+  const [clientes, setClientes] = useState<Cliente[]>([])
+  const [produtos, setProdutos] = useState<Produto[]>([])
+  const [tiposCaixa, setTiposCaixa] = useState<TipoCaixa[]>([])
+  const [classificacoes, setClassificacoes] = useState<Classificacao[]>([])
+
+  const [vendas, setVendas] = useState<Venda[]>([])
+  const [vendaAtualId, setVendaAtualId] = useState<number | null>(null)
+  const [vendaSalva, setVendaSalva] = useState(false)
+
+  const [produto, setProduto] = useState('')
+  const [tipoCaixa, setTipoCaixa] = useState('')
+  const [classificacao, setClassificacao] = useState('')
+  const [qtdCaixas, setQtdCaixas] = useState('')
+  const [kgPorCaixa, setKgPorCaixa] = useState('')
+  const [valorKg, setValorKg] = useState('')
+
+  const [itens, setItens] = useState<ItemVenda[]>([])
+
+  const [erro, setErro] = useState<string | null>(null)
+  const [mensagem, setMensagem] = useState<string | null>(null)
+  const [salvandoVenda, setSalvandoVenda] = useState(false)
+  const [salvandoItem, setSalvandoItem] = useState(false)
+  const [finalizando, setFinalizando] = useState(false)
+
+  async function carregarClientes() {
+    const { data, error } = await supabase
+      .from('clientes')
+      .select('*')
+      .eq('ativo', true)
+      .order('nome', { ascending: true })
+
+    if (error) {
+      setErro(error.message)
+      return
+    }
+
+    setClientes((data as Cliente[]) || [])
+  }
+
+  async function carregarProdutos() {
+    const { data, error } = await supabase
+      .from('produtos')
+      .select('*')
+      .eq('ativo', true)
+      .order('nome', { ascending: true })
+
+    if (error) {
+      setErro(error.message)
+      return
+    }
+
+    setProdutos((data as Produto[]) || [])
+  }
+
+  async function carregarTiposCaixa() {
+    const { data, error } = await supabase
+      .from('tipos_caixa')
+      .select('*')
+      .eq('ativo', true)
+      .order('nome', { ascending: true })
+
+    if (error) {
+      setErro(error.message)
+      return
+    }
+
+    setTiposCaixa((data as TipoCaixa[]) || [])
+  }
+
+  async function carregarClassificacoes() {
+    const { data, error } = await supabase
+      .from('classificacoes')
+      .select('*')
+      .eq('ativo', true)
+      .order('nome', { ascending: true })
+
+    if (error) {
+      setErro(error.message)
+      return
+    }
+
+    setClassificacoes((data as Classificacao[]) || [])
+  }
+
+  async function carregarVendas() {
+    const { data, error } = await supabase
+      .from('vendas')
+      .select('*')
+      .order('id', { ascending: false })
+
+    if (error) {
+      setErro(error.message)
+      setVendas([])
+      return
+    }
+
+    setVendas((data as Venda[]) || [])
+  }
+
+  async function carregarItens(vendaId: number) {
+    const { data, error } = await supabase
+      .from('itens_venda')
+      .select('*')
+      .eq('venda_id', vendaId)
+      .order('id', { ascending: true })
+
+    if (error) {
+      setErro(error.message)
+      setItens([])
+      return
+    }
+
+    setItens((data as ItemVenda[]) || [])
+  }
+
+  useEffect(() => {
+    carregarVendas()
+    carregarClientes()
+    carregarProdutos()
+    carregarTiposCaixa()
+    carregarClassificacoes()
+  }, [])
+
+  useEffect(() => {
+    if (vendaAtualId) {
+      carregarItens(vendaAtualId)
+    } else {
+      setItens([])
+    }
+  }, [vendaAtualId])
+
+  async function salvarVenda() {
+    if (vendaSalva && vendaAtualId) {
+      setMensagem(`Venda já salva com ID ${vendaAtualId}. Agora você pode adicionar itens.`)
+      setErro(null)
+      return
+    }
+
+    if (!dataVenda || !ordemVenda.trim() || !cliente.trim()) {
+      setErro('Preencha Data da Venda, Ordem de Venda e Cliente.')
+      setMensagem(null)
+      return
+    }
+
+    setSalvandoVenda(true)
+    setErro(null)
+    setMensagem(null)
+
+    const { data, error } = await supabase
+      .from('vendas')
+      .insert([
+        {
+          data_venda: dataVenda,
+          ordem_venda: ordemVenda.trim(),
+          cliente: cliente.trim(),
+          observacao: observacao.trim() || null,
+        },
+      ])
+      .select()
+      .single()
+
+    setSalvandoVenda(false)
+
+    if (error) {
+      setErro(error.message)
+      return
+    }
+
+    if (data?.id) {
+      setVendaAtualId(data.id)
+      setVendaSalva(true)
+      await carregarVendas()
+      await carregarItens(data.id)
+      setMensagem(`Venda salva com sucesso. ID da venda: ${data.id}. Agora adicione os itens.`)
+    }
+  }
+
+  async function adicionarItem() {
+    if (!vendaSalva || !vendaAtualId) {
+      setErro('Salve a venda primeiro antes de adicionar itens.')
+      setMensagem(null)
+      return
+    }
+
+    if (
+      !produto.trim() ||
+      !tipoCaixa.trim() ||
+      !classificacao.trim() ||
+      !qtdCaixas.trim() ||
+      !kgPorCaixa.trim() ||
+      !valorKg.trim()
+    ) {
+      setErro('Preencha todos os campos do item.')
+      setMensagem(null)
+      return
+    }
+
+    const qtd = Number(qtdCaixas)
+    const kg = Number(kgPorCaixa)
+    const vlr = Number(valorKg)
+
+    if (Number.isNaN(qtd) || Number.isNaN(kg) || Number.isNaN(vlr)) {
+      setErro('Quantidade, Kg por Caixa e Valor/Kg precisam ser numéricos.')
+      setMensagem(null)
+      return
+    }
+
+    const pesoTotal = qtd * kg
+    const valorTotal = pesoTotal * vlr
+
+    setSalvandoItem(true)
+    setErro(null)
+    setMensagem(null)
+
+    const { error } = await supabase.from('itens_venda').insert([
+      {
+        venda_id: vendaAtualId,
+        produto: produto.trim(),
+        tipo_caixa: tipoCaixa.trim(),
+        classificacao: classificacao.trim(),
+        qtd_caixas: qtd,
+        kg_por_caixa: kg,
+        valor_kg: vlr,
+        peso_total: pesoTotal,
+        valor_total: valorTotal,
+      },
+    ])
+
+    setSalvandoItem(false)
+
+    if (error) {
+      setErro(error.message)
+      return
+    }
+
+    setProduto('')
+    setTipoCaixa('')
+    setClassificacao('')
+    setQtdCaixas('')
+    setKgPorCaixa('')
+    setValorKg('')
+
+    await carregarItens(vendaAtualId)
+    setMensagem('Item adicionado com sucesso.')
+  }
+
+  function limparFormulario() {
+    setDataVenda('')
+    setOrdemVenda('')
+    setCliente('')
+    setObservacao('')
+    setErro(null)
+    setMensagem(null)
+
+    setVendaAtualId(null)
+    setVendaSalva(false)
+
+    setProduto('')
+    setTipoCaixa('')
+    setClassificacao('')
+    setQtdCaixas('')
+    setKgPorCaixa('')
+    setValorKg('')
+
+    setItens([])
+  }
+
+  async function finalizarVenda() {
+    if (!vendaSalva || !vendaAtualId) {
+      setErro('Salve a venda antes de finalizar.')
+      setMensagem(null)
+      return
+    }
+
+    setFinalizando(true)
+    setErro(null)
+    setMensagem(null)
+
+    await carregarItens(vendaAtualId)
+
+    setFinalizando(false)
+    setMensagem(`Venda ${ordemVenda || vendaAtualId} finalizada com sucesso.`)
+  }
+
+  const resumo = useMemo(() => {
+    const totalItens = itens.length
+    const totalCaixas = itens.reduce((acc, item) => acc + item.qtd_caixas, 0)
+    const pesoLiquidoTotal = itens.reduce((acc, item) => acc + item.peso_total, 0)
+    const valorTotalGeral = itens.reduce((acc, item) => acc + item.valor_total, 0)
+
+    const porClassificacao = itens.reduce<Record<string, number>>((acc, item) => {
+      acc[item.classificacao] = (acc[item.classificacao] || 0) + item.valor_total
+      return acc
+    }, {})
+
+    return {
+      totalItens,
+      totalCaixas,
+      pesoLiquidoTotal,
+      valorTotalGeral,
+      porClassificacao,
+    }
+  }, [itens])
+
+  function moeda(valor: number) {
+    return valor.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    })
+  }
+
+  function numero(valor: number) {
+    return valor.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
+  }
+
+  return (
+    <div className="min-h-screen bg-[#f8f9fa] text-slate-900">
+      <aside className="fixed left-0 top-0 hidden h-screen w-64 flex-col border-r border-slate-200 bg-[#F8F9FA] p-6 lg:flex">
+        <div className="mb-10 flex items-center gap-3">
+          <img
+            src="/logo.png"
+            alt="Nolasco Produção"
+            className="h-10 w-auto"
+          />
+          <div>
+            <h1 className="text-lg font-bold leading-tight text-[#063f81]">
+              Gestão de Frutas
+            </h1>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+              Painel Administrativo
+            </p>
+          </div>
+        </div>
+
+        <nav className="flex flex-1 flex-col gap-2">
+          <a className="rounded-lg bg-white px-4 py-3 font-semibold text-[#063f81] shadow-sm">
+            Nova Venda
+          </a>
+          <a className="rounded-lg px-4 py-3 text-slate-600 hover:bg-slate-200/50">
+            Histórico
+          </a>
+          <a className="rounded-lg px-4 py-3 text-slate-600 hover:bg-slate-200/50">
+            Clientes
+          </a>
+          <a className="rounded-lg px-4 py-3 text-slate-600 hover:bg-slate-200/50">
+            Produtos
+          </a>
+          <a className="rounded-lg px-4 py-3 text-slate-600 hover:bg-slate-200/50">
+            Configurações
+          </a>
+        </nav>
+
+        <button className="mt-auto rounded-lg bg-gradient-to-r from-[#063f81] to-[#2b579a] py-3 text-xs font-bold uppercase tracking-widest text-white">
+          Exportar Dados
+        </button>
+      </aside>
+
+      <header className="sticky top-0 z-30 flex w-full items-center justify-between bg-white/80 px-6 py-4 shadow-sm backdrop-blur-md lg:ml-64 lg:w-[calc(100%-16rem)] lg:px-10">
+        <div className="flex items-center gap-4">
+          <span className="text-2xl text-[#063f81] lg:hidden">☰</span>
+
+          <div className="flex items-center gap-3">
+            <img
+              src="/logo.png"
+              alt="Nolasco Produção"
+              className="h-10 w-auto"
+            />
+            <h2 className="text-lg font-bold uppercase tracking-tight text-[#063f81]">
+              NOLASCO PRODUÇÃO
+            </h2>
+          </div>
+        </div>
+
+        <div className="hidden gap-6 text-sm md:flex">
+          <a className="text-slate-500">Dashboard</a>
+          <a className="border-b-2 border-[#063f81] pb-1 text-[#063f81]">
+            Vendas
+          </a>
+          <a className="text-slate-500">Estoque</a>
+          <a className="text-slate-500">Relatórios</a>
+        </div>
+      </header>
+
+      <main className="min-h-screen bg-[#f8f9fa] p-6 lg:ml-64 lg:p-10">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <nav className="mb-2 flex items-center gap-2 text-xs text-slate-500">
+                <span>Vendas</span>
+                <span>{'>'}</span>
+                <span className="font-semibold text-[#063f81]">
+                  Registro de Venda de Frutas
+                </span>
+              </nav>
+              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+                Registro de Venda de Frutas
+              </h1>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={limparFormulario}
+                className="rounded-xl bg-slate-200 px-6 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-300"
+              >
+                Cancelar
+              </button>
+
+              <button
+                onClick={salvarVenda}
+                disabled={salvandoVenda || vendaSalva}
+                className="rounded-xl bg-gradient-to-r from-[#063f81] to-[#2b579a] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition active:scale-95 disabled:opacity-70"
+              >
+                {salvandoVenda ? 'Salvando...' : vendaSalva ? 'Venda Salva' : 'Salvar Venda'}
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+            <div className="space-y-8 lg:col-span-8">
+              <section className="space-y-6 rounded-2xl bg-white p-6 shadow-sm">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+                  Informações Gerais
+                </h3>
+
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                  <div className="space-y-1.5">
+                    <label className="ml-1 text-xs font-bold text-slate-500">
+                      Data da Venda
+                    </label>
+                    <input
+                      type="date"
+                      value={dataVenda}
+                      onChange={(e) => setDataVenda(e.target.value)}
+                      className="w-full rounded-xl border-none bg-slate-100 px-4 py-3 text-sm outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="ml-1 text-xs font-bold text-slate-500">
+                      Ordem de Venda
+                    </label>
+                    <input
+                      value={ordemVenda}
+                      onChange={(e) => setOrdemVenda(e.target.value)}
+                      placeholder="Ex: OV-2023-001"
+                      className="w-full rounded-xl border-none bg-slate-100 px-4 py-3 text-sm outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="ml-1 text-xs font-bold text-slate-500">
+                      Cliente
+                    </label>
+                    <select
+                      value={cliente}
+                      onChange={(e) => setCliente(e.target.value)}
+                      className="w-full rounded-xl border-none bg-slate-100 px-4 py-3 text-sm outline-none"
+                    >
+                      <option value="">Selecione o cliente</option>
+                      {clientes.map((c) => (
+                        <option key={c.id} value={c.nome}>
+                          {c.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5 md:col-span-3">
+                    <label className="ml-1 text-xs font-bold text-slate-500">
+                      Observação
+                    </label>
+                    <textarea
+                      value={observacao}
+                      onChange={(e) => setObservacao(e.target.value)}
+                      placeholder="Notas adicionais sobre a venda..."
+                      rows={3}
+                      className="w-full resize-none rounded-xl border-none bg-slate-100 px-4 py-3 text-sm outline-none"
+                    />
+                  </div>
+                </div>
+
+                {erro && (
+                  <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {erro}
+                  </div>
+                )}
+
+                {mensagem && (
+                  <div className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+                    {mensagem}
+                  </div>
+                )}
+              </section>
+
+              <section className="space-y-6 rounded-2xl bg-white p-6 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+                    Adicionar Itens
+                  </h3>
+                  <span className="rounded-full bg-blue-100 px-2 py-1 text-[10px] font-bold uppercase text-[#2b579a]">
+                    Entrada Rápida
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-6">
+                  <div className="space-y-1.5 md:col-span-2">
+                    <label className="ml-1 text-[10px] font-bold uppercase text-slate-500">
+                      Produto
+                    </label>
+                    <select
+                      value={produto}
+                      onChange={(e) => setProduto(e.target.value)}
+                      className="w-full rounded-xl border-none bg-slate-100 px-4 py-2.5 text-sm outline-none"
+                    >
+                      <option value="">Selecione</option>
+                      {produtos.map((p) => (
+                        <option key={p.id} value={p.nome}>
+                          {p.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5 md:col-span-2">
+                    <label className="ml-1 text-[10px] font-bold uppercase text-slate-500">
+                      Tipo de Caixa
+                    </label>
+                    <select
+                      value={tipoCaixa}
+                      onChange={(e) => setTipoCaixa(e.target.value)}
+                      className="w-full rounded-xl border-none bg-slate-100 px-4 py-2.5 text-sm outline-none"
+                    >
+                      <option value="">Selecione</option>
+                      {tiposCaixa.map((t) => (
+                        <option key={t.id} value={t.nome}>
+                          {t.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5 md:col-span-2">
+                    <label className="ml-1 text-[10px] font-bold uppercase text-slate-500">
+                      Classificação
+                    </label>
+                    <select
+                      value={classificacao}
+                      onChange={(e) => setClassificacao(e.target.value)}
+                      className="w-full rounded-xl border-none bg-slate-100 px-4 py-2.5 text-sm outline-none"
+                    >
+                      <option value="">Selecione</option>
+                      {classificacoes.map((c) => (
+                        <option key={c.id} value={c.nome}>
+                          {c.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="ml-1 text-[10px] font-bold uppercase text-slate-500">
+                      Qtd CX
+                    </label>
+                    <input
+                      type="number"
+                      value={qtdCaixas}
+                      onChange={(e) => setQtdCaixas(e.target.value)}
+                      placeholder="0"
+                      className="w-full rounded-xl border-none bg-slate-100 px-4 py-2.5 text-sm outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="ml-1 text-[10px] font-bold uppercase text-slate-500">
+                      Kg CX
+                    </label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      value={kgPorCaixa}
+                      onChange={(e) => setKgPorCaixa(e.target.value)}
+                      placeholder="0.0"
+                      className="w-full rounded-xl border-none bg-slate-100 px-4 py-2.5 text-sm outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="ml-1 text-[10px] font-bold uppercase text-slate-500">
+                      VLR Kg
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      value={valorKg}
+                      onChange={(e) => setValorKg(e.target.value)}
+                      placeholder="0.00"
+                      className="w-full rounded-xl border-none bg-slate-100 px-4 py-2.5 text-sm outline-none"
+                    />
+                  </div>
+
+                  <div className="flex items-end md:col-span-3">
+                    <button
+                      onClick={adicionarItem}
+                      disabled={!vendaSalva || salvandoItem}
+                      className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#2b579a]/20 bg-[#063f81]/5 py-2.5 text-sm font-bold text-[#063f81] transition hover:bg-[#063f81]/10 disabled:opacity-50"
+                    >
+                      {salvandoItem ? 'Adicionando...' : 'Adicionar item'}
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              <section className="overflow-hidden rounded-2xl bg-white shadow-sm">
+                <div className="border-b border-slate-200 p-6">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+                    Itens da Venda
+                  </h3>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse text-left">
+                    <thead>
+                      <tr className="bg-slate-100 text-slate-600">
+                        <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider">
+                          Produto
+                        </th>
+                        <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider">
+                          T. Caixa
+                        </th>
+                        <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider">
+                          Class.
+                        </th>
+                        <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-right">
+                          Qtd
+                        </th>
+                        <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-right">
+                          Kg
+                        </th>
+                        <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-right">
+                          Vlr Kg
+                        </th>
+                        <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-right">
+                          Peso Tot
+                        </th>
+                        <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-right">
+                          Total
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200">
+                      {itens.map((item) => (
+                        <tr
+                          key={item.id}
+                          className="transition-colors hover:bg-slate-50"
+                        >
+                          <td className="px-6 py-4 text-sm font-semibold">
+                            {item.produto}
+                          </td>
+                          <td className="px-6 py-4 text-xs text-slate-500">
+                            {item.tipo_caixa}
+                          </td>
+                          <td className="px-6 py-4 text-xs">
+                            {item.classificacao}
+                          </td>
+                          <td className="px-6 py-4 text-right text-sm">
+                            {item.qtd_caixas}
+                          </td>
+                          <td className="px-6 py-4 text-right text-sm">
+                            {numero(item.kg_por_caixa)}
+                          </td>
+                          <td className="px-6 py-4 text-right text-sm">
+                            {moeda(item.valor_kg)}
+                          </td>
+                          <td className="px-6 py-4 text-right text-sm font-medium">
+                            {numero(item.peso_total)} Kg
+                          </td>
+                          <td className="px-6 py-4 text-right text-sm font-bold text-[#063f81]">
+                            {moeda(item.valor_total)}
+                          </td>
+                        </tr>
+                      ))}
+
+                      {itens.length === 0 && (
+                        <tr>
+                          <td
+                            colSpan={8}
+                            className="px-6 py-6 text-center text-sm text-slate-500"
+                          >
+                            Nenhum item cadastrado.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+
+            <aside className="space-y-6 lg:col-span-4">
+              <div className="sticky top-24 rounded-2xl border-t-4 border-[#063f81] bg-white p-8 shadow-sm">
+                <h3 className="mb-6 flex items-center gap-2 text-lg font-extrabold text-slate-900">
+                  <span className="text-[#063f81]">📄</span>
+                  Resumo da Venda
+                </h3>
+
+                <div className="space-y-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="rounded-xl bg-slate-100 p-4">
+                      <p className="mb-1 text-[10px] font-bold uppercase text-slate-500">
+                        Total Itens
+                      </p>
+                      <p className="text-xl font-black text-[#063f81]">
+                        {resumo.totalItens.toString().padStart(2, '0')}
+                      </p>
+                    </div>
+
+                    <div className="rounded-xl bg-slate-100 p-4">
+                      <p className="mb-1 text-[10px] font-bold uppercase text-slate-500">
+                        Total Caixas
+                      </p>
+                      <p className="text-xl font-black text-[#063f81]">
+                        {resumo.totalCaixas}
+                      </p>
+                    </div>
+
+                    <div className="col-span-2 rounded-xl bg-slate-100 p-4">
+                      <p className="mb-1 text-[10px] font-bold uppercase text-slate-500">
+                        Peso Líquido Total
+                      </p>
+                      <p className="text-xl font-black text-[#063f81]">
+                        {numero(resumo.pesoLiquidoTotal)} Kg
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <p className="border-b border-slate-200 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                      Por Classificação
+                    </p>
+
+                    {Object.keys(resumo.porClassificacao).length === 0 && (
+                      <div className="text-xs text-slate-500">
+                        Sem itens cadastrados.
+                      </div>
+                    )}
+
+                    {Object.entries(resumo.porClassificacao).map(([chave, valor]) => (
+                      <div
+                        key={chave}
+                        className="flex items-center justify-between"
+                      >
+                        <span className="text-xs font-medium text-slate-500">
+                          {chave}
+                        </span>
+                        <span className="text-sm font-bold text-slate-900">
+                          {moeda(valor)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="border-t-2 border-dashed border-slate-200 pt-6">
+                    <p className="mb-1 text-[10px] font-black uppercase tracking-[0.2em] text-[#063f81]">
+                      Valor Total Geral
+                    </p>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-lg font-bold text-[#2b579a]">
+                        R$
+                      </span>
+                      <span className="text-4xl font-black tracking-tighter text-[#063f81]">
+                        {numero(resumo.valorTotalGeral)}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="pt-4">
+                    <button
+                      onClick={finalizarVenda}
+                      disabled={!vendaSalva || finalizando}
+                      className="flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#063f81] to-[#2b579a] py-4 text-sm font-black uppercase tracking-widest text-white shadow-xl shadow-blue-900/30 transition hover:scale-[1.02] disabled:opacity-70"
+                    >
+                      {finalizando ? 'Finalizando...' : 'Finalizar e Salvar'}
+                    </button>
+
+                    <p className="mt-4 text-center text-[10px] font-medium italic text-slate-500">
+                      * Confirme os dados antes de finalizar o registro
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </main>
+    </div>
+  )
+}
