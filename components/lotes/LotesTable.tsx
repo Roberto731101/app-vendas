@@ -53,7 +53,7 @@ export function LotesTable({ registros, onExcluir }: Props) {
           {registros.length === 0 && (
             <tr>
               <td colSpan={5} className="px-6 py-12 text-center text-sm text-slate-500">
-                Nenhum lote cadastrado.
+                Nenhum colheita-campo cadastrado.
               </td>
             </tr>
           )}

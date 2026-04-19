@@ -9,8 +9,8 @@ export function isGroup(entry: NavEntry): entry is NavGroup {
 
 export const NAV_SIDEBAR: NavEntry[] = [
   { href: '/dashboard',  label: 'Dashboard' },
-  { href: '/lotes',      label: 'Lotes' },
-  { href: '/colheita',   label: 'Colheita' },
+  { href: '/lotes',      label: 'Colheita-campo' },
+  { href: '/colheita',   label: 'Colheita-registro' },
   { href: '/vendas',     label: 'Vendas' },
   { href: '/relatorios', label: 'Relatórios' },
   {

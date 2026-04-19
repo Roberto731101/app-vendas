@@ -26,7 +26,7 @@ const ORIGEM_CONFIG: Record<
   { label: string; className: string }
 > = {
   COLHEITA: {
-    label: 'Colheita',
+    label: 'Colheita-registro',
     className: 'bg-blue-100 text-blue-700',
   },
   VENDA: {
@@ -55,11 +55,11 @@ export function ResumoPorLote({ resumos, carregando, erro }: Props) {
     <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
       <div className="flex items-center justify-between border-b border-slate-200 p-6">
         <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
-          Resumo por Lote
+          Resumo por Colheita-campo
         </h3>
         {!carregando && resumos.length > 0 && (
           <span className="text-xs text-slate-400">
-            {resumos.length} {resumos.length === 1 ? 'lote' : 'lotes'}
+            {resumos.length} {resumos.length === 1 ? 'colheita-campo' : 'colheita-campos'}
           </span>
         )}
       </div>
@@ -80,7 +80,7 @@ export function ResumoPorLote({ resumos, carregando, erro }: Props) {
             <thead>
               <tr className="bg-slate-100 text-slate-600">
                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider">
-                  Lote
+                  Colheita-campo
                 </th>
                 <th className="px-6 py-4 text-right text-[10px] font-bold uppercase tracking-wider">
                   Registros
@@ -95,7 +95,7 @@ export function ResumoPorLote({ resumos, carregando, erro }: Props) {
                   Origem
                 </th>
                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider">
-                  Última Colheita
+                  Última Colheita-registro
                 </th>
                 <th className="px-6 py-4 text-center text-[10px] font-bold uppercase tracking-wider">
                   Ação
@@ -161,7 +161,7 @@ export function ResumoPorLote({ resumos, carregando, erro }: Props) {
                     colSpan={7}
                     className="px-6 py-12 text-center text-sm text-slate-500"
                   >
-                    Nenhuma colheita registrada ainda.
+                    Nenhuma colheita-registro registrada ainda.
                   </td>
                 </tr>
               )}

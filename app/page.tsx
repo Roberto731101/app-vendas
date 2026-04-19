@@ -51,7 +51,7 @@ export default function Home() {
     <AppLayout
       sidebarNavItems={[
         { href: '/', label: 'Vendas' },
-        { href: '/colheita', label: 'Colheita' },
+        { href: '/colheita', label: 'Colheita-registro' },
         { href: '/setores', label: 'Setores' },
         { href: '/relatorios', label: 'Relatórios' },
       ]}

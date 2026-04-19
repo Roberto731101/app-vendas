@@ -9,7 +9,7 @@ import { NAV_SIDEBAR } from '@/lib/nav'
 
 const NAV_HEADER = [
   { label: 'Vendas' },
-  { label: 'Colheita' },
+  { label: 'Colheita-registro' },
   { label: 'Produtos', active: true },
 ]
 

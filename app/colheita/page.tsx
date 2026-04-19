@@ -11,7 +11,7 @@ import { ProducaoPorSetor } from '@/components/colheita/ProducaoPorSetor'
 
 const NAV_SIDEBAR = [
   { href: '/vendas',     label: 'Vendas' },
-  { href: '/colheita',   label: 'Colheita' },
+  { href: '/colheita',   label: 'Colheita-registro' },
   { href: '/setores',    label: 'Setores' },
   { href: '/relatorios', label: 'Relatórios' },
 ]
@@ -19,7 +19,7 @@ const NAV_SIDEBAR = [
 const NAV_HEADER = [
   { label: 'Dashboard' },
   { label: 'Vendas' },
-  { label: 'Colheita', active: true },
+  { label: 'Colheita-registro', active: true },
   { label: 'Relatórios' },
 ]
 
@@ -60,12 +60,12 @@ export default function ColheitaPage() {
       <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <nav className="mb-2 flex items-center gap-2 text-xs text-slate-500">
-            <span>Colheita</span>
+            <span>Colheita-registro</span>
             <span>{'>'}</span>
             <span className="font-semibold text-[#063f81]">Histórico</span>
           </nav>
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
-            Histórico de Colheitas
+            Histórico de Colheita-registros
           </h1>
         </div>
 
@@ -74,7 +74,7 @@ export default function ColheitaPage() {
             href="/colheita/nova"
             className="rounded-xl bg-[#063f81] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#052e60]"
           >
-            Nova Colheita
+            Nova Colheita-registro
           </Link>
           <button
             onClick={recarregar}
@@ -135,17 +135,17 @@ export default function ColheitaPage() {
             </select>
           </div>
 
-          {/* Lote */}
+          {/* Colheita-campo */}
           <div>
             <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-400">
-              Lote
+              Colheita-campo
             </label>
             <select
               value={filtros.loteId}
               onChange={(e) => atualizarLoteId(e.target.value)}
               className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
             >
-              <option value="">Todos os lotes</option>
+              <option value="">Todos os colheita-campo</option>
               {lotes.map((l) => (
                 <option key={l.id} value={l.id}>
                   {l.codigo}
@@ -186,7 +186,7 @@ export default function ColheitaPage() {
       <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-200 p-6">
           <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
-            Colheitas Registradas
+            Colheita-registros Registradas
           </h3>
           {!carregando && (
             <span className="text-xs text-slate-400">

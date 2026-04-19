@@ -35,7 +35,7 @@ export function ColheitasHistoricoTable({ colheitas, filtrosAtivos }: Props) {
               Setor
             </th>
             <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider">
-              Lote
+              Colheita-campo
             </th>
             <th className="px-6 py-4 text-right text-[10px] font-bold uppercase tracking-wider">
               Cachos
@@ -82,7 +82,7 @@ export function ColheitasHistoricoTable({ colheitas, filtrosAtivos }: Props) {
                     Abrir
                   </Link>
                 ) : (
-                  <span className="text-xs text-slate-400">Sem lote</span>
+                  <span className="text-xs text-slate-400">Sem colheita-campo</span>
                 )}
               </td>
             </tr>
@@ -92,8 +92,8 @@ export function ColheitasHistoricoTable({ colheitas, filtrosAtivos }: Props) {
             <tr>
               <td colSpan={7} className="px-6 py-12 text-center text-sm text-slate-500">
                 {filtrosAtivos
-                  ? 'Nenhuma colheita encontrada para os filtros aplicados.'
-                  : 'Nenhuma colheita registrada.'}
+                  ? 'Nenhuma colheita-registro encontrada para os filtros aplicados.'
+                  : 'Nenhuma colheita-registro registrada.'}
               </td>
             </tr>
           )}

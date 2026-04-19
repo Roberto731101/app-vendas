@@ -25,7 +25,7 @@ export function ColheitaResumo({ resumo, loteSelecionado, loteId }: Props) {
       <div className="sticky top-24 rounded-2xl border-t-4 border-[#063f81] bg-white p-8 shadow-sm">
         <h3 className="mb-6 flex items-center gap-2 text-lg font-extrabold text-slate-900">
           <span className="text-[#063f81]">🌾</span>
-          Resumo da Colheita
+          Resumo da Colheita-registro
         </h3>
 
         <div className="space-y-6">
@@ -60,7 +60,7 @@ export function ColheitaResumo({ resumo, loteSelecionado, loteId }: Props) {
 
           <div className="space-y-3">
             <p className="border-b border-slate-200 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-              Lote Atual
+              Colheita-campo Atual
             </p>
 
             <div className="flex items-center justify-between">
@@ -88,7 +88,7 @@ export function ColheitaResumo({ resumo, loteSelecionado, loteId }: Props) {
             </p>
             <div className="flex items-baseline gap-2">
               <span className="text-lg font-bold text-[#2b579a]">
-                {loteId ? 'Lote Selecionado' : 'Sem Lote'}
+                {loteId ? 'Colheita-campo Selecionado' : 'Sem Colheita-campo'}
               </span>
             </div>
           </div>

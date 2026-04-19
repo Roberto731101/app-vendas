@@ -17,7 +17,7 @@ function fmtData(iso: string) {
 }
 
 const BADGE: Record<OrigemPesoCacho, { label: string; cls: string }> = {
-  COLHEITA: { label: 'Colheita', cls: 'bg-blue-100 text-blue-700' },
+  COLHEITA: { label: 'Colheita-registro', cls: 'bg-blue-100 text-blue-700' },
   VENDA:    { label: 'Venda',    cls: 'bg-amber-100 text-amber-700' },
   SEM_BASE: { label: 'Sem base', cls: 'bg-slate-100 text-slate-500' },
 }
@@ -27,10 +27,10 @@ export function RelatorioColheitaPorLote({ linhas, carregando }: Props) {
     <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
       <div className="flex items-center justify-between border-b border-slate-200 p-6">
         <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
-          Colheita por Lote
+          Colheita-registro por Colheita-campo
         </h3>
         {!carregando && (
-          <span className="text-xs text-slate-400">{linhas.length} lote{linhas.length !== 1 ? 's' : ''}</span>
+          <span className="text-xs text-slate-400">{linhas.length} colheita-campo{linhas.length !== 1 ? 's' : ''}</span>
         )}
       </div>
 
@@ -41,8 +41,8 @@ export function RelatorioColheitaPorLote({ linhas, carregando }: Props) {
           <table className="w-full min-w-[580px] border-collapse text-left">
             <thead>
               <tr className="bg-slate-50 text-slate-500">
-                <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider">Lote</th>
-                <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider">Última Colheita</th>
+                <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider">Colheita-campo</th>
+                <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider">Última Colheita-registro</th>
                 <th className="px-6 py-3 text-right text-[10px] font-bold uppercase tracking-wider">Registros</th>
                 <th className="px-6 py-3 text-right text-[10px] font-bold uppercase tracking-wider">Total Cachos</th>
                 <th className="px-6 py-3 text-right text-[10px] font-bold uppercase tracking-wider">Ratio Médio</th>

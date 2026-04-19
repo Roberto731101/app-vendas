@@ -74,7 +74,7 @@ export default function VendaDetalhe() {
       <AppLayout
         sidebarNavItems={[
           { href: '/vendas', label: 'Vendas' },
-          { href: '/colheita', label: 'Colheita' },
+          { href: '/colheita', label: 'Colheita-registro' },
           { href: '/setores', label: 'Setores' },
           { href: '/relatorios', label: 'Relatórios' },
         ]}
@@ -94,7 +94,7 @@ export default function VendaDetalhe() {
     <AppLayout
       sidebarNavItems={[
         { href: '/vendas', label: 'Vendas' },
-        { href: '/colheita', label: 'Colheita' },
+        { href: '/colheita', label: 'Colheita-registro' },
         { href: '/setores', label: 'Setores' },
         { href: '/relatorios', label: 'Relatórios' },
       ]}

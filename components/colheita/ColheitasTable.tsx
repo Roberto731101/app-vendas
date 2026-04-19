@@ -17,7 +17,7 @@ export function ColheitasTable({ colheitas, carregando }: Props) {
     <section className="overflow-hidden rounded-2xl bg-white shadow-sm">
       <div className="border-b border-slate-200 p-6">
         <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
-          Colheitas do Lote
+          Colheita-registros do Colheita-campo
         </h3>
       </div>
 
@@ -70,7 +70,7 @@ export function ColheitasTable({ colheitas, carregando }: Props) {
             {!carregando && colheitas.length === 0 && (
               <tr>
                 <td colSpan={6} className="px-6 py-6 text-center text-sm text-slate-500">
-                  Nenhuma colheita cadastrada para o lote selecionado.
+                  Nenhuma colheita-registro cadastrada para o colheita-campo selecionado.
                 </td>
               </tr>
             )}
@@ -78,7 +78,7 @@ export function ColheitasTable({ colheitas, carregando }: Props) {
             {carregando && (
               <tr>
                 <td colSpan={6} className="px-6 py-6 text-center text-sm text-slate-500">
-                  Carregando colheitas...
+                  Carregando colheita-registros...
                 </td>
               </tr>
             )}

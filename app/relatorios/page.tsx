@@ -16,12 +16,12 @@ import {
 
 const NAV_HEADER = [
   { label: 'Vendas' },
-  { label: 'Colheita' },
+  { label: 'Colheita-registro' },
   { label: 'Relatórios', active: true },
 ]
 
 const OPCOES_EXPORTAR = [
-  { label: 'Colheita por Lote',    key: 'colheita'    },
+  { label: 'Colheita-registro por Colheita-campo', key: 'colheita' },
   { label: 'Produção por Setor',   key: 'producao'    },
   { label: 'Vendas por Lote',      key: 'vendas'      },
   { label: 'Consolidado por Lote', key: 'consolidado' },
@@ -162,17 +162,17 @@ export default function RelatoriosPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-4 p-6 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Lote */}
+          {/* Colheita-campo */}
           <div>
             <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-400">
-              Lote
+              Colheita-campo
             </label>
             <select
               value={filtros.loteId}
               onChange={(e) => setLoteId(e.target.value)}
               className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
             >
-              <option value="">Todos os lotes</option>
+              <option value="">Todos os colheita-campo</option>
               {opcoesLote.map((o) => (
                 <option key={o.id} value={o.id}>{o.label}</option>
               ))}

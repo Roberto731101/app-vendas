@@ -10,7 +10,7 @@ import { ColheitaResumo } from '@/components/colheita/ColheitaResumo'
 
 const NAV_SIDEBAR = [
   { href: '/vendas',     label: 'Vendas' },
-  { href: '/colheita',   label: 'Colheita' },
+  { href: '/colheita',   label: 'Colheita-registro' },
   { href: '/setores',    label: 'Setores' },
   { href: '/relatorios', label: 'Relatórios' },
 ]
@@ -18,7 +18,7 @@ const NAV_SIDEBAR = [
 const NAV_HEADER = [
   { label: 'Dashboard' },
   { label: 'Vendas' },
-  { label: 'Colheita', active: true },
+  { label: 'Colheita-registro', active: true },
   { label: 'Relatórios' },
 ]
 
@@ -65,7 +65,7 @@ export default function ColheitaDetalhePage() {
       <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <nav className="mb-2 flex items-center gap-2 text-xs text-slate-500">
-            <span>Colheita</span>
+            <span>Colheita-registro</span>
             <span>{'>'}</span>
             <a
               onClick={() => router.push('/colheita')}
@@ -75,11 +75,11 @@ export default function ColheitaDetalhePage() {
             </a>
             <span>{'>'}</span>
             <span className="font-semibold text-[#063f81]">
-              {loteSelecionado ? `Lote ${loteSelecionado.codigo}` : 'Controle de Colheita'}
+              {loteSelecionado ? `Colheita-campo ${loteSelecionado.codigo}` : 'Controle de Colheita-registro'}
             </span>
           </nav>
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
-            {loteSelecionado ? `Lote ${loteSelecionado.codigo}` : 'Controle de Colheita'}
+            {loteSelecionado ? `Colheita-campo ${loteSelecionado.codigo}` : 'Controle de Colheita-registro'}
           </h1>
         </div>
 

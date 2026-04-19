@@ -32,14 +32,14 @@ export function ColheitaInfoForm({
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <div className="space-y-1.5">
           <label className="ml-1 text-xs font-bold text-slate-500">
-            Lote
+            Colheita-campo
           </label>
           <select
             value={loteId}
             onChange={(e) => setLoteId(e.target.value)}
             className="w-full rounded-xl border-none bg-slate-100 px-4 py-3 text-sm outline-none"
           >
-            <option value="">Selecione o lote</option>
+            <option value="">Selecione o colheita-campo</option>
             {lotes.map((lote) => (
               <option key={lote.id} value={lote.id}>
                 {lote.codigo}
@@ -50,7 +50,7 @@ export function ColheitaInfoForm({
 
         <div className="space-y-1.5">
           <label className="ml-1 text-xs font-bold text-slate-500">
-            Data da Colheita
+            Data da Colheita-registro
           </label>
           <input
             type="date"
@@ -67,7 +67,7 @@ export function ColheitaInfoForm({
           <input
             value={observacaoGeral}
             onChange={(e) => setObservacaoGeral(e.target.value)}
-            placeholder="Observação geral do lote"
+            placeholder="Observação geral do colheita-campo"
             className="w-full rounded-xl border-none bg-slate-100 px-4 py-3 text-sm outline-none"
           />
         </div>

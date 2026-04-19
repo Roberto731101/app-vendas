@@ -8,8 +8,8 @@ import { NAV_SIDEBAR } from '@/lib/nav'
 
 const NAV_HEADER = [
   { label: 'Vendas' },
-  { label: 'Colheita' },
-  { label: 'Lotes', active: true },
+  { label: 'Colheita-registro' },
+  { label: 'Colheita-campo', active: true },
 ]
 
 export default function LotesPage() {
@@ -22,22 +22,22 @@ export default function LotesPage() {
           <nav className="mb-2 flex items-center gap-2 text-xs text-slate-500">
             <span>Cadastros</span>
             <span>{'>'}</span>
-            <span className="font-semibold text-[#063f81]">Lotes</span>
+            <span className="font-semibold text-[#063f81]">Colheita-campo</span>
           </nav>
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Lotes</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Colheita-campo</h1>
         </div>
         <Link
           href="/lotes/novo"
           className="rounded-xl bg-[#063f81] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#052e60]"
         >
-          + Novo Lote
+          + Novo Colheita-campo
         </Link>
       </div>
 
       <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-200 p-6">
           <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
-            Lotes Cadastrados
+            Colheita-campo Cadastrados
           </h3>
           {!carregando && (
             <span className="text-xs text-slate-400">

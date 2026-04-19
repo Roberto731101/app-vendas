@@ -9,8 +9,8 @@ import { NAV_SIDEBAR } from '@/lib/nav'
 
 const NAV_HEADER = [
   { label: 'Vendas' },
-  { label: 'Colheita' },
-  { label: 'Lotes', active: true },
+  { label: 'Colheita-registro' },
+  { label: 'Colheita-campo', active: true },
 ]
 
 export default function LoteFormPage() {
@@ -57,15 +57,15 @@ export default function LoteFormPage() {
             onClick={() => router.push('/lotes')}
             className="cursor-pointer hover:text-[#063f81]"
           >
-            Lotes
+            Colheita-campo
           </span>
           <span>{'>'}</span>
           <span className="font-semibold text-[#063f81]">
-            {isNovo ? 'Novo Lote' : 'Editar Lote'}
+            {isNovo ? 'Novo Colheita-campo' : 'Editar Colheita-campo'}
           </span>
         </nav>
         <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
-          {isNovo ? 'Novo Lote' : 'Editar Lote'}
+          {isNovo ? 'Novo Colheita-campo' : 'Editar Colheita-campo'}
         </h1>
       </div>
 
