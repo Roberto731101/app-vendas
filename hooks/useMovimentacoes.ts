@@ -19,6 +19,8 @@ export type Movimentacao = {
   area_nome: string | null
   setor_id: number | null
   setor_nome: string | null
+  usuario_id: string | null
+  usuario_nome: string | null
   observacao: string | null
   created_at: string
 }
@@ -32,6 +34,7 @@ export type MovimentacaoInsert = {
   fazenda_id: number | null
   area_id: number | null
   setor_id: number | null
+  usuario_id: string | null
   observacao: string | null
 }
 
@@ -61,11 +64,12 @@ export function useMovimentacoes() {
   const [filtros, setFiltros] = useState<FiltrosMovimentacao>(FILTROS_INICIAIS)
   const [totalHoje, setTotalHoje] = useState(0)
 
-  function mapear(row: Record<string, unknown>): Movimentacao {
+  function mapear(row: Record<string, unknown>, userMap: Record<string, string> = {}): Movimentacao {
     const insumo  = row['insumos']  as { nome_insumo: string; unidade: string } | null
     const fazenda = row['fazendas'] as { nome: string } | null
     const area    = row['areas']    as { nome: string } | null
     const setor   = row['setores']  as { nome: string } | null
+    const uid     = row['usuario_id'] != null ? String(row['usuario_id']) : null
     return {
       id:                 Number(row['id']),
       insumo_id:          Number(row['insumo_id']),
@@ -80,9 +84,21 @@ export function useMovimentacoes() {
       area_nome:          area?.nome ?? null,
       setor_id:           row['setor_id'] != null ? Number(row['setor_id']) : null,
       setor_nome:         setor?.nome ?? null,
+      usuario_id:         uid,
+      usuario_nome:       uid ? (userMap[uid] ?? null) : null,
       observacao:         row['observacao'] != null ? String(row['observacao']) : null,
       created_at:         String(row['created_at']),
     }
+  }
+
+  async function resolverUsuarios(rows: Record<string, unknown>[]): Promise<Record<string, string>> {
+    const uids = [...new Set(rows.map((r) => r['usuario_id']).filter(Boolean))] as string[]
+    if (uids.length === 0) return {}
+    const { data } = await supabase
+      .from('usuarios')
+      .select('auth_id, nome')
+      .in('auth_id', uids)
+    return Object.fromEntries(((data ?? []) as { auth_id: string; nome: string }[]).map((u) => [u.auth_id, u.nome]))
   }
 
   async function carregar(f: FiltrosMovimentacao = filtros) {
@@ -110,7 +126,10 @@ export function useMovimentacoes() {
     const { data, error } = await query
     setCarregando(false)
     if (error) { setErro(error.message); return }
-    setRegistros(((data ?? []) as Record<string, unknown>[]).map(mapear))
+
+    const rows = (data ?? []) as Record<string, unknown>[]
+    const userMap = await resolverUsuarios(rows)
+    setRegistros(rows.map((row) => mapear(row, userMap)))
 
     // Recentes: últimas 24h para o histórico
     const ontem = new Date()
@@ -124,7 +143,9 @@ export function useMovimentacoes() {
       .order('created_at', { ascending: false })
       .limit(20)
 
-    setRecentes(((dataRecentes ?? []) as Record<string, unknown>[]).map(mapear))
+    const rowsRecentes = (dataRecentes ?? []) as Record<string, unknown>[]
+    const userMapRecentes = await resolverUsuarios(rowsRecentes)
+    setRecentes(rowsRecentes.map((row) => mapear(row, userMapRecentes)))
 
     // Total hoje
     const hoje = new Date().toISOString().slice(0, 10)
@@ -135,10 +156,16 @@ export function useMovimentacoes() {
     setTotalHoje(count ?? 0)
   }
 
-  async function registrar(payload: MovimentacaoInsert): Promise<boolean> {
+  async function registrar(payloadBase: Omit<MovimentacaoInsert, 'usuario_id'>): Promise<boolean> {
     setSalvando(true)
     setErro(null)
     setMensagem(null)
+
+    const { data: { session } } = await supabase.auth.getSession()
+    const payload: MovimentacaoInsert = {
+      ...payloadBase,
+      usuario_id: session?.user.id ?? null,
+    }
 
     // Buscar saldo atual
     const { data: insumoData, error: insumoErr } = await supabase

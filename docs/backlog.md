@@ -1,6 +1,18 @@
 # Backlog do Projeto
 
 ## Concluído
+- ✅ Autenticação com Supabase Auth (2026-04-20)
+  - @supabase/ssr instalado (sessão em cookies)
+  - lib/auth.ts: signIn, signOut, getSession, getUser
+  - hooks/useAuth.ts: estado global de sessão + perfil
+  - contexts/AuthContext.tsx: provider + useAuthContext
+  - app/login/page.tsx: tela de login com toggle senha
+  - proxy.ts: proteção de todas as rotas (redireciona para /login)
+  - AppHeader.tsx: avatar + nome + cargo + dropdown Sair
+  - Sidebar.tsx: card do usuário logado no rodapé + botão Sair
+  - useMovimentacoes.ts: usuario_id auto-injetado no registrar
+  - MovimentacaoHistorico.tsx: responsável exibido em cada card
+  - SQL: auth_id em usuarios, usuario_id em movimentacoes_estoque
 - ✅ Módulo de Estoque — Gerencial/Estoque (2026-04-20)
   - useCategorias.ts, useInsumos.ts, useMovimentacoes.ts criados
   - 8 componentes em /components/estoque

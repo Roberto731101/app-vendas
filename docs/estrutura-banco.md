@@ -108,6 +108,16 @@ Campos sugeridos:
 - ativo (bool)
 - created_at, updated_at
 
+### Tabela: usuarios
+- id
+- nome
+- email
+- cargo
+- funcao
+- departamento
+- auth_id (uuid FK → auth.users.id) ← adicionado em 2026-04-20
+- created_at
+
 ### Tabela: movimentacoes_estoque
 - id
 - insumo_id (FK → insumos.id)
@@ -118,6 +128,7 @@ Campos sugeridos:
 - fazenda_id (FK → fazendas.id)
 - area_id (FK → areas.id)
 - setor_id (FK → setores.id)
+- usuario_id (uuid FK → auth.users.id) ← adicionado em 2026-04-20
 - observacao
 - created_at
 

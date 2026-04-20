@@ -37,6 +37,9 @@ export function MovimentacaoHistorico({ recentes, carregando }: Props) {
                   {[m.fazenda_nome, m.area_nome, m.setor_nome].filter(Boolean).join(' › ')}
                 </p>
               )}
+              <p className="text-xs text-slate-400 truncate">
+                {m.usuario_nome ?? '—'}
+              </p>
             </div>
 
             {/* Quantidade */}
