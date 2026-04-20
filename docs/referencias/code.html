@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-fixed-variant": "#23501e",
+              "tertiary-fixed": "#ffd9e4",
+              "surface-variant": "#e3e2e0",
+              "secondary-fixed": "#ffdcc1",
+              "primary": "#154212",
+              "on-secondary-fixed": "#2e1500",
+              "error": "#ba1a1a",
+              "surface-container-highest": "#e3e2e0",
+              "on-secondary-fixed-variant": "#683d0f",
+              "tertiary": "#60233e",
+              "outline": "#72796e",
+              "secondary": "#835425",
+              "surface-container-low": "#f4f3f1",
+              "secondary-fixed-dim": "#f9ba82",
+              "primary-fixed-dim": "#a1d494",
+              "primary-fixed": "#bcf0ae",
+              "on-surface-variant": "#42493e",
+              "on-tertiary-fixed": "#3b0520",
+              "outline-variant": "#c2c9bb",
+              "on-error-container": "#93000a",
+              "tertiary-container": "#7c3a55",
+              "on-secondary-container": "#7a4b1e",
+              "on-error": "#ffffff",
+              "background": "#faf9f7",
+              "on-primary-container": "#9dd090",
+              "on-secondary": "#ffffff",
+              "secondary-container": "#ffbf87",
+              "on-tertiary-container": "#ffaac8",
+              "on-background": "#1a1c1b",
+              "inverse-surface": "#2f3130",
+              "surface": "#faf9f7",
+              "tertiary-fixed-dim": "#ffb0cc",
+              "surface-container": "#efeeec",
+              "surface-bright": "#faf9f7",
+              "on-tertiary-fixed-variant": "#71314c",
+              "surface-tint": "#3b6934",
+              "error-container": "#ffdad6",
+              "on-primary-fixed": "#002201",
+              "surface-container-high": "#e9e8e6",
+              "on-tertiary": "#ffffff",
+              "inverse-on-surface": "#f1f1ef",
+              "on-surface": "#1a1c1b",
+              "inverse-primary": "#a1d494",
+              "surface-dim": "#dadad8",
+              "surface-container-lowest": "#ffffff",
+              "primary-container": "#2d5a27",
+              "on-primary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Work Sans"],
+              "label": ["Work Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Work Sans', sans-serif;
+      }
+      h1, h2, h3, .display-font {
+        font-family: 'Manrope', sans-serif;
+      }
+      .glass-effect {
+        backdrop-filter: blur(20px);
+        background-color: rgba(250, 249, 247, 0.8);
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex min-h-screen">
+<!-- Predicted Component: SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-6 space-y-8 bg-surface-container-low w-64 z-50">
+<div class="flex flex-col space-y-1">
+<span class="text-lg font-extrabold text-secondary">Field Ops</span>
+<span class="text-xs font-medium text-on-surface-variant opacity-70">Active Season 2024</span>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Dashboard Tab (Inactive) -->
+<a class="flex items-center gap-3 text-on-background opacity-70 font-medium hover:opacity-100 hover:translate-x-1 transition-all group p-2" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label">Dashboard</span>
+</a>
+<!-- Inventory Tab (Inactive) -->
+<a class="flex items-center gap-3 text-on-background opacity-70 font-medium hover:opacity-100 hover:translate-x-1 transition-all group p-2" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label">Inventory</span>
+</a>
+<!-- Areas Tab (Active) -->
+<a class="flex items-center gap-3 text-primary font-semibold hover:translate-x-1 transition-all p-2 bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="map" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-label">Areas</span>
+</a>
+<!-- Reports Tab (Inactive) -->
+<a class="flex items-center gap-3 text-on-background opacity-70 font-medium hover:opacity-100 hover:translate-x-1 transition-all group p-2" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+<span class="font-label">Reports</span>
+</a>
+</nav>
+<div class="pt-6 border-t border-outline-variant/15 space-y-2">
+<button class="w-full flex items-center justify-center gap-2 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full font-bold text-sm shadow-sm transition-transform active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                Quick Scan
+            </button>
+<a class="flex items-center gap-3 text-on-background opacity-70 font-medium hover:opacity-100 p-2" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label">Support</span>
+</a>
+<a class="flex items-center gap-3 text-on-background opacity-70 font-medium hover:opacity-100 p-2" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen">
+<!-- Predicted Component: TopNavBar -->
+<header class="flex justify-between items-center px-8 w-full sticky top-0 z-40 glass-effect h-16">
+<div class="flex items-center gap-8">
+<h1 class="text-2xl font-bold tracking-tight text-primary">Digital Agronomist</h1>
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-1.5 bg-surface-container-high border-none rounded-md text-sm focus:ring-1 focus:ring-primary outline-none" placeholder="Buscar áreas..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-on-surface" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden ml-2 ring-2 ring-primary-fixed">
+<img alt="Manager Profile" data-alt="Close-up portrait of a professional farm manager wearing a light linen shirt, smiling confidently in soft natural daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN9QkVEfW__sGpUnil7gI887BukkZyb8usp6uMJHHrfjqAs5sBzUKuD475zo-zHVl6HM6PdY_Q7BLuli8Y5tLDcSv08OdyHGNwFQ-oDByHq9mktEwvbu_P4VzPcDciJFY5ygpIvPhGMRmv83dU4g70i6BtwJLZBFdyxXd4FQSdgAcbpJPhY4X3RQjnoGbUiZ5dHTT3BmO7rSlJGKgWsn0VggCfrqW8c9sAVbjdL9BoWcJKIyx5CBOc5mZfJm3_SgOBJsgo7pi-pbY"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<section class="p-8 space-y-10">
+<!-- Hero Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="space-y-2">
+<h2 class="text-5xl font-extrabold text-on-background tracking-tighter">Gestão de Áreas</h2>
+<p class="text-on-surface-variant text-lg max-w-xl">Supervisione o desempenho produtivo e a saúde biológica de cada setor da propriedade em tempo real.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-3 bg-secondary-container text-on-secondary-container rounded-full font-semibold hover:shadow-md transition-shadow">
+                        Nova Área
+                    </button>
+<button class="px-6 py-3 bg-surface-container-lowest text-on-surface border border-outline-variant/30 rounded-full font-semibold hover:bg-surface-container-high transition-colors">
+                        Exportar Relatórios
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout for Management -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Large Geo-Spatial Section (8 cols) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-low rounded-xl overflow-hidden relative min-h-[500px] group">
+<div class="absolute inset-0 z-0">
+<img alt="Satellite view of organized agricultural crop circles and rectangular fields in vibrant greens and golden browns from high altitude" class="w-full h-full object-cover grayscale-[20%] group-hover:scale-105 transition-transform duration-700" data-location="Mato Grosso, Brazil" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5spHue57EAdlNQqkwDdP1HeZ93QoxNiyWFLnsZx1N-6zjObSmKDeNk3qQIwmwkPMMOTo2r7DjEW_hKtq8ek2VmWY7grV_nPIZ9GqbmvGr1LnZUQSkKJrwysMQLR71FKa6eOdaDmS5wFV945ESLZO8Qte2zJUdrprt_0nRFWrZLXHVSF3btzVaK8MKWdzmVOBt4PfgOa9zadEYkCWiNDn_KP3m8UtFZq0nU7IIs-utYcpirZsQZ-KLMN3j3mGgb7PJtFRO1J4TeQ4"/>
+</div>
+<!-- Overlay Controls -->
+<div class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/60 to-transparent flex justify-between items-end">
+<div class="glass-effect p-4 rounded-xl border border-white/10 text-on-surface">
+<h3 class="font-headline font-bold text-lg mb-1">Monitoramento Geoespacial</h3>
+<p class="text-sm opacity-80">Visualização de satélite • Atualizado há 14 min</p>
+</div>
+<div class="flex gap-2">
+<button class="h-10 w-10 glass-effect rounded-lg flex items-center justify-center hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-on-surface" data-icon="layers">layers</span>
+</button>
+<button class="h-10 w-10 glass-effect rounded-lg flex items-center justify-center hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-on-surface" data-icon="my_location">my_location</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Side Stats (4 cols) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl space-y-4">
+<span class="text-xs font-bold uppercase tracking-widest text-secondary opacity-70">Saúde Geral</span>
+<div class="text-4xl font-headline font-extrabold text-primary">94.2%</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full">
+<div class="bg-primary h-full w-[94%] rounded-full"></div>
+</div>
+<p class="text-sm text-on-surface-variant italic">O índice de vigor vegetativo aumentou 2% em relação à última semana.</p>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl flex-1 relative overflow-hidden">
+<div class="relative z-10 space-y-4">
+<h4 class="font-headline font-bold text-lg">Alertas Críticos</h4>
+<div class="space-y-3">
+<div class="flex items-center gap-3 p-3 bg-error-container/40 rounded-lg">
+<span class="material-symbols-outlined text-error" data-icon="water_drop">water_drop</span>
+<div>
+<p class="text-xs font-bold text-on-error-container">Irrigação Necessária</p>
+<p class="text-[10px] text-on-error-container opacity-80">Talhão 01 • Umidade 12%</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-secondary-container/40 rounded-lg">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="pest_control">pest_control</span>
+<div>
+<p class="text-xs font-bold text-on-secondary-container">Monitoramento de Pragas</p>
+<p class="text-[10px] text-on-secondary-container opacity-80">Galpão • Setor Oeste</p>
+</div>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl opacity-5 pointer-events-none" data-icon="sensors">sensors</span>
+</div>
+</div>
+</div>
+<!-- Area Cards Grid -->
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="text-2xl font-bold font-headline">Áreas de Produção</h3>
+<div class="flex gap-4 text-sm font-medium text-on-surface-variant">
+<button class="border-b-2 border-primary text-primary pb-1 px-1">Todos</button>
+<button class="hover:text-primary pb-1 px-1 transition-colors">Plantio</button>
+<button class="hover:text-primary pb-1 px-1 transition-colors">Infraestrutura</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Card 01: Talhão 01 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl group hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+<div class="flex justify-between items-start mb-6">
+<div class="h-12 w-12 bg-primary-fixed rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="grass">grass</span>
+</div>
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full text-[10px] font-bold uppercase tracking-wider">Produtivo</span>
+</div>
+<h4 class="text-xl font-bold mb-2">Talhão 01</h4>
+<div class="space-y-3">
+<div class="flex justify-between items-center py-2 border-b border-surface-container-high">
+<span class="text-sm text-on-surface-variant">Área (ha)</span>
+<span class="font-semibold">45.2</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-container-high">
+<span class="text-sm text-on-surface-variant">Cultivo Atual</span>
+<span class="font-semibold">Soja Especial</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-sm text-on-surface-variant">Status de Saúde</span>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-semibold text-primary">Excelente</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 rounded-lg border border-outline-variant/30 text-sm font-bold text-on-surface-variant group-hover:bg-primary group-hover:text-on-primary group-hover:border-transparent transition-all">Ver Detalhes</button>
+</div>
+<!-- Card 02: Curral -->
+<div class="bg-surface-container-lowest p-6 rounded-xl group hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+<div class="flex justify-between items-start mb-6">
+<div class="h-12 w-12 bg-secondary-fixed rounded-xl flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="house">house</span>
+</div>
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-full text-[10px] font-bold uppercase tracking-wider">Ativo</span>
+</div>
+<h4 class="text-xl font-bold mb-2">Curral</h4>
+<div class="space-y-3">
+<div class="flex justify-between items-center py-2 border-b border-surface-container-high">
+<span class="text-sm text-on-surface-variant">Área (ha)</span>
+<span class="font-semibold">12.5</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-container-high">
+<span class="text-sm text-on-surface-variant">Cultivo Atual</span>
+<span class="font-semibold">N/A (Pecuária)</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-sm text-on-surface-variant">Status de Saúde</span>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-semibold text-secondary">Estável</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 rounded-lg border border-outline-variant/30 text-sm font-bold text-on-surface-variant group-hover:bg-primary group-hover:text-on-primary group-hover:border-transparent transition-all">Ver Detalhes</button>
+</div>
+<!-- Card 03: Galpão -->
+<div class="bg-surface-container-lowest p-6 rounded-xl group hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+<div class="flex justify-between items-start mb-6">
+<div class="h-12 w-12 bg-surface-container-highest rounded-xl flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="inventory">inventory</span>
+</div>
+<span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full text-[10px] font-bold uppercase tracking-wider">Manutenção</span>
+</div>
+<h4 class="text-xl font-bold mb-2">Galpão</h4>
+<div class="space-y-3">
+<div class="flex justify-between items-center py-2 border-b border-surface-container-high">
+<span class="text-sm text-on-surface-variant">Área (ha)</span>
+<span class="font-semibold">3.8</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-container-high">
+<span class="text-sm text-on-surface-variant">Cultivo Atual</span>
+<span class="font-semibold">Armazenagem</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-sm text-on-surface-variant">Status de Saúde</span>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="font-semibold text-error">Revisão</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 rounded-lg border border-outline-variant/30 text-sm font-bold text-on-surface-variant group-hover:bg-primary group-hover:text-on-primary group-hover:border-transparent transition-all">Ver Detalhes</button>
+</div>
+</div>
+</div>
+<!-- Decorative Section: Visual Rhythm -->
+<div class="relative bg-primary-container p-12 rounded-[2rem] overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Extreme close-up of a vibrant green soybean leaf showing detailed vein structure and soft sunlight shining through" class="w-full h-full object-cover mix-blend-overlay opacity-30" data-alt="Close-up of agricultural plant details with vibrant lighting and macro textures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAanxzbFfKeS2LArupfmU9ZVmxeU4VHKYBiW_oIJzvSa4uZ2uRVzr_CTtWKesmGych4G63eoPU5Np2-9jHD-B6WyIz7nNcqb3KEMs8M6UUeLgixx4LW5sfHv2Wg3QMj7XjyLzM1zNPhqPNpD4K7Ci75V3iOnp-dkFNl8TjypvLYz4F08Q1PmHcqt-QYZBhr364Gj0SvKXQGyb_TJXu0KLWb_eILEf1Ll0PQi1wqQEdxEbqq3_vkBgPBCoS8TADw28eaqhH45HRRHMs"/>
+</div>
+<div class="relative z-10 max-w-2xl space-y-4">
+<h3 class="text-4xl font-headline font-extrabold text-on-primary-container">Otimização de Colheita Inteligente</h3>
+<p class="text-lg text-on-primary-container opacity-90">Utilize nossos novos algoritmos de visão computacional para prever o momento exato da colheita com base na saturação de clorofila.</p>
+<button class="mt-4 px-8 py-3 bg-primary-fixed text-on-primary-fixed rounded-full font-bold transition-transform hover:scale-105">
+                        Conhecer IA Agronômica
+                    </button>
+</div>
+</div>
+</section>
+<!-- Footer for Canvas -->
+<footer class="mt-auto p-8 text-center text-xs text-on-surface-variant opacity-50 font-medium">
+            © 2024 Digital Agronomist • Todos os direitos reservados • Política de Dados Agrícolas
+        </footer>
+</main>
+</body></html>

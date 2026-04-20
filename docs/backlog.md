@@ -1,6 +1,17 @@
 # Backlog do Projeto
 
 ## Concluído
+- ✅ Gestão de Áreas com Google Maps + Cotas por Safra (2026-04-20)
+  - hooks/useSafras.ts, useCotasArea.ts, useGestaoAreas.ts criados
+  - components/maps/MapaAreas.tsx (polígonos por status, InfoWindow, legenda)
+  - components/maps/EditorPoligono.tsx (DrawingManager para desenhar polígonos)
+  - components/areas: AreaCard, AlertasCriticos, CotaInsumoRow, CotaForm, SafraSelect
+  - /areas (painel 40/60: lista+alertas à esquerda, mapa à direita)
+  - /areas/[id] (detalhe: mapa, editor polígono, cotas, histórico)
+  - /areas/safras (CRUD de safras)
+  - Dependência: @vis.gl/react-google-maps
+  - Variável: NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+  - SQL: safras, cotas_insumos_area, campos lat/lng/poligono
 - ✅ Autenticação com Supabase Auth (2026-04-20)
   - @supabase/ssr instalado (sessão em cookies)
   - lib/auth.ts: signIn, signOut, getSession, getUser

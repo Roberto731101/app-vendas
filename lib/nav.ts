@@ -54,6 +54,13 @@ export const NAV_SIDEBAR: NavSection[] = [
           { href: '/estoque/categorias',  label: 'Categorias' },
         ],
       },
+      {
+        group: 'Gestão de Áreas',
+        items: [
+          { href: '/areas',         label: 'Painel' },
+          { href: '/areas/safras',  label: 'Safras' },
+        ],
+      },
     ],
   },
   {

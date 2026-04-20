@@ -132,6 +132,52 @@ Campos sugeridos:
 - observacao
 - created_at
 
+---
+
+## Módulo de Gestão de Áreas (2026-04-20)
+
+### Campos geográficos adicionados
+
+```sql
+ALTER TABLE fazendas ADD COLUMN IF NOT EXISTS lat numeric;
+ALTER TABLE fazendas ADD COLUMN IF NOT EXISTS lng numeric;
+ALTER TABLE areas ADD COLUMN IF NOT EXISTS poligono jsonb;
+ALTER TABLE areas ADD COLUMN IF NOT EXISTS lat numeric;
+ALTER TABLE areas ADD COLUMN IF NOT EXISTS lng numeric;
+ALTER TABLE setores ADD COLUMN IF NOT EXISTS poligono jsonb;
+ALTER TABLE setores ADD COLUMN IF NOT EXISTS lat numeric;
+ALTER TABLE setores ADD COLUMN IF NOT EXISTS lng numeric;
+```
+
+### Tabela: safras
+- id
+- nome
+- data_inicio (date)
+- data_fim (date)
+- ativo (bool)
+- created_at
+
+### Tabela: cotas_insumos_area
+- id
+- area_id (FK → areas.id)
+- insumo_id (FK → insumos.id)
+- safra_id (FK → safras.id)
+- quantidade_cota (numeric)
+- unidade (text)
+- observacao (text)
+- created_at, updated_at
+- UNIQUE(area_id, insumo_id, safra_id)
+
+### Regras de cota
+- status ok      → consumido < 80% da cota
+- status alerta  → consumido >= 80% e < 100%
+- status critico → consumido >= 100%
+
+### Saúde da área
+- excelente → sem alertas nem críticos
+- estavel   → tem alertas, sem críticos
+- critico   → tem pelo menos um crítico
+
 ### Regras de status calculado
 - ok      → quantidade_atual > estoque_minimo * 1.2
 - alerta  → quantidade_atual <= estoque_minimo * 1.2 (e > mínimo)
