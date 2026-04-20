@@ -9,6 +9,7 @@ export type Setor = {
   nome: string
   hect: number | null
   descricao: string | null
+  area_id: number | null
   created_at: string
 }
 
@@ -17,9 +18,10 @@ export type SetorInsert = {
   nome: string
   hect: number | null
   descricao: string | null
+  area_id: number | null
 }
 
-export function useSetores() {
+export function useSetores(areaId?: number) {
   const [registros, setRegistros] = useState<Setor[]>([])
   const [carregando, setCarregando] = useState(true)
   const [erro, setErro] = useState<string | null>(null)
@@ -29,10 +31,9 @@ export function useSetores() {
   async function carregar() {
     setCarregando(true)
     setErro(null)
-    const { data, error } = await supabase
-      .from('setores')
-      .select('*')
-      .order('nome', { ascending: true })
+    let query = supabase.from('setores').select('*').order('nome', { ascending: true })
+    if (areaId) query = query.eq('area_id', areaId)
+    const { data, error } = await query
     setCarregando(false)
     if (error) { setErro(error.message); return }
     setRegistros((data as Setor[]) ?? [])
@@ -71,7 +72,7 @@ export function useSetores() {
     return true
   }
 
-  useEffect(() => { carregar() }, [])
+  useEffect(() => { carregar() }, [areaId])
 
-  return { registros, carregando, erro, mensagem, salvando, carregar, buscarPorId, salvar, excluir }
+  return { registros, carregando, erro, mensagem, salvando, carregar, buscarPorId, salvar, excluir, setErro, setMensagem }
 }

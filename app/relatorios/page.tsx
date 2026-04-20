@@ -1,5 +1,6 @@
 'use client'
 
+import './print.css'
 import { useEffect, useRef, useState } from 'react'
 import { AppLayout } from '@/components/layout/AppLayout'
 import { useRelatorios } from '@/hooks/useRelatorios'
@@ -7,6 +8,7 @@ import { RelatorioColheitaPorLote } from '@/components/relatorios/RelatorioColhe
 import { RelatorioProducaoPorSetor } from '@/components/relatorios/RelatorioProducaoPorSetor'
 import { RelatorioVendasPorLote } from '@/components/relatorios/RelatorioVendasPorLote'
 import { RelatorioConsolidado } from '@/components/relatorios/RelatorioConsolidado'
+import { RelatorioHeader } from '@/components/relatorios/RelatorioHeader'
 import {
   exportarColheitaPorLote,
   exportarProducaoPorSetor,
@@ -20,14 +22,14 @@ const NAV_HEADER = [
   { label: 'Relatórios', active: true },
 ]
 
-const OPCOES_EXPORTAR = [
+const OPCOES_CSV = [
   { label: 'Colheita-registro por Colheita-campo', key: 'colheita' },
-  { label: 'Produção por Setor',   key: 'producao'    },
-  { label: 'Vendas por Lote',      key: 'vendas'      },
-  { label: 'Consolidado por Lote', key: 'consolidado' },
+  { label: 'Produção por Setor',                  key: 'producao'    },
+  { label: 'Vendas por Lote',                     key: 'vendas'      },
+  { label: 'Consolidado por Lote',                key: 'consolidado' },
 ] as const
 
-type ChaveExportar = typeof OPCOES_EXPORTAR[number]['key']
+type ChaveCSV = typeof OPCOES_CSV[number]['key']
 
 export default function RelatoriosPage() {
   const {
@@ -49,51 +51,53 @@ export default function RelatoriosPage() {
     recarregar,
   } = useRelatorios()
 
-  const [menuExportarAberto, setMenuExportarAberto] = useState(false)
+  const [menuAberto, setMenuAberto] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
 
-  // Fecha o menu ao clicar fora
   useEffect(() => {
     function handleClickFora(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setMenuExportarAberto(false)
+        setMenuAberto(false)
       }
     }
-    if (menuExportarAberto) {
-      document.addEventListener('mousedown', handleClickFora)
-    }
+    if (menuAberto) document.addEventListener('mousedown', handleClickFora)
     return () => document.removeEventListener('mousedown', handleClickFora)
-  }, [menuExportarAberto])
+  }, [menuAberto])
 
-  function handleExportar(chave: ChaveExportar) {
-    setMenuExportarAberto(false)
+  function handleExportarCSV(chave: ChaveCSV) {
+    setMenuAberto(false)
     switch (chave) {
-      case 'colheita':    exportarColheitaPorLote(relColheita);    break
-      case 'producao':    exportarProducaoPorSetor(relProducao);   break
-      case 'vendas':      exportarVendasPorLote(relVendas);        break
+      case 'colheita':    exportarColheitaPorLote(relColheita);       break
+      case 'producao':    exportarProducaoPorSetor(relProducao);      break
+      case 'vendas':      exportarVendasPorLote(relVendas);           break
       case 'consolidado': exportarConsolidadoPorLote(relConsolidado); break
     }
+  }
+
+  function handleExportarPDF() {
+    setMenuAberto(false)
+    window.print()
   }
 
   return (
     <AppLayout headerNavItems={NAV_HEADER}>
 
       {/* Cabeçalho visível apenas na impressão */}
-      <div className="print-only mb-6 border-b-2 border-slate-300 pb-4">
-        <h1 className="text-2xl font-bold text-slate-900">Relatórios — Gestão de Frutas</h1>
-        <p className="mt-1 text-sm text-slate-500">NOLASCO PRODUÇÃO</p>
+      <div className="print-only">
+        <RelatorioHeader filtros={filtros} opcoesLote={opcoesLote} opcoesSetor={opcoesSetor} />
       </div>
 
-      {/* Cabeçalho normal */}
-      <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+      {/* Cabeçalho normal da tela */}
+      <div className="no-print mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
-          <nav className="no-print mb-2 flex items-center gap-2 text-xs text-slate-500">
+          <nav className="mb-2 flex items-center gap-2 text-xs text-slate-500">
             <span>Relatórios</span>
           </nav>
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Relatórios</h1>
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">NOLASCO PRODUÇÃO</p>
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Relatório de Produção e Vendas</h1>
         </div>
 
-        <div className="no-print flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3">
           <button
             onClick={recarregar}
             className="rounded-xl bg-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-300"
@@ -101,41 +105,42 @@ export default function RelatoriosPage() {
             Atualizar
           </button>
 
-          {/* Botão Imprimir */}
-          <button
-            onClick={() => window.print()}
-            className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-          >
-            Imprimir
-          </button>
-
-          {/* Botão Exportar com dropdown */}
+          {/* Dropdown Exportar: CSV + PDF */}
           <div ref={menuRef} className="relative">
             <button
-              onClick={() => setMenuExportarAberto((v) => !v)}
+              onClick={() => setMenuAberto((v) => !v)}
               className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#063f81] to-[#2b579a] px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition active:scale-95"
             >
               Exportar
               <svg
-                className={`h-4 w-4 transition-transform ${menuExportarAberto ? 'rotate-180' : ''}`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
+                className={`h-4 w-4 transition-transform ${menuAberto ? 'rotate-180' : ''}`}
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
 
-            {menuExportarAberto && (
-              <div className="absolute right-0 z-50 mt-2 w-52 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
+            {menuAberto && (
+              <div className="absolute right-0 z-50 mt-2 w-56 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
+                {/* Opção PDF */}
                 <p className="border-b border-slate-100 px-4 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Exportar como CSV
+                  PDF
                 </p>
-                {OPCOES_EXPORTAR.map((opcao) => (
+                <button
+                  onClick={handleExportarPDF}
+                  className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm font-semibold text-[#063f81] hover:bg-slate-50"
+                >
+                  <span>🖨️</span> Imprimir / Salvar PDF
+                </button>
+
+                {/* Opções CSV */}
+                <p className="border-b border-t border-slate-100 px-4 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  CSV
+                </p>
+                {OPCOES_CSV.map((opcao) => (
                   <button
                     key={opcao.key}
-                    onClick={() => handleExportar(opcao.key)}
+                    onClick={() => handleExportarCSV(opcao.key)}
                     className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50"
                   >
                     {opcao.label}
@@ -162,7 +167,6 @@ export default function RelatoriosPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-4 p-6 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Colheita-campo */}
           <div>
             <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-400">
               Colheita-campo
@@ -179,7 +183,6 @@ export default function RelatoriosPage() {
             </select>
           </div>
 
-          {/* Setor */}
           <div>
             <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-400">
               Setor
@@ -197,7 +200,6 @@ export default function RelatoriosPage() {
             </select>
           </div>
 
-          {/* Data início */}
           <div>
             <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-400">
               Período — início
@@ -210,7 +212,6 @@ export default function RelatoriosPage() {
             />
           </div>
 
-          {/* Data fim */}
           <div>
             <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-400">
               Período — fim
@@ -225,7 +226,6 @@ export default function RelatoriosPage() {
         </div>
       </div>
 
-      {/* Erro global */}
       {erro && (
         <div className="no-print mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {erro}

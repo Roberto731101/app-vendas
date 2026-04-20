@@ -10,6 +10,11 @@ function fmtKg(v: number) {
 }
 
 export function RelatorioConsolidado({ linhas, carregando }: Props) {
+  const totalCachos     = linhas.reduce((s, l) => s + l.totalCachos, 0)
+  const totalCorrigido  = linhas.reduce((s, l) => s + l.pesoCorrigidoTotal, 0)
+  const totalVendido    = linhas.reduce((s, l) => s + l.pesoVendidoTotal, 0)
+  const totalDiferenca  = totalCorrigido - totalVendido
+
   return (
     <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
       <div className="flex items-center justify-between border-b border-slate-200 p-6">
@@ -64,6 +69,21 @@ export function RelatorioConsolidado({ linhas, carregando }: Props) {
                 </tr>
               )}
             </tbody>
+            {linhas.length > 0 && (
+              <tfoot>
+                <tr className="border-t-2 border-slate-200 bg-slate-50">
+                  <td className="px-6 py-3 text-xs font-bold uppercase text-slate-500">Total</td>
+                  <td className="px-6 py-3 text-right text-sm font-bold text-slate-900">{totalCachos.toLocaleString('pt-BR')}</td>
+                  <td className="px-6 py-3 text-right text-sm font-bold text-slate-900">{fmtKg(totalCorrigido)}</td>
+                  <td className="px-6 py-3 text-right text-sm font-bold text-slate-900">{fmtKg(totalVendido)}</td>
+                  <td className="px-6 py-3 text-right">
+                    <span className={`text-sm font-bold ${totalDiferenca >= 0 ? 'text-green-700' : 'text-red-600'}`}>
+                      {totalDiferenca >= 0 ? '+' : ''}{fmtKg(totalDiferenca)}
+                    </span>
+                  </td>
+                </tr>
+              </tfoot>
+            )}
           </table>
         </div>
       )}

@@ -1,5 +1,44 @@
 # Estrutura do Banco
 
+## Hierarquia: Fazenda → Área → Setor
+
+```
+fazendas
+  └─ areas (fazenda_id FK)
+       └─ setores (area_id FK)
+```
+
+## Tabela: fazendas
+- id
+- nome
+- descricao
+- created_at
+
+## Tabela: areas
+- id
+- fazenda_id (FK → fazendas.id)
+- numero (texto, ex: "Area01")
+- nome
+- descricao
+- created_at
+
+## Tabela: setores
+- id
+- area_id (FK → areas.id) ← adicionado via migration
+- numero (int)
+- nome
+- hect (decimal, hectares)
+- descricao
+- created_at
+
+## Migração aplicada (2026-04-19)
+```sql
+ALTER TABLE areas RENAME COLUMN "Nome" TO nome;
+ALTER TABLE setores ADD COLUMN area_id int8 REFERENCES areas(id);
+```
+
+---
+
 ## Tabela: vendas
 Campos sugeridos:
 - id
@@ -42,3 +81,47 @@ Campos sugeridos:
 - id
 - descricao
 - ativo
+
+---
+
+## Módulo de Estoque
+
+### Tabela: categorias_insumos
+- id
+- nome_categoria
+- descricao
+- tipo (text: fertilizante | defensivo | semente | outros)
+- ativo (bool)
+- created_at, updated_at
+
+### Tabela: insumos
+- id
+- nome_insumo
+- categoria_id (FK → categorias_insumos.id)
+- marca_fornecedor
+- unidade (kg | L | un | cx | sc | t)
+- quantidade_atual (numeric)
+- estoque_minimo (numeric)
+- lote
+- data_validade (date)
+- status_estoque (calculado: ok | alerta | critico)
+- ativo (bool)
+- created_at, updated_at
+
+### Tabela: movimentacoes_estoque
+- id
+- insumo_id (FK → insumos.id)
+- tipo_movimentacao ('entrada' | 'saida')
+- quantidade (numeric)
+- unidade
+- data_movimentacao (date)
+- fazenda_id (FK → fazendas.id)
+- area_id (FK → areas.id)
+- setor_id (FK → setores.id)
+- observacao
+- created_at
+
+### Regras de status calculado
+- ok      → quantidade_atual > estoque_minimo * 1.2
+- alerta  → quantidade_atual <= estoque_minimo * 1.2 (e > mínimo)
+- critico → quantidade_atual <= estoque_minimo

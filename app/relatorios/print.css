@@ -1,0 +1,201 @@
+@media print {
+  /* ── Página A4 ──────────────────────────────────────────────────────────── */
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm 12mm 14mm;
+
+    @bottom-right {
+      content: "Página " counter(page) " de " counter(pages);
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 7pt;
+      color: #94a3b8;
+    }
+
+    @bottom-left {
+      content: "NOLASCO PRODUÇÃO — Relatório de Produção e Vendas";
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 7pt;
+      color: #94a3b8;
+    }
+  }
+
+  /* ── Ocultar navegação e controles ─────────────────────────────────────── */
+  aside,
+  header,
+  nav,
+  .no-print {
+    display: none !important;
+  }
+
+  /* ── Layout base ────────────────────────────────────────────────────────── */
+  main {
+    margin-left: 0 !important;
+    padding: 0 !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  /* ── Tipografia geral ───────────────────────────────────────────────────── */
+  body,
+  body * {
+    font-family: 'Inter', Arial, sans-serif !important;
+    font-size: 8pt !important;
+    line-height: 1.3 !important;
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Sombras e bordas arredondadas ─────────────────────────────────────── */
+  .shadow-sm,
+  .shadow-lg,
+  .shadow {
+    box-shadow: none !important;
+  }
+
+  .rounded-2xl,
+  .rounded-xl,
+  .rounded-lg {
+    border-radius: 0 !important;
+  }
+
+  /* ── Cabeçalho do relatório ─────────────────────────────────────────────── */
+  .relatorio-header-empresa {
+    font-size: 10pt !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    color: #063f81 !important;
+  }
+
+  .relatorio-header-titulo {
+    font-size: 8pt !important;
+    font-weight: 400 !important;
+    color: #64748b !important;
+  }
+
+  .relatorio-header-filtros {
+    font-size: 7.5pt !important;
+    color: #94a3b8 !important;
+  }
+
+  .relatorio-header-sep {
+    border-top: 1px solid #e2e8f0 !important;
+    margin-top: 6pt !important;
+    margin-bottom: 8mm !important;
+  }
+
+  /* ── Títulos de seção ───────────────────────────────────────────────────── */
+  .relatorio-bloco h3 {
+    font-size: 8pt !important;
+    font-weight: 700 !important;
+    color: #063f81 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    margin-bottom: 4px !important;
+    margin-top: 10pt !important;
+  }
+
+  .relatorio-bloco p {
+    display: none !important;
+  }
+
+  .relatorio-bloco .flex.items-center.justify-between {
+    padding: 4px 0 4px 0 !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+  }
+
+  /* ── Tabelas ────────────────────────────────────────────────────────────── */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 7.5pt !important;
+    min-width: 0 !important;
+  }
+
+  .overflow-x-auto {
+    overflow: visible !important;
+  }
+
+  /* Cabeçalho das tabelas */
+  thead tr {
+    background-color: #f1f5f9 !important;
+    color: #475569 !important;
+  }
+
+  thead th {
+    font-size: 6.5pt !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    padding: 4px 6px !important;
+    color: #475569 !important;
+    border-bottom: 1px solid #cbd5e1 !important;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  /* Células de dados */
+  tbody td {
+    padding: 3px 6px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    color: #1e293b !important;
+    vertical-align: middle !important;
+  }
+
+  /* Destacar Peso Corrigido e Prod/Hectare */
+  tbody td.col-peso-corrigido,
+  tbody td.col-prod-hectare {
+    font-weight: 600 !important;
+    color: #063f81 !important;
+  }
+
+  /* Rodapé de totais */
+  tfoot {
+    display: table-footer-group;
+  }
+
+  tfoot tr {
+    background-color: #f8fafc !important;
+    border-top: 1.5px solid #cbd5e1 !important;
+  }
+
+  tfoot td {
+    font-weight: 700 !important;
+    font-size: 7.5pt !important;
+    padding: 4px 6px !important;
+    color: #1e293b !important;
+  }
+
+  /* Linha não quebra no meio */
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* ── Blocos de relatório ────────────────────────────────────────────────── */
+  .relatorio-bloco {
+    page-break-inside: avoid;
+    page-break-after: auto;
+    margin-bottom: 10mm !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 6px 0 !important;
+  }
+
+  .relatorio-bloco + .relatorio-bloco {
+    page-break-before: auto;
+  }
+
+  /* Gap entre blocos não cria espaço extra */
+  .flex.flex-col.gap-8 {
+    gap: 0 !important;
+  }
+
+  /* Espaço interno do header do bloco */
+  .border-b.border-slate-200.p-6 {
+    padding: 4px 8px !important;
+  }
+}

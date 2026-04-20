@@ -1,5 +1,36 @@
 # Backlog do Projeto
 
+## Concluído
+- ✅ Módulo de Estoque — Gerencial/Estoque (2026-04-20)
+  - useCategorias.ts, useInsumos.ts, useMovimentacoes.ts criados
+  - 8 componentes em /components/estoque
+  - 4 telas: /estoque, /estoque/insumos, /estoque/movimentar, /estoque/categorias
+  - Sidebar refatorada para grupos independentes
+  - lib/nav.ts com grupo Estoque
+  - Status calculado automaticamente (ok/alerta/critico)
+  - Validação de saldo negativo na saída
+  - Bloqueio de exclusão em cascata (categoria→insumo, insumo→movimentação)
+- ✅ Melhoria do Relatório + Exportação PDF (2026-04-20)
+  - RelatorioProducaoPorSetor simplificado (7 colunas, sem Ratio/Origem/Peso Obtido)
+  - Totalizadores adicionados em Produção por Setor e Consolidado por Lote
+  - Cabeçalho NOLASCO PRODUÇÃO com filtros aplicados e data de geração (RelatorioHeader)
+  - Exportar PDF via window.print() integrado ao dropdown Exportar
+  - print.css criado em app/relatorios/ (A4, rodapé com página, oculta nav/filtros/botões)
+- ✅ Cadastro hierárquico Fazenda → Área → Setor (2026-04-19)
+  - Hook useAreas.ts criado
+  - useFazendas.ts com join completo (buscarTodasComHierarquia)
+  - useSetores.ts com area_id
+  - AreaForm.tsx criado
+  - HierarquiaView.tsx criado
+  - /fazendas/page.tsx refatorado com layout em duas colunas
+  - Regras: bloqueio de exclusão em cascata
+
+## Próximo passo: Relatórios
+- Relatório de produção por fazenda/área/setor
+- Relatório de vendas por período
+- Exportação para Excel/CSV
+- Integração com Power BI
+
 ## Prioridade alta
 - Estruturar cadastro de vendas
 - Estruturar cadastro de itens
