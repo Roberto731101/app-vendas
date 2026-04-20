@@ -21,7 +21,6 @@ export type SetorHierarquia = {
   nome: string
   hect: number | null
   descricao: string | null
-  area_id: number | null
 }
 
 export type AreaHierarquia = {

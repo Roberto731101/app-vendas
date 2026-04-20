@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { AppLayout } from '@/components/layout/AppLayout'
 import { useMovimentacoes } from '@/hooks/useMovimentacoes'
@@ -17,7 +17,7 @@ const NAV_HEADER = [
   { label: 'Movimentar', active: true },
 ]
 
-export default function MovimentarPage() {
+function MovimentarContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const movHook = useMovimentacoes()
@@ -127,5 +127,13 @@ export default function MovimentarPage() {
         </div>
       </div>
     </AppLayout>
+  )
+}
+
+export default function MovimentarPage() {
+  return (
+    <Suspense>
+      <MovimentarContent />
+    </Suspense>
   )
 }

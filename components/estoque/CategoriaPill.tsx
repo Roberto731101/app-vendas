@@ -4,7 +4,7 @@ const CORES: Record<string, string> = {
   semente:      'bg-blue-100 text-blue-700',
 }
 
-function corPorTipo(tipo: string | null): string {
+function corPorTipo(tipo: string | null | undefined): string {
   if (!tipo) return 'bg-slate-100 text-slate-600'
   return CORES[tipo.toLowerCase()] ?? 'bg-slate-100 text-slate-600'
 }

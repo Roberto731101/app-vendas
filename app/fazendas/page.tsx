@@ -43,7 +43,7 @@ export default function FazendasPage() {
   const [areaSelecionadaId, setAreaSelecionadaId] = useState<number | null>(null)
 
   // ── Setores ───────────────────────────────────────────────────────────────
-  const setorHook = useSetores(areaSelecionadaId ?? undefined)
+  const setorHook = useSetores()
   const [setorEditandoId, setSetorEditandoId] = useState<number | undefined>(undefined)
   const [modoSetor, setModoSetor] = useState<ModoSetor>('oculto')
   const [sNome, setSNome] = useState('')
@@ -143,7 +143,6 @@ export default function FazendasPage() {
   }
 
   function iniciarEditarSetor(setor: Setor | SetorHierarquia) {
-    if (setor.area_id) setAreaSelecionadaId(setor.area_id)
     setSNome(setor.nome)
     setSNumero(String(setor.numero))
     setSHect(setor.hect != null ? String(setor.hect) : '')
@@ -159,7 +158,6 @@ export default function FazendasPage() {
         nome: sNome,
         hect: sHect ? Number(sHect) : null,
         descricao: sDescricao || null,
-        area_id: areaSelecionadaId,
       },
       setorEditandoId,
     )
