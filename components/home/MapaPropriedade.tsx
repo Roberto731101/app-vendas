@@ -12,8 +12,8 @@ const COR_STATUS: Record<StatusSaude, string> = {
   critico:   '#ef4444',
 }
 
-const DEFAULT_CENTER = { lat: -15.77972, lng: -47.92972 }
-const DEFAULT_ZOOM   = 13
+const DEFAULT_CENTER = { lat: -16.659231, lng: -41.856125 }
+const DEFAULT_ZOOM   = 15
 
 // ──────────────────────────────────────────────────────
 // Polygon layer para uma área

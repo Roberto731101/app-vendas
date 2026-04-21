@@ -12,8 +12,8 @@ const COR_STATUS: Record<StatusSaude, string> = {
 }
 
 // Coordenadas padrão — centro do Brasil (fallback)
-const DEFAULT_CENTER = { lat: -15.77972, lng: -47.92972 }
-const DEFAULT_ZOOM   = 14
+const DEFAULT_CENTER = { lat: -16.659231, lng: -41.856125 }
+const DEFAULT_ZOOM   = 15
 
 type InfoAreaSelecionada = {
   area: AreaGeo

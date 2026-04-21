@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { APIProvider, Map, useMap, useMapsLibrary } from '@vis.gl/react-google-maps'
 import type { PontoGeo } from '@/hooks/useGestaoAreas'
 
-const DEFAULT_CENTER = { lat: -15.77972, lng: -47.92972 }
+const DEFAULT_CENTER = { lat: -16.659231, lng: -41.856125 }
 
 type DrawingManagerProps = {
   onPoligonoFinalizado: (pontos: PontoGeo[]) => void

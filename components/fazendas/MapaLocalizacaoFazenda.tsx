@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react'
 import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps'
 
-const DEFAULT_CENTER = { lat: -15.77972, lng: -47.92972 }
-const DEFAULT_ZOOM   = 10
+const DEFAULT_CENTER = { lat: -16.659231, lng: -41.856125 }
+const DEFAULT_ZOOM   = 15
 
 type Props = {
   lat: number | null
