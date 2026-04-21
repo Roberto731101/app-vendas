@@ -8,6 +8,7 @@ import { useSetores } from '@/hooks/useSetores'
 import { FazendaForm } from '@/components/fazendas/FazendaForm'
 import { AreaForm } from '@/components/fazendas/AreaForm'
 import { HierarquiaView } from '@/components/fazendas/HierarquiaView'
+import { MapaLocalizacaoFazenda } from '@/components/fazendas/MapaLocalizacaoFazenda'
 import { NAV_SIDEBAR } from '@/lib/nav'
 import type { FazendaComHierarquia, AreaHierarquia, SetorHierarquia } from '@/hooks/useFazendas'
 import type { Area } from '@/hooks/useAreas'
@@ -22,6 +23,7 @@ const NAV_HEADER = [
 type ModoFazenda = 'selecionar' | 'nova' | 'editar'
 type ModoArea = 'oculto' | 'selecionar' | 'nova' | 'editar'
 type ModoSetor = 'oculto' | 'novo' | 'editar'
+type AbaFazenda = 'dados' | 'mapa'
 
 export default function FazendasPage() {
   // ── Fazendas ──────────────────────────────────────────────────────────────
@@ -32,6 +34,9 @@ export default function FazendasPage() {
   const [modoFazenda, setModoFazenda] = useState<ModoFazenda>('selecionar')
   const [fNome, setFNome] = useState('')
   const [fDescricao, setFDescricao] = useState('')
+  const [fLat, setFLat] = useState<number | null>(null)
+  const [fLng, setFLng] = useState<number | null>(null)
+  const [abaFazenda, setAbaFazenda] = useState<AbaFazenda>('dados')
 
   // ── Áreas ─────────────────────────────────────────────────────────────────
   const areaHook = useAreas(fazendaSelecionadaId ?? undefined)
@@ -61,28 +66,35 @@ export default function FazendasPage() {
 
   // ── Handlers Fazenda ──────────────────────────────────────────────────────
   function iniciarNovaFazenda() {
-    setFNome(''); setFDescricao('')
+    setFNome(''); setFDescricao(''); setFLat(null); setFLng(null)
     setFazendaEditandoId(undefined)
     setModoFazenda('nova')
     setModoArea('oculto')
     setModoSetor('oculto')
     setFazendaSelecionadaId(null)
+    setAbaFazenda('dados')
   }
 
   function iniciarEditarFazenda(fazenda: FazendaComHierarquia) {
     setFNome(fazenda.nome); setFDescricao(fazenda.descricao ?? '')
+    const faz = fazenda as FazendaComHierarquia & { lat?: number | null; lng?: number | null }
+    setFLat(faz.lat ?? null); setFLng(faz.lng ?? null)
     setFazendaEditandoId(fazenda.id)
     setModoFazenda('editar')
+    setAbaFazenda('dados')
   }
 
   async function salvarFazenda() {
-    const ok = await fazHook.salvar({ nome: fNome, descricao: fDescricao || null }, fazendaEditandoId)
+    const ok = await fazHook.salvar(
+      { nome: fNome, descricao: fDescricao || null, lat: fLat, lng: fLng },
+      fazendaEditandoId,
+    )
     if (ok) { setModoFazenda('selecionar'); setFazendaEditandoId(undefined) }
   }
 
   function cancelarFazenda() {
     setModoFazenda('selecionar'); setFazendaEditandoId(undefined)
-    setFNome(''); setFDescricao('')
+    setFNome(''); setFDescricao(''); setFLat(null); setFLng(null)
   }
 
   function selecionarFazenda(id: number) {
@@ -165,7 +177,7 @@ export default function FazendasPage() {
   }
 
   function cancelarSetor() {
-    setModoSetor(areaSelecionadaId ? 'oculto' : 'oculto')
+    setModoSetor('oculto')
     setSetorEditandoId(undefined)
     setSNome(''); setSNumero(''); setSHect(''); setSDescricao('')
   }
@@ -179,7 +191,7 @@ export default function FazendasPage() {
         <nav className="mb-2 flex items-center gap-2 text-xs text-slate-500">
           <span>Cadastros</span>
           <span>{'>'}</span>
-          <span className="font-semibold text-[#063f81]">Fazendas</span>
+          <span className="font-semibold text-[#0891b2]">Fazendas</span>
         </nav>
         <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Fazendas</h1>
       </div>
@@ -190,10 +202,10 @@ export default function FazendasPage() {
           {/* Seção 1 — Fazenda */}
           <div className="rounded-2xl bg-white p-6 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">1. Fazenda</h3>
+              <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">1. Fazenda</h3>
               <button
                 onClick={iniciarNovaFazenda}
-                className="rounded-lg bg-[#063f81]/10 px-3 py-1.5 text-xs font-bold text-[#063f81] hover:bg-[#063f81]/20"
+                className="rounded-lg bg-[#0891b2]/10 px-3 py-1.5 text-xs font-bold text-[#0891b2] hover:bg-[#0891b2]/20"
               >
                 + Nova
               </button>
@@ -223,15 +235,63 @@ export default function FazendasPage() {
             )}
 
             {(modoFazenda === 'nova' || modoFazenda === 'editar') && (
-              <FazendaForm
-                nome={fNome} descricao={fDescricao}
-                setNome={setFNome} setDescricao={setFDescricao}
-                salvando={fazHook.salvando}
-                erro={null} mensagem={null}
-                onSalvar={salvarFazenda}
-                onCancelar={cancelarFazenda}
-                editando={modoFazenda === 'editar'}
-              />
+              <div className="space-y-4">
+                {/* Abas Dados / Mapa */}
+                <div className="flex border-b border-slate-200">
+                  {(['dados', 'mapa'] as AbaFazenda[]).map((aba) => (
+                    <button
+                      key={aba}
+                      type="button"
+                      onClick={() => setAbaFazenda(aba)}
+                      className={`px-4 py-2 text-sm font-semibold capitalize transition-colors border-b-2 -mb-px ${
+                        abaFazenda === aba
+                          ? 'border-[#0891b2] text-[#0891b2]'
+                          : 'border-transparent text-slate-400 hover:text-slate-600'
+                      }`}
+                    >
+                      {aba === 'dados' ? 'Dados' : 'Mapa'}
+                    </button>
+                  ))}
+                </div>
+
+                {abaFazenda === 'dados' && (
+                  <FazendaForm
+                    nome={fNome} descricao={fDescricao}
+                    setNome={setFNome} setDescricao={setFDescricao}
+                    salvando={fazHook.salvando}
+                    erro={null} mensagem={null}
+                    onSalvar={salvarFazenda}
+                    onCancelar={cancelarFazenda}
+                    editando={modoFazenda === 'editar'}
+                  />
+                )}
+
+                {abaFazenda === 'mapa' && (
+                  <div className="space-y-4">
+                    <MapaLocalizacaoFazenda
+                      lat={fLat}
+                      lng={fLng}
+                      onChange={(lat, lng) => { setFLat(lat); setFLng(lng) }}
+                    />
+                    <div className="flex gap-3">
+                      <button
+                        onClick={salvarFazenda}
+                        disabled={fazHook.salvando}
+                        className="rounded-xl bg-[#0891b2] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490] disabled:opacity-50"
+                      >
+                        {fazHook.salvando ? 'Salvando...' : modoFazenda === 'editar' ? 'Atualizar' : 'Cadastrar'}
+                      </button>
+                      <button
+                        onClick={cancelarFazenda}
+                        disabled={fazHook.salvando}
+                        className="rounded-xl bg-slate-200 px-6 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-300 disabled:opacity-50"
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
           </div>
 
@@ -239,7 +299,7 @@ export default function FazendasPage() {
           {fazendaSelecionadaId && modoArea !== 'oculto' && (
             <div className="rounded-2xl bg-white p-6 shadow-sm space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
                   2. Área
                   {fazendaSelecionada && (
                     <span className="ml-2 font-normal text-slate-500 normal-case">de {fazendaSelecionada.nome}</span>
@@ -247,7 +307,7 @@ export default function FazendasPage() {
                 </h3>
                 <button
                   onClick={() => iniciarNovaArea()}
-                  className="rounded-lg bg-[#063f81]/10 px-3 py-1.5 text-xs font-bold text-[#063f81] hover:bg-[#063f81]/20"
+                  className="rounded-lg bg-[#0891b2]/10 px-3 py-1.5 text-xs font-bold text-[#0891b2] hover:bg-[#0891b2]/20"
                 >
                   + Nova
                 </button>
@@ -260,7 +320,7 @@ export default function FazendasPage() {
                 <div className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">{areaHook.mensagem}</div>
               )}
 
-              {(modoArea === 'selecionar') && (
+              {modoArea === 'selecionar' && (
                 <div className="space-y-1.5">
                   <label className="ml-1 text-xs font-bold text-slate-500">Selecionar área existente</label>
                   <select
@@ -294,7 +354,7 @@ export default function FazendasPage() {
           {/* Seção 3 — Setor (aparece após selecionar área) */}
           {areaSelecionadaId && modoSetor !== 'oculto' && (
             <div className="rounded-2xl bg-white p-6 shadow-sm space-y-4">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
                 3. Setor
                 {areaSelecionada && (
                   <span className="ml-2 font-normal text-slate-500 normal-case">de {areaSelecionada.nome}</span>
@@ -358,7 +418,7 @@ export default function FazendasPage() {
                 <button
                   onClick={salvarSetor}
                   disabled={setorHook.salvando}
-                  className="rounded-xl bg-[#063f81] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#052e60] disabled:opacity-50"
+                  className="rounded-xl bg-[#0891b2] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490] disabled:opacity-50"
                 >
                   {setorHook.salvando ? 'Salvando...' : modoSetor === 'editar' ? 'Atualizar' : 'Cadastrar'}
                 </button>
@@ -377,7 +437,7 @@ export default function FazendasPage() {
         {/* ── COLUNA DIREITA: Hierarquia visual ── */}
         <div className="space-y-4">
           <div className="rounded-2xl bg-white px-6 py-4 shadow-sm flex items-center justify-between">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">Estrutura</h3>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">Estrutura</h3>
             <button
               onClick={recarregarHierarquia}
               className="text-xs text-slate-400 hover:text-slate-600"

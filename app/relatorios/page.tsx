@@ -109,7 +109,7 @@ export default function RelatoriosPage() {
           <div ref={menuRef} className="relative">
             <button
               onClick={() => setMenuAberto((v) => !v)}
-              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#063f81] to-[#2b579a] px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition active:scale-95"
+              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#0891b2] to-[#0e7490] px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition active:scale-95"
             >
               Exportar
               <svg
@@ -128,7 +128,7 @@ export default function RelatoriosPage() {
                 </p>
                 <button
                   onClick={handleExportarPDF}
-                  className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm font-semibold text-[#063f81] hover:bg-slate-50"
+                  className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm font-semibold text-[#0891b2] hover:bg-slate-50"
                 >
                   <span>🖨️</span> Imprimir / Salvar PDF
                 </button>
@@ -174,7 +174,7 @@ export default function RelatoriosPage() {
             <select
               value={filtros.loteId}
               onChange={(e) => setLoteId(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#0891b2] focus:bg-white focus:ring-2 focus:ring-[#0891b2]/10"
             >
               <option value="">Todos os colheita-campo</option>
               {opcoesLote.map((o) => (
@@ -191,7 +191,7 @@ export default function RelatoriosPage() {
             <select
               value={filtros.setorId}
               onChange={(e) => setSetorId(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#0891b2] focus:bg-white focus:ring-2 focus:ring-[#0891b2]/10"
             >
               <option value="">Todos os setores</option>
               {opcoesSetor.map((o) => (
@@ -208,7 +208,7 @@ export default function RelatoriosPage() {
               type="date"
               value={filtros.dataInicio}
               onChange={(e) => setDataInicio(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#0891b2] focus:bg-white focus:ring-2 focus:ring-[#0891b2]/10"
             />
           </div>
 
@@ -220,7 +220,7 @@ export default function RelatoriosPage() {
               type="date"
               value={filtros.dataFim}
               onChange={(e) => setDataFim(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#0891b2] focus:bg-white focus:ring-2 focus:ring-[#0891b2]/10"
             />
           </div>
         </div>

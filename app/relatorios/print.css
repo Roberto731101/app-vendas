@@ -67,7 +67,7 @@
     font-weight: 700 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.08em !important;
-    color: #063f81 !important;
+    color: #0891b2 !important;
   }
 
   .relatorio-header-titulo {
@@ -91,7 +91,7 @@
   .relatorio-bloco h3 {
     font-size: 8pt !important;
     font-weight: 700 !important;
-    color: #063f81 !important;
+    color: #0891b2 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.08em !important;
     margin-bottom: 4px !important;
@@ -151,7 +151,7 @@
   tbody td.col-peso-corrigido,
   tbody td.col-prod-hectare {
     font-weight: 600 !important;
-    color: #063f81 !important;
+    color: #0891b2 !important;
   }
 
   /* Rodapé de totais */

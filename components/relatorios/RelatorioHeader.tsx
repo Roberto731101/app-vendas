@@ -27,7 +27,7 @@ export function RelatorioHeader({ filtros, opcoesLote, opcoesSetor }: Props) {
 
   return (
     <div className="mb-6 pb-4">
-      <p className="relatorio-header-empresa text-xs font-bold uppercase tracking-widest text-[#063f81]">
+      <p className="relatorio-header-empresa text-xs font-bold uppercase tracking-widest text-[#0891b2]">
         NOLASCO PRODUÇÃO
       </p>
       <h1 className="relatorio-header-titulo mt-0.5 text-2xl font-extrabold text-slate-900">

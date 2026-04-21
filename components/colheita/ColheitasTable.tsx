@@ -16,7 +16,7 @@ export function ColheitasTable({ colheitas, carregando }: Props) {
   return (
     <section className="overflow-hidden rounded-2xl bg-white shadow-sm">
       <div className="border-b border-slate-200 p-6">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
           Colheita-registros do Colheita-campo
         </h3>
       </div>

@@ -77,7 +77,7 @@ export function ColheitasHistoricoTable({ colheitas, filtrosAtivos }: Props) {
                 {item.lote_id !== null ? (
                   <Link
                     href={`/colheita/${item.lote_id}`}
-                    className="rounded-lg bg-[#063f81]/10 px-3 py-1.5 text-xs font-bold text-[#063f81] hover:bg-[#063f81]/20"
+                    className="rounded-lg bg-[#0891b2]/10 px-3 py-1.5 text-xs font-bold text-[#0891b2] hover:bg-[#0891b2]/20"
                   >
                     Abrir
                   </Link>

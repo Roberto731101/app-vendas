@@ -69,7 +69,7 @@ export function ItensVendaTable({ itens }: Props) {
   return (
     <section className="overflow-hidden rounded-2xl bg-white shadow-sm">
       <div className="border-b border-slate-200 p-6">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
           Itens da Venda
         </h3>
       </div>
@@ -125,7 +125,7 @@ export function ItensVendaTable({ itens }: Props) {
                 <td className="px-6 py-4 text-right text-sm font-medium">
                   {numero(grupo.peso_total)} Kg
                 </td>
-                <td className="px-6 py-4 text-right text-sm font-bold text-[#063f81]">
+                <td className="px-6 py-4 text-right text-sm font-bold text-[#0891b2]">
                   {moeda(grupo.valor_total)}
                 </td>
               </tr>

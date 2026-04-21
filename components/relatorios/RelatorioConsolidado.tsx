@@ -19,7 +19,7 @@ export function RelatorioConsolidado({ linhas, carregando }: Props) {
     <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
       <div className="flex items-center justify-between border-b border-slate-200 p-6">
         <div>
-          <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
             Consolidado por Lote
           </h3>
           <p className="mt-0.5 text-xs text-slate-400">

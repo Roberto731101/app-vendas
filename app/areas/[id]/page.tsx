@@ -171,7 +171,7 @@ export default function AreaDetalhePage() {
                 <button
                   type="button"
                   onClick={() => setMostrarCotaForm((v) => !v)}
-                  className="rounded-xl bg-[#063f81] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#052e60]"
+                  className="rounded-xl bg-[#0891b2] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#0e7490]"
                 >
                   {mostrarCotaForm ? 'Cancelar' : '+ Definir Cota'}
                 </button>

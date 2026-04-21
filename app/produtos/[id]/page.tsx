@@ -51,12 +51,12 @@ export default function ProdutoFormPage() {
         <nav className="mb-2 flex items-center gap-2 text-xs text-slate-500">
           <span
             onClick={() => router.push('/produtos')}
-            className="cursor-pointer hover:text-[#063f81]"
+            className="cursor-pointer hover:text-[#0891b2]"
           >
             Produtos
           </span>
           <span>{'>'}</span>
-          <span className="font-semibold text-[#063f81]">
+          <span className="font-semibold text-[#0891b2]">
             {isNovo ? 'Novo Produto' : 'Editar Produto'}
           </span>
         </nav>

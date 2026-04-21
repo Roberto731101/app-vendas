@@ -26,9 +26,9 @@ function DrawingManagerLayer({ onPoligonoFinalizado }: DrawingManagerProps) {
         drawingModes: [drawingLib.OverlayType.POLYGON],
       },
       polygonOptions: {
-        fillColor:   '#063f81',
+        fillColor:   '#0891b2',
         fillOpacity: 0.35,
-        strokeColor: '#063f81',
+        strokeColor: '#0891b2',
         strokeWeight: 2,
         editable:    true,
       },
@@ -69,7 +69,10 @@ type Props = {
 }
 
 export function EditorPoligono({ centroInicial, poligonoAtual, onSalvar, altura = '400px' }: Props) {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ''
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[EditorPoligono] API Key:', apiKey ? `${apiKey.slice(0, 8)}...` : 'NÃO ENCONTRADA')
+  }
   const [rascunho, setRascunho]     = useState<PontoGeo[] | null>(null)
   const [salvando, setSalvando]     = useState(false)
   const [mensagem, setMensagem]     = useState<string | null>(null)
@@ -96,7 +99,7 @@ export function EditorPoligono({ centroInicial, poligonoAtual, onSalvar, altura 
 
   return (
     <div className="space-y-3">
-      <APIProvider apiKey={apiKey} libraries={['drawing']}>
+      <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''} libraries={['drawing']}>
         <div style={{ height: altura }} className="overflow-hidden rounded-2xl">
           <Map
             defaultCenter={centro}
@@ -114,7 +117,7 @@ export function EditorPoligono({ centroInicial, poligonoAtual, onSalvar, altura 
           type="button"
           onClick={handleSalvar}
           disabled={!rascunho || rascunho.length < 3 || salvando}
-          className="rounded-xl bg-[#063f81] px-5 py-2 text-sm font-semibold text-white hover:bg-[#052e60] disabled:opacity-40"
+          className="rounded-xl bg-[#0891b2] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0e7490] disabled:opacity-40"
         >
           {salvando ? 'Salvando...' : 'Salvar Polígono'}
         </button>

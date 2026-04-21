@@ -20,7 +20,7 @@ function SetorNode({ setor, onEditarSetor, onExcluirSetor }: SetorNodeProps) {
       <div className="flex gap-2">
         <button
           onClick={() => onEditarSetor(setor)}
-          className="rounded-lg bg-[#063f81]/10 px-2.5 py-1 text-xs font-bold text-[#063f81] hover:bg-[#063f81]/20"
+          className="rounded-lg bg-[#0891b2]/10 px-2.5 py-1 text-xs font-bold text-[#0891b2] hover:bg-[#0891b2]/20"
         >
           Editar
         </button>
@@ -64,7 +64,7 @@ function AreaNode({ area, onEditarArea, onExcluirArea, onEditarSetor, onExcluirS
           </button>
           <button
             onClick={() => onEditarArea(area)}
-            className="rounded-lg bg-[#063f81]/10 px-2.5 py-1 text-xs font-bold text-[#063f81] hover:bg-[#063f81]/20"
+            className="rounded-lg bg-[#0891b2]/10 px-2.5 py-1 text-xs font-bold text-[#0891b2] hover:bg-[#0891b2]/20"
           >
             Editar
           </button>
@@ -145,7 +145,7 @@ export function HierarquiaView({
               </button>
               <button
                 onClick={() => onEditarFazenda(fazenda)}
-                className="rounded-lg bg-[#063f81]/10 px-2.5 py-1 text-xs font-bold text-[#063f81] hover:bg-[#063f81]/20"
+                className="rounded-lg bg-[#0891b2]/10 px-2.5 py-1 text-xs font-bold text-[#0891b2] hover:bg-[#0891b2]/20"
               >
                 Editar
               </button>

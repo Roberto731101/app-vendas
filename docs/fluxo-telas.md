@@ -1,9 +1,32 @@
 # Fluxo de Telas
 
-## Tela inicial
-- Resumo geral
-- Atalhos para nova venda
-- Lista de vendas recentes
+## Tela inicial / (atualizada em 2026-04-20)
+
+Layout principal com mapa da propriedade:
+
+### Header da tela
+- Título: "Visão Geral da Propriedade"
+- Subtítulo: nome da fazenda principal
+- Cards de resumo rápido: Total de Fazendas | Total de Áreas | Safra Ativa (ResumoRapido.tsx)
+
+### Mapa central (MapaPropriedade.tsx)
+- Google Maps modo satélite, altura calc(100vh - 240px)
+- Marcadores AdvancedMarker para cada fazenda com lat/lng
+- Polígonos coloridos por status_saude das áreas
+- InfoWindow de fazenda: nome, total de áreas, link /areas
+- InfoWindow de área: nome, fazenda, hectares, status, link /areas/[id]
+
+### Painel lateral (PainelStatusAreas.tsx)
+- Card branco w-72, lista de áreas com ponto colorido + nome + status
+- Clicar numa área centraliza o mapa nela
+- Botão "Gestão de Áreas" → /areas
+
+### Legenda (LegendaMapa.tsx)
+- Canto inferior esquerdo do mapa, card translúcido
+- Verde = excelente | Amarelo = estável | Vermelho = crítico | Cinza = sem dados
+
+### Componentes em /components/home/
+- MapaPropriedade.tsx, PainelStatusAreas.tsx, ResumoRapido.tsx, LegendaMapa.tsx
 
 ## Tela de vendas
 - Listagem de vendas

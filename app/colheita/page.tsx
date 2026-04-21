@@ -62,7 +62,7 @@ export default function ColheitaPage() {
           <nav className="mb-2 flex items-center gap-2 text-xs text-slate-500">
             <span>Colheita-registro</span>
             <span>{'>'}</span>
-            <span className="font-semibold text-[#063f81]">Histórico</span>
+            <span className="font-semibold text-[#0891b2]">Histórico</span>
           </nav>
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
             Histórico de Colheita-registros
@@ -72,7 +72,7 @@ export default function ColheitaPage() {
         <div className="flex flex-wrap gap-3">
           <Link
             href="/colheita/nova"
-            className="rounded-xl bg-[#063f81] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#052e60]"
+            className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490]"
           >
             Nova Colheita-registro
           </Link>
@@ -112,7 +112,7 @@ export default function ColheitaPage() {
               value={buscaInput}
               onChange={(e) => atualizarBusca(e.target.value)}
               placeholder="Buscar por observação..."
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none transition focus:border-[#0891b2] focus:bg-white focus:ring-2 focus:ring-[#0891b2]/10"
             />
           </div>
 
@@ -124,7 +124,7 @@ export default function ColheitaPage() {
             <select
               value={filtros.setorId}
               onChange={(e) => atualizarSetorId(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#0891b2] focus:bg-white focus:ring-2 focus:ring-[#0891b2]/10"
             >
               <option value="">Todos os setores</option>
               {setores.map((s) => (
@@ -143,7 +143,7 @@ export default function ColheitaPage() {
             <select
               value={filtros.loteId}
               onChange={(e) => atualizarLoteId(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#0891b2] focus:bg-white focus:ring-2 focus:ring-[#0891b2]/10"
             >
               <option value="">Todos os colheita-campo</option>
               {lotes.map((l) => (
@@ -163,7 +163,7 @@ export default function ColheitaPage() {
               type="date"
               value={filtros.dataInicio}
               onChange={(e) => atualizarDataInicio(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#0891b2] focus:bg-white focus:ring-2 focus:ring-[#0891b2]/10"
             />
           </div>
 
@@ -176,7 +176,7 @@ export default function ColheitaPage() {
               type="date"
               value={filtros.dataFim}
               onChange={(e) => atualizarDataFim(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#0891b2] focus:bg-white focus:ring-2 focus:ring-[#0891b2]/10"
             />
           </div>
         </div>
@@ -185,7 +185,7 @@ export default function ColheitaPage() {
       {/* Tabela */}
       <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-200 p-6">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
             Colheita-registros Registradas
           </h3>
           {!carregando && (

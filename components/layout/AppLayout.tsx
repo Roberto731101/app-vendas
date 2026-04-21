@@ -19,13 +19,13 @@ export function AppLayout({ headerNavItems, children }: Props) {
   const [sidebarAberto, setSidebarAberto] = useState(false)
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] text-slate-900">
+    <div className="min-h-screen bg-[#f0f4f4] text-slate-900">
       <Sidebar isOpen={sidebarAberto} onClose={() => setSidebarAberto(false)} />
       <AppHeader
         navItems={headerNavItems}
         onMenuToggle={() => setSidebarAberto((v) => !v)}
       />
-      <main className="min-h-screen bg-[#f8f9fa] p-4 pt-6 lg:ml-64 lg:p-10">
+      <main className="min-h-screen bg-[#f0f4f4] p-4 pt-6 lg:ml-64 lg:p-10">
         <div className="mx-auto max-w-7xl">
           {children}
         </div>

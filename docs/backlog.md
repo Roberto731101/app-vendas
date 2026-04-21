@@ -1,6 +1,16 @@
 # Backlog do Projeto
 
 ## Concluído
+- ✅ Novo tema visual + Tela inicial com mapa (2026-04-20)
+  - Tema substituído: #063f81 → #0891b2 (ciano azulado) em todo o sistema
+  - Sidebar: fundo #1a2e2e, texto #4dd0e1, ativo bg-white/10 text-white
+  - Header: fundo branco, borda #e2e8f0
+  - Fundo geral: #f0f4f4
+  - app/page.tsx recriado como Visão Geral da Propriedade (mapa + painel)
+  - components/home/: MapaPropriedade, PainelStatusAreas, ResumoRapido, LegendaMapa
+  - app/fazendas/page.tsx: abas "Dados" e "Mapa" no formulário de fazenda
+  - components/fazendas/MapaLocalizacaoFazenda.tsx: clique para salvar lat/lng
+  - hooks/useFazendas.ts: tipo Fazenda e FazendaInsert incluem lat/lng
 - ✅ Gestão de Áreas com Google Maps + Cotas por Safra (2026-04-20)
   - hooks/useSafras.ts, useCotasArea.ts, useGestaoAreas.ts criados
   - components/maps/MapaAreas.tsx (polígonos por status, InfoWindow, legenda)

@@ -27,13 +27,13 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f8f9fa] px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[#f0f4f4] px-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-md">
 
         {/* Cabeçalho */}
         <div className="mb-6 flex flex-col items-center gap-2 text-center">
           <img src="/logo.png" alt="Logo" className="h-14 w-auto" />
-          <h1 className="text-xl font-black uppercase tracking-tight text-[#063f81]">
+          <h1 className="text-xl font-black uppercase tracking-tight text-[#0891b2]">
             NOLASCO PRODUÇÃO
           </h1>
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
@@ -53,7 +53,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="seu@email.com"
-              className="w-full rounded-xl border-none bg-slate-100 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#063f81]/30"
+              className="w-full rounded-xl border-none bg-slate-100 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#0891b2]/30"
             />
           </div>
 
@@ -66,7 +66,7 @@ export default function LoginPage() {
                 value={senha}
                 onChange={(e) => setSenha(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-xl border-none bg-slate-100 px-4 py-3 pr-12 text-sm outline-none focus:ring-2 focus:ring-[#063f81]/30"
+                className="w-full rounded-xl border-none bg-slate-100 px-4 py-3 pr-12 text-sm outline-none focus:ring-2 focus:ring-[#0891b2]/30"
               />
               <button
                 type="button"
@@ -97,7 +97,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={carregando}
-            className="w-full rounded-xl bg-[#063f81] py-3 text-sm font-bold text-white hover:bg-[#052e60] disabled:opacity-50"
+            className="w-full rounded-xl bg-[#0891b2] py-3 text-sm font-bold text-white hover:bg-[#0e7490] disabled:opacity-50"
           >
             {carregando ? 'Entrando...' : 'Entrar'}
           </button>

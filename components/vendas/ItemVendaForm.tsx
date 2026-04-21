@@ -70,10 +70,10 @@ export function ItemVendaForm({
   return (
     <section className="space-y-6 rounded-2xl bg-white p-6 shadow-sm">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
           Adicionar Itens
         </h3>
-        <span className="rounded-full bg-blue-100 px-2 py-1 text-[10px] font-bold uppercase text-[#2b579a]">
+        <span className="rounded-full bg-blue-100 px-2 py-1 text-[10px] font-bold uppercase text-[#0e7490]">
           Entrada Rápida
         </span>
       </div>
@@ -186,7 +186,7 @@ export function ItemVendaForm({
           <button
             onClick={onAdicionarItem}
             disabled={!vendaSalva || salvandoItem}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#2b579a]/20 bg-[#063f81]/5 py-2.5 text-sm font-bold text-[#063f81] transition hover:bg-[#063f81]/10 disabled:opacity-50"
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#0e7490]/20 bg-[#0891b2]/5 py-2.5 text-sm font-bold text-[#0891b2] transition hover:bg-[#0891b2]/10 disabled:opacity-50"
           >
             {salvandoItem
               ? itemEditandoId !== null ? 'Salvando...' : 'Adicionando...'

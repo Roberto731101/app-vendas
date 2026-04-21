@@ -38,13 +38,13 @@ export function RankingVendas({ titulo, itens }: Props) {
                 </p>
                 <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
                   <div
-                    className="h-full rounded-full bg-[#063f81]"
+                    className="h-full rounded-full bg-[#0891b2]"
                     style={{ width: max > 0 ? `${(item.valor / max) * 100}%` : '0%' }}
                   />
                 </div>
               </div>
 
-              <span className="shrink-0 text-sm font-bold text-[#063f81]">
+              <span className="shrink-0 text-sm font-bold text-[#0891b2]">
                 {moeda(item.valor)}
               </span>
             </li>

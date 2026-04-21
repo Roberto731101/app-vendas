@@ -67,8 +67,12 @@ type Props = {
 }
 
 export function MapaAreas({ areas, altura = '420px' }: Props) {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ''
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''
   const [selecionada, setSelecionada] = useState<InfoAreaSelecionada | null>(null)
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[MapaAreas] API Key:', apiKey ? `${apiKey.slice(0, 8)}...` : 'NÃO ENCONTRADA')
+  }
 
   const centroPrincipal = (() => {
     const comCoordenada = areas.find((a) => a.fazenda_lat && a.fazenda_lng)
@@ -78,16 +82,8 @@ export function MapaAreas({ areas, altura = '420px' }: Props) {
     return DEFAULT_CENTER
   })()
 
-  if (!apiKey) {
-    return (
-      <div style={{ height: altura }} className="flex items-center justify-center rounded-2xl bg-slate-100 text-sm text-slate-500">
-        Configure NEXT_PUBLIC_GOOGLE_MAPS_API_KEY para exibir o mapa.
-      </div>
-    )
-  }
-
   return (
-    <APIProvider apiKey={apiKey}>
+    <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}>
       <div style={{ height: altura }} className="overflow-hidden rounded-2xl">
         <Map
           defaultCenter={centroPrincipal}
@@ -121,7 +117,7 @@ export function MapaAreas({ areas, altura = '420px' }: Props) {
                 <div className="pt-1">
                   <a
                     href={`/areas/${selecionada.area.id}`}
-                    className="text-xs font-semibold text-[#063f81] underline"
+                    className="text-xs font-semibold text-[#0891b2] underline"
                   >
                     Ver Detalhes →
                   </a>

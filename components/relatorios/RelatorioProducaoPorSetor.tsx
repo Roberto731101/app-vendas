@@ -17,7 +17,7 @@ export function RelatorioProducaoPorSetor({ linhas, carregando }: Props) {
   return (
     <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
       <div className="flex items-center justify-between border-b border-slate-200 p-6">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
           Produção por Setor
         </h3>
         {!carregando && (
@@ -62,7 +62,7 @@ export function RelatorioProducaoPorSetor({ linhas, carregando }: Props) {
                   <td className="px-4 py-3 text-right text-sm text-slate-600">{l.totalCachos.toLocaleString('pt-BR')}</td>
                   <td className="px-4 py-3 text-right text-sm text-slate-600">{fmt(l.hect, 2)}</td>
                   <td className="col-peso-corrigido px-4 py-3 text-right text-sm font-semibold text-slate-900">{fmt(l.pesoCorrigido)}</td>
-                  <td className="col-prod-hectare px-4 py-3 text-right text-sm font-bold text-[#063f81]">{fmt(l.prodHectare)}</td>
+                  <td className="col-prod-hectare px-4 py-3 text-right text-sm font-bold text-[#0891b2]">{fmt(l.prodHectare)}</td>
                 </tr>
               ))}
               {linhas.length === 0 && (

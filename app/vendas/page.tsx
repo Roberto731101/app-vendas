@@ -53,7 +53,7 @@ export default function VendasPage() {
           <nav className="mb-2 flex items-center gap-2 text-xs text-slate-500">
             <span>Vendas</span>
             <span>{'>'}</span>
-            <span className="font-semibold text-[#063f81]">Histórico</span>
+            <span className="font-semibold text-[#0891b2]">Histórico</span>
           </nav>
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
             Histórico de Vendas
@@ -69,7 +69,7 @@ export default function VendasPage() {
           </button>
           <Link
             href="/"
-            className="rounded-xl bg-gradient-to-r from-[#063f81] to-[#2b579a] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition hover:opacity-90"
+            className="rounded-xl bg-gradient-to-r from-[#0891b2] to-[#0e7490] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition hover:opacity-90"
           >
             + Nova Venda
           </Link>
@@ -103,7 +103,7 @@ export default function VendasPage() {
               value={clienteInput}
               onChange={(e) => atualizarCliente(e.target.value)}
               placeholder="Buscar por cliente..."
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none transition focus:border-[#0891b2] focus:bg-white focus:ring-2 focus:ring-[#0891b2]/10"
             />
           </div>
 
@@ -119,7 +119,7 @@ export default function VendasPage() {
                   onClick={() => atualizarStatus(op.valor)}
                   className={`flex-1 rounded-lg py-1.5 text-xs font-semibold transition ${
                     filtros.status === op.valor
-                      ? 'bg-white text-[#063f81] shadow-sm'
+                      ? 'bg-white text-[#0891b2] shadow-sm'
                       : 'text-slate-500 hover:text-slate-700'
                   }`}
                 >
@@ -138,7 +138,7 @@ export default function VendasPage() {
               type="date"
               value={filtros.dataInicio}
               onChange={(e) => atualizarDataInicio(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#0891b2] focus:bg-white focus:ring-2 focus:ring-[#0891b2]/10"
             />
           </div>
 
@@ -151,7 +151,7 @@ export default function VendasPage() {
               type="date"
               value={filtros.dataFim}
               onChange={(e) => atualizarDataFim(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#063f81] focus:bg-white focus:ring-2 focus:ring-[#063f81]/10"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[#0891b2] focus:bg-white focus:ring-2 focus:ring-[#0891b2]/10"
             />
           </div>
         </div>
@@ -160,7 +160,7 @@ export default function VendasPage() {
       {/* Tabela */}
       <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-200 p-6">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
             Vendas Registradas
           </h3>
           {!carregando && (
@@ -234,7 +234,7 @@ export default function VendasPage() {
                     <td className="px-6 py-4 text-center">
                       <Link
                         href={`/vendas/${venda.id}`}
-                        className="rounded-lg bg-[#063f81]/10 px-3 py-1.5 text-xs font-bold text-[#063f81] hover:bg-[#063f81]/20"
+                        className="rounded-lg bg-[#0891b2]/10 px-3 py-1.5 text-xs font-bold text-[#0891b2] hover:bg-[#0891b2]/20"
                       >
                         Abrir
                       </Link>

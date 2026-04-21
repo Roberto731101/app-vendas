@@ -22,7 +22,7 @@ export function TipoCaixaForm({
 }: Props) {
   return (
     <section className="space-y-6 rounded-2xl bg-white p-6 shadow-sm">
-      <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+      <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
         {editando ? 'Editar Tipo de Caixa' : 'Novo Tipo de Caixa'}
       </h3>
 
@@ -67,7 +67,7 @@ export function TipoCaixaForm({
           type="button"
           onClick={() => setAtivo(!ativo)}
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-            ativo ? 'bg-[#063f81]' : 'bg-slate-300'
+            ativo ? 'bg-[#0891b2]' : 'bg-slate-300'
           }`}
         >
           <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
@@ -88,7 +88,7 @@ export function TipoCaixaForm({
         <button
           onClick={onSalvar}
           disabled={salvando}
-          className="rounded-xl bg-[#063f81] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#052e60] disabled:opacity-50"
+          className="rounded-xl bg-[#0891b2] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490] disabled:opacity-50"
         >
           {salvando ? 'Salvando...' : editando ? 'Atualizar' : 'Cadastrar'}
         </button>

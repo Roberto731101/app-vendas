@@ -112,12 +112,12 @@ export default function VendaDetalhe() {
             <span>{'>'}</span>
             <a
               onClick={() => router.push('/vendas')}
-              className="cursor-pointer hover:text-[#063f81]"
+              className="cursor-pointer hover:text-[#0891b2]"
             >
               Histórico
             </a>
             <span>{'>'}</span>
-            <span className="font-semibold text-[#063f81]">
+            <span className="font-semibold text-[#0891b2]">
               Venda #{vendaId}
             </span>
           </nav>

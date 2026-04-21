@@ -30,10 +30,10 @@ export function ColheitaItemForm({
   return (
     <section className="space-y-6 rounded-2xl bg-white p-6 shadow-sm">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
           Adicionar Colheita-registro
         </h3>
-        <span className="rounded-full bg-blue-100 px-2 py-1 text-[10px] font-bold uppercase text-[#2b579a]">
+        <span className="rounded-full bg-blue-100 px-2 py-1 text-[10px] font-bold uppercase text-[#0e7490]">
           Entrada Rápida
         </span>
       </div>
@@ -101,7 +101,7 @@ export function ColheitaItemForm({
         <button
           onClick={onAdicionarColheita}
           disabled={salvando}
-          className="rounded-xl bg-gradient-to-r from-[#063f81] to-[#2b579a] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition active:scale-95 disabled:opacity-70"
+          className="rounded-xl bg-gradient-to-r from-[#0891b2] to-[#0e7490] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition active:scale-95 disabled:opacity-70"
         >
           {salvando ? 'Salvando...' : 'Salvar Colheita-registro'}
         </button>

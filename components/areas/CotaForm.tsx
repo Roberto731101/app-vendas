@@ -109,7 +109,7 @@ export function CotaForm({ areaId, safraId, insumos, salvando, erro, onSalvar, o
         <button
           type="submit"
           disabled={salvando}
-          className="rounded-xl bg-[#063f81] px-5 py-2 text-sm font-semibold text-white hover:bg-[#052e60] disabled:opacity-50"
+          className="rounded-xl bg-[#0891b2] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0e7490] disabled:opacity-50"
         >
           {salvando ? 'Salvando...' : 'Salvar Cota'}
         </button>

@@ -54,7 +54,7 @@ export function ResumoPorLote({ resumos, carregando, erro }: Props) {
   return (
     <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
       <div className="flex items-center justify-between border-b border-slate-200 p-6">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
           Resumo por Colheita-campo
         </h3>
         {!carregando && resumos.length > 0 && (
@@ -120,7 +120,7 @@ export function ResumoPorLote({ resumos, carregando, erro }: Props) {
                           {item.codigo}
                         </span>
                         {isUltimo && (
-                          <span className="rounded-full bg-[#063f81] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
+                          <span className="rounded-full bg-[#0891b2] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
                             Recente
                           </span>
                         )}
@@ -146,7 +146,7 @@ export function ResumoPorLote({ resumos, carregando, erro }: Props) {
                     <td className="px-6 py-4 text-center">
                       <Link
                         href={`/colheita/${item.lote_id}`}
-                        className="rounded-lg bg-[#063f81]/10 px-3 py-1.5 text-xs font-bold text-[#063f81] hover:bg-[#063f81]/20"
+                        className="rounded-lg bg-[#0891b2]/10 px-3 py-1.5 text-xs font-bold text-[#0891b2] hover:bg-[#0891b2]/20"
                       >
                         Abrir
                       </Link>

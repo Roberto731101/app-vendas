@@ -47,7 +47,7 @@ export function VendaInfoForm({
   return (
     <section className="space-y-6 rounded-2xl bg-white p-6 shadow-sm">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
           Informações Gerais
         </h3>
         {vendaFinalizada && (

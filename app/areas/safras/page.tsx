@@ -60,7 +60,7 @@ export default function SafrasPage() {
         <button
           type="button"
           onClick={iniciarNova}
-          className="rounded-xl bg-[#063f81] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#052e60]"
+          className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490]"
         >
           + Nova Safra
         </button>
@@ -127,7 +127,7 @@ export default function SafrasPage() {
             <button
               type="submit"
               disabled={salvando}
-              className="rounded-xl bg-[#063f81] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#052e60] disabled:opacity-50"
+              className="rounded-xl bg-[#0891b2] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490] disabled:opacity-50"
             >
               {salvando ? 'Salvando...' : editandoId ? 'Atualizar' : 'Cadastrar'}
             </button>
@@ -182,7 +182,7 @@ export default function SafrasPage() {
                           nome: s.nome, data_inicio: s.data_inicio,
                           data_fim: s.data_fim, ativo: s.ativo,
                         })}
-                        className="text-xs font-semibold text-[#063f81] hover:underline"
+                        className="text-xs font-semibold text-[#0891b2] hover:underline"
                       >
                         Editar
                       </button>

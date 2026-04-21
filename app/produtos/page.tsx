@@ -22,13 +22,13 @@ export default function ProdutosPage() {
           <nav className="mb-2 flex items-center gap-2 text-xs text-slate-500">
             <span>Cadastros</span>
             <span>{'>'}</span>
-            <span className="font-semibold text-[#063f81]">Produtos</span>
+            <span className="font-semibold text-[#0891b2]">Produtos</span>
           </nav>
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Produtos</h1>
         </div>
         <Link
           href="/produtos/novo"
-          className="rounded-xl bg-[#063f81] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#052e60]"
+          className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490]"
         >
           + Novo Produto
         </Link>
@@ -36,7 +36,7 @@ export default function ProdutosPage() {
 
       <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-200 p-6">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
             Produtos Cadastrados
           </h3>
           {!carregando && (

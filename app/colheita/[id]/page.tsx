@@ -69,12 +69,12 @@ export default function ColheitaDetalhePage() {
             <span>{'>'}</span>
             <a
               onClick={() => router.push('/colheita')}
-              className="cursor-pointer hover:text-[#063f81]"
+              className="cursor-pointer hover:text-[#0891b2]"
             >
               Histórico
             </a>
             <span>{'>'}</span>
-            <span className="font-semibold text-[#063f81]">
+            <span className="font-semibold text-[#0891b2]">
               {loteSelecionado ? `Colheita-campo ${loteSelecionado.codigo}` : 'Controle de Colheita-registro'}
             </span>
           </nav>

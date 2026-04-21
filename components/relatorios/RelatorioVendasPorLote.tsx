@@ -26,7 +26,7 @@ export function RelatorioVendasPorLote({ linhas, carregando }: Props) {
   return (
     <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
       <div className="flex items-center justify-between border-b border-slate-200 p-6">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
           Vendas por Lote
         </h3>
         {!carregando && (

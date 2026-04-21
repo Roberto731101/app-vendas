@@ -28,7 +28,7 @@ export function FazendasTable({ registros, onExcluir }: Props) {
                 <div className="flex items-center justify-center gap-2">
                   <Link
                     href={`/fazendas/${item.id}`}
-                    className="rounded-lg bg-[#063f81]/10 px-3 py-1.5 text-xs font-bold text-[#063f81] hover:bg-[#063f81]/20"
+                    className="rounded-lg bg-[#0891b2]/10 px-3 py-1.5 text-xs font-bold text-[#0891b2] hover:bg-[#0891b2]/20"
                   >
                     Editar
                   </Link>

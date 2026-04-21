@@ -36,7 +36,7 @@ function TooltipCustom({ active, payload, label }: {
       <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
         {label}
       </p>
-      <p className="text-sm font-black text-[#063f81]">
+      <p className="text-sm font-black text-[#0891b2]">
         {moeda(payload[0].value)}
       </p>
     </div>
@@ -57,8 +57,8 @@ export function GraficoVendas({ dados }: Props) {
       <AreaChart data={dados} margin={{ top: 8, right: 16, left: 8, bottom: 0 }}>
         <defs>
           <linearGradient id="gradienteVendas" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%"  stopColor="#063f81" stopOpacity={0.15} />
-            <stop offset="95%" stopColor="#063f81" stopOpacity={0} />
+            <stop offset="5%"  stopColor="#0891b2" stopOpacity={0.15} />
+            <stop offset="95%" stopColor="#0891b2" stopOpacity={0} />
           </linearGradient>
         </defs>
 
@@ -79,16 +79,16 @@ export function GraficoVendas({ dados }: Props) {
           width={48}
         />
 
-        <Tooltip content={<TooltipCustom />} cursor={{ stroke: '#063f81', strokeWidth: 1, strokeDasharray: '4 4' }} />
+        <Tooltip content={<TooltipCustom />} cursor={{ stroke: '#0891b2', strokeWidth: 1, strokeDasharray: '4 4' }} />
 
         <Area
           type="monotone"
           dataKey="valor"
-          stroke="#063f81"
+          stroke="#0891b2"
           strokeWidth={2}
           fill="url(#gradienteVendas)"
           dot={false}
-          activeDot={{ r: 5, fill: '#063f81', stroke: '#fff', strokeWidth: 2 }}
+          activeDot={{ r: 5, fill: '#0891b2', stroke: '#fff', strokeWidth: 2 }}
         />
       </AreaChart>
     </ResponsiveContainer>

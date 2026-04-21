@@ -15,7 +15,7 @@ type Props = {
 function Chevron({ open }: { open: boolean }) {
   return (
     <svg
-      className={`h-3 w-3 shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+      className={`h-3 w-3 shrink-0 transition-transform duration-200 text-[#4dd0e1] ${open ? 'rotate-180' : ''}`}
       fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
     >
       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -46,7 +46,6 @@ export function Sidebar({ isOpen, onClose }: Props) {
     })
   }
 
-  // Estado único para todos os níveis de acordeon (seção, grupo, sub-grupo)
   const [abertos, setAbertos] = useState<Record<string, boolean>>(() => {
     const init: Record<string, boolean> = {}
     for (const section of NAV_SIDEBAR) {
@@ -88,7 +87,7 @@ export function Sidebar({ isOpen, onClose }: Props) {
       )}
 
       <aside
-        className={`fixed left-0 top-0 z-50 flex h-screen w-64 flex-col border-r border-slate-200 bg-[#F8F9FA] transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed left-0 top-0 z-50 flex h-screen w-64 flex-col bg-[#1a2e2e] transition-transform duration-300 lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -97,7 +96,7 @@ export function Sidebar({ isOpen, onClose }: Props) {
           type="button"
           onClick={onClose}
           aria-label="Fechar menu"
-          className="absolute right-4 top-4 rounded-lg p-1.5 text-slate-400 hover:bg-slate-200 hover:text-slate-600 lg:hidden"
+          className="absolute right-4 top-4 rounded-lg p-1.5 text-[#4dd0e1] hover:bg-white/10 lg:hidden"
         >
           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -105,13 +104,13 @@ export function Sidebar({ isOpen, onClose }: Props) {
         </button>
 
         {/* Logo */}
-        <div className="flex items-center gap-3 border-b border-slate-200 px-5 py-5">
+        <Link href="/" onClick={onClose} className="flex items-center gap-3 border-b border-white/10 px-5 py-5 hover:bg-white/5 transition-colors">
           <img src="/logo.png" alt="Logo" className="h-10 w-auto" />
           <div>
-            <h1 className="text-lg font-bold text-[#063f81]">Gestão de Frutas</h1>
-            <p className="text-[10px] font-bold uppercase text-slate-500">Painel Administrativo</p>
+            <h1 className="text-lg font-bold text-white">Gestão de Frutas</h1>
+            <p className="text-[10px] font-bold uppercase text-[#4dd0e1]">Painel Administrativo</p>
           </div>
-        </div>
+        </Link>
 
         {/* Navegação */}
         <nav className="flex flex-1 flex-col overflow-y-auto py-3">
@@ -122,15 +121,15 @@ export function Sidebar({ isOpen, onClose }: Props) {
             return (
               <div key={section.section} className="mb-0.5">
 
-                {/* ── Nível 1: Seção (acordeon principal) ───────────────── */}
+                {/* Nível 1: Seção */}
                 <button
                   type="button"
                   onClick={() => toggle(section.section)}
                   className={`flex w-full items-center justify-between px-4 pb-1 pt-3 text-left transition-colors ${
-                    secAtiva ? 'text-[#063f81]' : 'text-slate-400 hover:text-slate-500'
+                    secAtiva ? 'text-white' : 'text-[#4dd0e1]/70 hover:text-[#4dd0e1]'
                   }`}
                 >
-                  <span className="text-[10px] font-black uppercase tracking-widest">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#4dd0e1]">
                     {section.section}
                   </span>
                   <Chevron open={secAberta} />
@@ -140,7 +139,6 @@ export function Sidebar({ isOpen, onClose }: Props) {
                   <div className="flex flex-col gap-0.5 px-2 pb-1">
                     {section.entries.map((entry) => {
 
-                      // ── Link direto na seção (sem grupo) ──────────────
                       if (!isGroup(entry)) {
                         return (
                           <Link
@@ -149,8 +147,8 @@ export function Sidebar({ isOpen, onClose }: Props) {
                             onClick={onClose}
                             className={`rounded-lg px-3 py-2 text-sm transition-colors ${
                               isAtivo(entry.href)
-                                ? 'bg-white font-semibold text-[#063f81] shadow-sm'
-                                : 'text-slate-600 hover:bg-slate-200'
+                                ? 'bg-white/10 font-semibold text-white'
+                                : 'text-[#4dd0e1] hover:bg-white/5'
                             }`}
                           >
                             {entry.label}
@@ -158,7 +156,6 @@ export function Sidebar({ isOpen, onClose }: Props) {
                         )
                       }
 
-                      // ── Nível 2: Grupo (sub-acordeon) ─────────────────
                       const grupoAberto = abertos[entry.group] ?? false
                       const grupoAtivo  = grupoTemAtivo(entry)
 
@@ -169,8 +166,8 @@ export function Sidebar({ isOpen, onClose }: Props) {
                             onClick={() => toggle(entry.group)}
                             className={`flex w-full items-center justify-between rounded-lg pl-2 pr-3 py-2 text-left text-sm transition-colors ${
                               grupoAtivo
-                                ? 'font-semibold text-[#063f81]'
-                                : 'text-slate-600 hover:bg-slate-200'
+                                ? 'font-semibold text-white'
+                                : 'text-[#4dd0e1] hover:bg-white/5'
                             }`}
                           >
                             <span>{entry.group}</span>
@@ -178,10 +175,9 @@ export function Sidebar({ isOpen, onClose }: Props) {
                           </button>
 
                           {grupoAberto && (
-                            <div className="ml-2 mt-0.5 flex flex-col gap-0.5 border-l-2 border-slate-200 pl-3">
+                            <div className="ml-2 mt-0.5 flex flex-col gap-0.5 border-l-2 border-white/10 pl-3">
                               {entry.items.map((item) => {
 
-                                // ── Nível 3: Sub-grupo (acordeon folha) ──
                                 if (isSubGroup(item)) {
                                   const subAberto = abertos[item.subgroup] ?? false
                                   const subAtivo  = item.items.some((i) => isAtivo(i.href))
@@ -193,8 +189,8 @@ export function Sidebar({ isOpen, onClose }: Props) {
                                         onClick={() => toggle(item.subgroup)}
                                         className={`flex w-full items-center justify-between rounded-lg px-3 py-1.5 text-left text-sm transition-colors ${
                                           subAtivo
-                                            ? 'font-semibold text-[#063f81]'
-                                            : 'text-slate-600 hover:bg-slate-200'
+                                            ? 'font-semibold text-white'
+                                            : 'text-[#4dd0e1] hover:bg-white/5'
                                         }`}
                                       >
                                         <span>{item.subgroup}</span>
@@ -202,7 +198,7 @@ export function Sidebar({ isOpen, onClose }: Props) {
                                       </button>
 
                                       {subAberto && (
-                                        <div className="ml-2 mt-0.5 flex flex-col gap-0.5 border-l-2 border-slate-200 pl-3">
+                                        <div className="ml-2 mt-0.5 flex flex-col gap-0.5 border-l-2 border-white/10 pl-3">
                                           {item.items.map((i) => (
                                             <Link
                                               key={i.href}
@@ -210,8 +206,8 @@ export function Sidebar({ isOpen, onClose }: Props) {
                                               onClick={onClose}
                                               className={`block rounded-lg px-3 py-1.5 text-sm transition-colors ${
                                                 isAtivo(i.href)
-                                                  ? 'bg-white font-semibold text-[#063f81] shadow-sm'
-                                                  : 'text-slate-600 hover:bg-slate-200'
+                                                  ? 'bg-white/10 font-semibold text-white'
+                                                  : 'text-[#4dd0e1] hover:bg-white/5'
                                               }`}
                                             >
                                               {i.label}
@@ -223,7 +219,6 @@ export function Sidebar({ isOpen, onClose }: Props) {
                                   )
                                 }
 
-                                // ── Item simples ─────────────────────────
                                 return (
                                   <Link
                                     key={item.href}
@@ -231,8 +226,8 @@ export function Sidebar({ isOpen, onClose }: Props) {
                                     onClick={onClose}
                                     className={`rounded-lg px-3 py-1.5 text-sm transition-colors ${
                                       isAtivo(item.href)
-                                        ? 'bg-white font-semibold text-[#063f81] shadow-sm'
-                                        : 'text-slate-600 hover:bg-slate-200'
+                                        ? 'bg-white/10 font-semibold text-white'
+                                        : 'text-[#4dd0e1] hover:bg-white/5'
                                     }`}
                                   >
                                     {item.label}
@@ -251,17 +246,18 @@ export function Sidebar({ isOpen, onClose }: Props) {
           })}
         </nav>
 
-        <div className="border-t border-slate-200 p-4">
-          <div className="flex items-center gap-3 rounded-xl bg-slate-100 px-3 py-2.5">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#063f81] text-sm font-bold text-white">
+        {/* Rodapé do usuário */}
+        <div className="border-t border-white/10 p-4">
+          <div className="flex items-center gap-3 rounded-xl px-3 py-2.5">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0891b2] text-sm font-bold text-white">
               {user?.nome?.charAt(0).toUpperCase() ?? '?'}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-slate-800 leading-tight">
+              <p className="truncate text-sm font-semibold text-white leading-tight">
                 {user?.nome ?? '—'}
               </p>
               {user?.cargo && (
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-[#4dd0e1]">
                   {user.cargo}
                 </p>
               )}
@@ -270,7 +266,7 @@ export function Sidebar({ isOpen, onClose }: Props) {
           <button
             type="button"
             onClick={handleLogout}
-            className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg py-2 text-xs font-semibold text-red-500 hover:bg-red-50"
+            className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg py-2 text-xs font-semibold text-[#4dd0e1] hover:text-white hover:bg-white/5"
           >
             <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

@@ -7,12 +7,16 @@ export type Fazenda = {
   id: number
   nome: string
   descricao: string | null
+  lat: number | null
+  lng: number | null
   created_at: string
 }
 
 export type FazendaInsert = {
   nome: string
   descricao: string | null
+  lat?: number | null
+  lng?: number | null
 }
 
 export type SetorHierarquia = {

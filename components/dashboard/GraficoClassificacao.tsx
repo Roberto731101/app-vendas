@@ -19,7 +19,7 @@ type Props = {
   dados: ItemClassificacao[]
 }
 
-const CORES = ['#063f81', '#0891b2', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899']
+const CORES = ['#0891b2', '#0891b2', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899']
 
 function moeda(valor: number) {
   return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -36,7 +36,7 @@ function TooltipCustom({ active, payload }: {
       <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
         {item.classificacao}
       </p>
-      <p className="text-sm font-black text-[#063f81]">{moeda(item.valor)}</p>
+      <p className="text-sm font-black text-[#0891b2]">{moeda(item.valor)}</p>
       <p className="text-xs text-slate-500">
         {item.peso.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} kg
       </p>

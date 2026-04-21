@@ -35,7 +35,7 @@ export default function AreasPage() {
         </div>
         <a
           href="/areas/safras"
-          className="self-start rounded-xl bg-[#063f81] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#052e60] sm:self-auto"
+          className="self-start rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490] sm:self-auto"
         >
           Gerenciar Safras
         </a>

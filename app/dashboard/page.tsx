@@ -41,13 +41,13 @@ function Card({ titulo, valor, descricao, destaque }: CardProps) {
   return (
     <div
       className={`rounded-2xl p-6 shadow-sm ${
-        destaque ? 'border-t-4 border-[#063f81] bg-white' : 'bg-white'
+        destaque ? 'border-t-4 border-[#0891b2] bg-white' : 'bg-white'
       }`}
     >
       <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
         {titulo}
       </p>
-      <p className={`text-3xl font-black tracking-tight ${destaque ? 'text-[#063f81]' : 'text-slate-900'}`}>
+      <p className={`text-3xl font-black tracking-tight ${destaque ? 'text-[#0891b2]' : 'text-slate-900'}`}>
         {valor}
       </p>
       {descricao && <p className="mt-1 text-xs text-slate-400">{descricao}</p>}
@@ -95,7 +95,7 @@ export default function DashboardPage() {
       <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <nav className="mb-2 flex items-center gap-2 text-xs text-slate-500">
-            <span className="font-semibold text-[#063f81]">Dashboard</span>
+            <span className="font-semibold text-[#0891b2]">Dashboard</span>
           </nav>
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
             Dashboard
@@ -110,7 +110,7 @@ export default function DashboardPage() {
                 onClick={() => selecionarPeriodo(p.valor)}
                 className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition ${
                   periodo === p.valor
-                    ? 'bg-white text-[#063f81] shadow-sm'
+                    ? 'bg-white text-[#0891b2] shadow-sm'
                     : 'text-slate-500 hover:text-slate-700'
                 }`}
               >
@@ -125,19 +125,19 @@ export default function DashboardPage() {
                 type="date"
                 value={localInicio}
                 onChange={(e) => setLocalInicio(e.target.value)}
-                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#063f81]"
+                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0891b2]"
               />
               <span className="text-xs text-slate-400">até</span>
               <input
                 type="date"
                 value={localFim}
                 onChange={(e) => setLocalFim(e.target.value)}
-                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#063f81]"
+                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0891b2]"
               />
               <button
                 onClick={() => aplicarPersonalizado(localInicio, localFim)}
                 disabled={!localInicio || !localFim}
-                className="rounded-lg bg-[#063f81] px-4 py-1.5 text-xs font-semibold text-white disabled:opacity-40 hover:bg-[#052e60]"
+                className="rounded-lg bg-[#0891b2] px-4 py-1.5 text-xs font-semibold text-white disabled:opacity-40 hover:bg-[#0e7490]"
               >
                 Aplicar
               </button>

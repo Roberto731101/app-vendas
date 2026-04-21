@@ -51,12 +51,12 @@ export default function ClassificacaoFormPage() {
         <nav className="mb-2 flex items-center gap-2 text-xs text-slate-500">
           <span
             onClick={() => router.push('/classificacoes')}
-            className="cursor-pointer hover:text-[#063f81]"
+            className="cursor-pointer hover:text-[#0891b2]"
           >
             Classificações
           </span>
           <span>{'>'}</span>
-          <span className="font-semibold text-[#063f81]">
+          <span className="font-semibold text-[#0891b2]">
             {isNovo ? 'Nova Classificação' : 'Editar Classificação'}
           </span>
         </nav>

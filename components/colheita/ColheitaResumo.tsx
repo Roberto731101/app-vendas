@@ -22,9 +22,9 @@ function numero(valor: number) {
 export function ColheitaResumo({ resumo, loteSelecionado, loteId }: Props) {
   return (
     <aside className="space-y-6 lg:col-span-4">
-      <div className="sticky top-24 rounded-2xl border-t-4 border-[#063f81] bg-white p-8 shadow-sm">
+      <div className="sticky top-24 rounded-2xl border-t-4 border-[#0891b2] bg-white p-8 shadow-sm">
         <h3 className="mb-6 flex items-center gap-2 text-lg font-extrabold text-slate-900">
-          <span className="text-[#063f81]">🌾</span>
+          <span className="text-[#0891b2]">🌾</span>
           Resumo da Colheita-registro
         </h3>
 
@@ -34,7 +34,7 @@ export function ColheitaResumo({ resumo, loteSelecionado, loteId }: Props) {
               <p className="mb-1 text-[10px] font-bold uppercase text-slate-500">
                 Setores
               </p>
-              <p className="text-xl font-black text-[#063f81]">
+              <p className="text-xl font-black text-[#0891b2]">
                 {resumo.totalLinhas.toString().padStart(2, '0')}
               </p>
             </div>
@@ -43,7 +43,7 @@ export function ColheitaResumo({ resumo, loteSelecionado, loteId }: Props) {
               <p className="mb-1 text-[10px] font-bold uppercase text-slate-500">
                 Total Cachos
               </p>
-              <p className="text-xl font-black text-[#063f81]">
+              <p className="text-xl font-black text-[#0891b2]">
                 {resumo.totalCachos}
               </p>
             </div>
@@ -52,7 +52,7 @@ export function ColheitaResumo({ resumo, loteSelecionado, loteId }: Props) {
               <p className="mb-1 text-[10px] font-bold uppercase text-slate-500">
                 Média da Amostra
               </p>
-              <p className="text-xl font-black text-[#063f81]">
+              <p className="text-xl font-black text-[#0891b2]">
                 {numero(resumo.mediaAmostra)}
               </p>
             </div>
@@ -83,11 +83,11 @@ export function ColheitaResumo({ resumo, loteSelecionado, loteId }: Props) {
           </div>
 
           <div className="border-t-2 border-dashed border-slate-200 pt-6">
-            <p className="mb-1 text-[10px] font-black uppercase tracking-[0.2em] text-[#063f81]">
+            <p className="mb-1 text-[10px] font-black uppercase tracking-[0.2em] text-[#0891b2]">
               Situação
             </p>
             <div className="flex items-baseline gap-2">
-              <span className="text-lg font-bold text-[#2b579a]">
+              <span className="text-lg font-bold text-[#0e7490]">
                 {loteId ? 'Colheita-campo Selecionado' : 'Sem Colheita-campo'}
               </span>
             </div>

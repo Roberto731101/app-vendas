@@ -22,7 +22,7 @@ export function SetorForm({
 }: Props) {
   return (
     <section className="space-y-6 rounded-2xl bg-white p-6 shadow-sm">
-      <h3 className="text-sm font-bold uppercase tracking-wider text-[#063f81]">
+      <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
         {editando ? 'Editar Setor' : 'Novo Setor'}
       </h3>
 
@@ -87,7 +87,7 @@ export function SetorForm({
         <button
           onClick={onSalvar}
           disabled={salvando}
-          className="rounded-xl bg-[#063f81] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#052e60] disabled:opacity-50"
+          className="rounded-xl bg-[#0891b2] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490] disabled:opacity-50"
         >
           {salvando ? 'Salvando...' : editando ? 'Atualizar' : 'Cadastrar'}
         </button>
