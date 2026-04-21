@@ -26,6 +26,29 @@ type FormCargo = {
 
 const FORM_VAZIO: FormCargo = { departamento_id: '', nome: '', descricao: '', ativo: true }
 
+// ─── Normalização do retorno do Supabase ─────────────────────────────────────
+// PostgREST pode retornar joins como array ou objeto único.
+// Normalizamos sempre para objeto único antes de salvar no estado.
+
+type RawJoin<T> = T | T[] | null
+
+function primeiroOuNull<T>(v: RawJoin<T>): T | null {
+  if (!v) return null
+  return Array.isArray(v) ? (v[0] ?? null) : v
+}
+
+function normalizarCargo(raw: Record<string, unknown>): Cargo {
+  return {
+    id:              raw.id as number,
+    departamento_id: raw.departamento_id as number | null,
+    nome:            raw.nome as string,
+    descricao:       raw.descricao as string | null,
+    ativo:           raw.ativo as boolean,
+    created_at:      raw.created_at as string,
+    departamentos:   primeiroOuNull(raw.departamentos as RawJoin<{ nome: string }>),
+  }
+}
+
 // ─── Regra de integridade (módulo) ───────────────────────────────────────────
 // Centralizada fora dos componentes para ser usada pelo modal E pelo toggle.
 
@@ -265,7 +288,7 @@ export default function CargosPage() {
       .select('id, departamento_id, nome, descricao, ativo, created_at, departamentos:departamento_id(nome)')
       .order('nome')
     if (error) setErro('Erro ao carregar cargos.')
-    else { setLista((data ?? []) as Cargo[]); setErro(null) }
+    else { setLista((data ?? []).map(d => normalizarCargo(d as Record<string, unknown>))); setErro(null) }
   }, [])
 
   useEffect(() => {

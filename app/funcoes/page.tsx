@@ -30,6 +30,42 @@ type FormFuncao = {
 
 const FORM_VAZIO: FormFuncao = { cargo_id: '', nome: '', descricao: '', ativo: true }
 
+// ─── Normalização do retorno do Supabase ─────────────────────────────────────
+// PostgREST pode retornar joins como array ou objeto único.
+// Normalizamos sempre para objeto único antes de salvar no estado.
+
+type RawJoin<T> = T | T[] | null
+
+function primeiroOuNull<T>(v: RawJoin<T>): T | null {
+  if (!v) return null
+  return Array.isArray(v) ? (v[0] ?? null) : v
+}
+
+type RawCargoJoin = { id: number; nome: string; departamentos: RawJoin<{ nome: string }> }
+
+function normalizarCargoSimples(raw: Record<string, unknown>): CargoSimples {
+  return {
+    id:            raw.id as number,
+    nome:          raw.nome as string,
+    departamentos: primeiroOuNull(raw.departamentos as RawJoin<{ nome: string }>),
+  }
+}
+
+function normalizarFuncao(raw: Record<string, unknown>): Funcao {
+  const cargoRaw = primeiroOuNull(raw.cargos as RawJoin<RawCargoJoin>)
+  return {
+    id:         raw.id as number,
+    cargo_id:   raw.cargo_id as number | null,
+    nome:       raw.nome as string,
+    descricao:  raw.descricao as string | null,
+    ativo:      raw.ativo as boolean,
+    created_at: raw.created_at as string,
+    cargos:     cargoRaw
+      ? { id: cargoRaw.id, nome: cargoRaw.nome, departamentos: primeiroOuNull(cargoRaw.departamentos) }
+      : null,
+  }
+}
+
 // ─── Regra de integridade (módulo) ───────────────────────────────────────────
 
 type ResultadoVerificacao =
@@ -246,7 +282,7 @@ export default function FuncoesPage() {
       .select('id, cargo_id, nome, descricao, ativo, created_at, cargos:cargo_id(id, nome, departamentos:departamento_id(nome))')
       .order('nome')
     if (error) setErro('Erro ao carregar funções.')
-    else { setLista((data ?? []) as Funcao[]); setErro(null) }
+    else { setLista((data ?? []).map(d => normalizarFuncao(d as Record<string, unknown>))); setErro(null) }
   }, [])
 
   useEffect(() => {
@@ -260,7 +296,7 @@ export default function FuncoesPage() {
           .eq('ativo', true)
           .order('nome'),
       ])
-      setCargos((resCargos.data ?? []) as CargoSimples[])
+      setCargos((resCargos.data ?? []).map(d => normalizarCargoSimples(d as Record<string, unknown>)))
       setCarregando(false)
     }
     inicializar()
