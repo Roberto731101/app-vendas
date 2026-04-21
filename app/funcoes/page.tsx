@@ -269,7 +269,7 @@ function FuncaoModal({ item, cargos, onClose, onSalvo }: ModalProps) {
 // ─── Página ───────────────────────────────────────────────────────────────────
 
 export default function FuncoesPage() {
-  const { carregando: authCarregando, podeAcessar } = useAuthContext()
+  const { carregando: authCarregando, podeAcessar, podeCriar, podeEditar } = useAuthContext()
   const [lista,       setLista]       = useState<Funcao[]>([])
   const [cargos,      setCargos]      = useState<CargoSimples[]>([])
   const [carregando,  setCarregando]  = useState(true)
@@ -362,10 +362,12 @@ export default function FuncoesPage() {
           <h1 className="text-2xl font-black text-[#0891b2]">Funções</h1>
           <p className="text-sm text-slate-500">Estrutura organizacional — nível 3</p>
         </div>
-        <button
-          onClick={abrirNovo}
-          className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#0e7490]"
-        >+ Nova função</button>
+        {podeCriar(MODULOS.funcoes) && (
+          <button
+            onClick={abrirNovo}
+            className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#0e7490]"
+          >+ Nova função</button>
+        )}
       </div>
 
       {carregando && <p className="text-sm text-slate-400">Carregando...</p>}
@@ -420,10 +422,12 @@ export default function FuncoesPage() {
                     </button>
                   </td>
                   <td className="px-5 py-3 text-right">
-                    <button
-                      onClick={() => abrirEditar(funcao)}
-                      className="rounded-lg px-3 py-1.5 text-xs font-semibold text-[#0891b2] hover:bg-[#0891b2]/10"
-                    >Editar</button>
+                    {podeEditar(MODULOS.funcoes) && (
+                      <button
+                        onClick={() => abrirEditar(funcao)}
+                        className="rounded-lg px-3 py-1.5 text-xs font-semibold text-[#0891b2] hover:bg-[#0891b2]/10"
+                      >Editar</button>
+                    )}
                   </td>
                 </tr>
               ))}

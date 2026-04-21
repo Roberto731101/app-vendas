@@ -5,17 +5,22 @@ import { supabase } from '@/lib/supabase'
 import type { Session } from '@supabase/supabase-js'
 import type { Usuario } from '@/lib/auth'
 import { USUARIO_SELECT, mapUsuario } from '@/lib/auth'
-import { carregarPermissoes, checarPermissao } from '@/lib/permissoes'
+import {
+  carregarPermissoes,
+  checarPermissao,
+  checarPermissaoCriar,
+  checarPermissaoEditar,
+  checarPermissaoExcluir,
+} from '@/lib/permissoes'
 import type { Permissoes } from '@/lib/permissoes'
 
 export function useAuth() {
-  const [user,        setUser]        = useState<Usuario | null>(null)
-  const [session,     setSession]     = useState<Session | null>(null)
-  const [permissoes,  setPermissoes]  = useState<Permissoes | null>(null)
-  const [carregando,  setCarregando]  = useState(true)
+  const [user, setUser] = useState<Usuario | null>(null)
+  const [session, setSession] = useState<Session | null>(null)
+  const [permissoes, setPermissoes] = useState<Permissoes | null>(null)
+  const [carregando, setCarregando] = useState(true)
 
   async function carregarPerfil(authUserId: string) {
-    // 1. Busca perfil com JOIN de departamento/cargo/funcao
     const { data } = await supabase
       .from('usuarios')
       .select(USUARIO_SELECT)
@@ -24,14 +29,12 @@ export function useAuth() {
 
     const usuario = data ? mapUsuario(data as Record<string, unknown>) : null
 
-    // 2. Carrega permissões antes de sinalizar carregamento concluído
-    //    → garante que podeAcessar() já funciona quando carregando = false
     if (usuario?.funcao_id) {
       const perms = await carregarPermissoes(usuario.funcao_id)
       setPermissoes(perms)
     } else {
       // Usuário sem função → sem permissões explícitas
-      setPermissoes(new Set())
+      setPermissoes({})
     }
 
     setUser(usuario)
@@ -40,17 +43,28 @@ export function useAuth() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
-      if (session) carregarPerfil(session.user.id)
-      else setCarregando(false)
-    })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
       if (session) {
         carregarPerfil(session.user.id)
       } else {
         setUser(null)
-        setPermissoes(null)
+        setPermissoes({})
+        setCarregando(false)
+      }
+    })
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+
+      if (session) {
+        setCarregando(true)
+        carregarPerfil(session.user.id)
+      } else {
+        setUser(null)
+        setSession(null)
+        setPermissoes({})
         setCarregando(false)
       }
     })
@@ -58,7 +72,6 @@ export function useAuth() {
     return () => subscription.unsubscribe()
   }, [])
 
-  // Sinaliza carregamento concluído somente após user E permissoes estarem prontos
   useEffect(() => {
     if ((user !== null || session === null) && permissoes !== null) {
       setCarregando(false)
@@ -69,14 +82,38 @@ export function useAuth() {
     await supabase.auth.signOut()
     setUser(null)
     setSession(null)
-    setPermissoes(null)
+    setPermissoes({})
   }
 
-  // Função estável — só recriada quando permissoes muda
   const podeAcessar = useCallback(
     (modulo: string) => checarPermissao(permissoes, modulo),
     [permissoes]
   )
 
-  return { user, session, carregando, logout, permissoes, podeAcessar }
+  const podeCriar = useCallback(
+    (modulo: string) => checarPermissaoCriar(permissoes, modulo),
+    [permissoes]
+  )
+
+  const podeEditar = useCallback(
+    (modulo: string) => checarPermissaoEditar(permissoes, modulo),
+    [permissoes]
+  )
+
+  const podeExcluir = useCallback(
+    (modulo: string) => checarPermissaoExcluir(permissoes, modulo),
+    [permissoes]
+  )
+
+  return {
+    user,
+    session,
+    carregando,
+    logout,
+    permissoes,
+    podeAcessar,
+    podeCriar,
+    podeEditar,
+    podeExcluir,
+  }
 }

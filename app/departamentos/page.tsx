@@ -192,7 +192,7 @@ function DepModal({ item, onClose, onSalvo }: ModalProps) {
 // ─── Página ───────────────────────────────────────────────────────────────────
 
 export default function DepartamentosPage() {
-  const { carregando: authCarregando, podeAcessar } = useAuthContext()
+  const { carregando: authCarregando, podeAcessar, podeCriar, podeEditar } = useAuthContext()
   const [lista,       setLista]       = useState<Departamento[]>([])
   const [carregando,  setCarregando]  = useState(true)
   const [erro,        setErro]        = useState<string | null>(null)
@@ -270,10 +270,12 @@ export default function DepartamentosPage() {
           <h1 className="text-2xl font-black text-[#0891b2]">Departamentos</h1>
           <p className="text-sm text-slate-500">Estrutura organizacional — nível 1</p>
         </div>
-        <button
-          onClick={abrirNovo}
-          className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#0e7490]"
-        >+ Novo departamento</button>
+        {podeCriar(MODULOS.departamentos) && (
+          <button
+            onClick={abrirNovo}
+            className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#0e7490]"
+          >+ Novo departamento</button>
+        )}
       </div>
 
       {carregando && <p className="text-sm text-slate-400">Carregando...</p>}
@@ -324,10 +326,12 @@ export default function DepartamentosPage() {
                     </button>
                   </td>
                   <td className="px-5 py-3 text-right">
-                    <button
-                      onClick={() => abrirEditar(dep)}
-                      className="rounded-lg px-3 py-1.5 text-xs font-semibold text-[#0891b2] hover:bg-[#0891b2]/10"
-                    >Editar</button>
+                    {podeEditar(MODULOS.departamentos) && (
+                      <button
+                        onClick={() => abrirEditar(dep)}
+                        className="rounded-lg px-3 py-1.5 text-xs font-semibold text-[#0891b2] hover:bg-[#0891b2]/10"
+                      >Editar</button>
+                    )}
                   </td>
                 </tr>
               ))}

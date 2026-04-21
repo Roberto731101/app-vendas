@@ -5,8 +5,6 @@ import { AppLayout } from '@/components/layout/AppLayout'
 import { useClassificacoes } from '@/hooks/useClassificacoes'
 import { ClassificacoesTable } from '@/components/classificacoes/ClassificacoesTable'
 import { NAV_SIDEBAR } from '@/lib/nav'
-import { useAuthContext } from '@/contexts/AuthContext'
-import { MODULOS } from '@/lib/permissoes'
 
 const NAV_HEADER = [
   { label: 'Vendas' },
@@ -15,29 +13,7 @@ const NAV_HEADER = [
 ]
 
 export default function ClassificacoesPage() {
-  const { carregando: carregandoAuth, podeAcessar, podeCriar } = useAuthContext()
   const { registros, carregando, erro, mensagem, excluir } = useClassificacoes()
-
-  if (carregandoAuth) {
-    return (
-      <div className="flex h-screen items-center justify-center text-sm text-slate-500">
-        Carregando permissões...
-      </div>
-    )
-  }
-
-  if (!podeAcessar(MODULOS.classificacoes)) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="rounded-xl border bg-white p-6 text-center shadow-sm">
-          <h2 className="text-lg font-semibold text-slate-800">Acesso não autorizado</h2>
-          <p className="text-sm text-slate-500">
-            Você não tem permissão para acessar esta página.
-          </p>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <AppLayout sidebarNavItems={NAV_SIDEBAR} headerNavItems={NAV_HEADER}>
@@ -53,14 +29,12 @@ export default function ClassificacoesPage() {
           </h1>
         </div>
 
-        {podeCriar(MODULOS.classificacoes) && (
-          <Link
-            href="/classificacoes/novo"
-            className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490]"
-          >
-            + Nova Classificação
-          </Link>
-        )}
+        <Link
+          href="/classificacoes/novo"
+          className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490]"
+        >
+          + Nova Classificação
+        </Link>
       </div>
 
       <div className="overflow-hidden rounded-2xl bg-white shadow-sm">

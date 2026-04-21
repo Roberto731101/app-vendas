@@ -295,7 +295,7 @@ function UsuarioModal({ usuario, departamentos, cargos, funcoes, onClose, onSalv
 // ─── Página principal ─────────────────────────────────────────────────────────
 
 export default function UsuariosPage() {
-  const { carregando: authCarregando, podeAcessar } = useAuthContext()
+  const { carregando: authCarregando, podeAcessar, podeCriar, podeEditar } = useAuthContext()
   const [usuarios,      setUsuarios]      = useState<Usuario[]>([])
   const [departamentos, setDepartamentos] = useState<Departamento[]>([])
   const [cargos,        setCargos]        = useState<Cargo[]>([])
@@ -396,12 +396,14 @@ export default function UsuariosPage() {
           <h1 className="text-2xl font-black text-[#0891b2]">Usuários</h1>
           <p className="text-sm text-slate-500">Colaboradores com acesso ao sistema</p>
         </div>
-        <button
-          onClick={abrirNovo}
-          className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#0e7490]"
-        >
-          + Novo usuário
-        </button>
+        {podeCriar(MODULOS.usuarios) && (
+          <button
+            onClick={abrirNovo}
+            className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#0e7490]"
+          >
+            + Novo usuário
+          </button>
+        )}
       </div>
 
       {/* Carregando */}
@@ -470,12 +472,14 @@ export default function UsuariosPage() {
 
                   {/* Ações */}
                   <td className="px-5 py-3 text-right">
-                    <button
-                      onClick={() => abrirEditar(u)}
-                      className="rounded-lg px-3 py-1.5 text-xs font-semibold text-[#0891b2] hover:bg-[#0891b2]/10"
-                    >
-                      Editar
-                    </button>
+                    {podeEditar(MODULOS.usuarios) && (
+                      <button
+                        onClick={() => abrirEditar(u)}
+                        className="rounded-lg px-3 py-1.5 text-xs font-semibold text-[#0891b2] hover:bg-[#0891b2]/10"
+                      >
+                        Editar
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
