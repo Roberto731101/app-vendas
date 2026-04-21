@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { NAV_SIDEBAR, isGroup, isSubGroup } from '@/lib/nav'
-import { useAuthContext } from '@/contexts/AuthContext'
 import type { NavGroup, NavItem } from '@/lib/nav'
+import { useAuthContext } from '@/contexts/AuthContext'
 
 type Props = {
   isOpen: boolean
@@ -16,7 +16,10 @@ function Chevron({ open }: { open: boolean }) {
   return (
     <svg
       className={`h-3 w-3 shrink-0 transition-transform duration-200 text-[#4dd0e1] ${open ? 'rotate-180' : ''}`}
-      fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2.5}
     >
       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
     </svg>
@@ -25,6 +28,8 @@ function Chevron({ open }: { open: boolean }) {
 
 export function Sidebar({ isOpen, onClose }: Props) {
   const pathname = usePathname()
+  const router = useRouter()
+  const { user, logout, podeAcessar } = useAuthContext()
 
   function isAtivo(href: string) {
     return href === '/'
@@ -32,40 +37,63 @@ export function Sidebar({ isOpen, onClose }: Props) {
       : pathname === href || pathname.startsWith(href + '/')
   }
 
+  function itemPodeVer(item: NavItem): boolean {
+    return !item.modulo || podeAcessar(item.modulo)
+  }
+
   function grupoTemAtivo(grupo: NavGroup): boolean {
     return grupo.items.some((item) => {
-      if (isSubGroup(item)) return item.items.some((i) => isAtivo(i.href))
-      return isAtivo((item as NavItem).href)
+      if (isSubGroup(item)) {
+        return item.items.some((i) => itemPodeVer(i) && isAtivo(i.href))
+      }
+      return itemPodeVer(item as NavItem) && isAtivo((item as NavItem).href)
+    })
+  }
+
+  function grupoTemItensVisiveis(grupo: NavGroup): boolean {
+    return grupo.items.some((item) => {
+      if (isSubGroup(item)) {
+        return item.items.some((i) => itemPodeVer(i))
+      }
+      return itemPodeVer(item as NavItem)
     })
   }
 
   function secaoTemAtivo(entries: (NavGroup | NavItem)[]): boolean {
     return entries.some((entry) => {
       if (isGroup(entry)) return grupoTemAtivo(entry)
-      return isAtivo((entry as NavItem).href)
+      return itemPodeVer(entry as NavItem) && isAtivo((entry as NavItem).href)
+    })
+  }
+
+  function secaoTemItensVisiveis(entries: (NavGroup | NavItem)[]): boolean {
+    return entries.some((entry) => {
+      if (isGroup(entry)) return grupoTemItensVisiveis(entry)
+      return itemPodeVer(entry as NavItem)
     })
   }
 
   const [abertos, setAbertos] = useState<Record<string, boolean>>(() => {
     const init: Record<string, boolean> = {}
+
     for (const section of NAV_SIDEBAR) {
       init[section.section] = secaoTemAtivo(section.entries)
+
       for (const entry of section.entries) {
         if (isGroup(entry)) {
           init[entry.group] = grupoTemAtivo(entry)
+
           for (const item of entry.items) {
             if (isSubGroup(item)) {
-              init[item.subgroup] = item.items.some((i) => isAtivo(i.href))
+              init[item.subgroup] = item.items.some((i) => itemPodeVer(i) && isAtivo(i.href))
             }
           }
         }
       }
     }
+
     return init
   })
-
-  const { user, logout } = useAuthContext()
-  const router = useRouter()
 
   function toggle(key: string) {
     setAbertos((prev) => ({ ...prev, [key]: !prev[key] }))
@@ -75,6 +103,16 @@ export function Sidebar({ isOpen, onClose }: Props) {
     await logout()
     router.push('/login')
   }
+
+  const secoesVisiveis = NAV_SIDEBAR
+    .map((section) => ({
+      ...section,
+      entries: section.entries.filter((entry) => {
+        if (isGroup(entry)) return grupoTemItensVisiveis(entry)
+        return itemPodeVer(entry as NavItem)
+      }),
+    }))
+    .filter((section) => secaoTemItensVisiveis(section.entries))
 
   return (
     <>
@@ -91,7 +129,6 @@ export function Sidebar({ isOpen, onClose }: Props) {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Fechar — mobile */}
         <button
           type="button"
           onClick={onClose}
@@ -103,8 +140,11 @@ export function Sidebar({ isOpen, onClose }: Props) {
           </svg>
         </button>
 
-        {/* Logo */}
-        <Link href="/" onClick={onClose} className="flex items-center gap-3 border-b border-white/10 px-5 py-5 hover:bg-white/5 transition-colors">
+        <Link
+          href="/"
+          onClick={onClose}
+          className="flex items-center gap-3 border-b border-white/10 px-5 py-5 transition-colors hover:bg-white/5"
+        >
           <img src="/logo.png" alt="Logo" className="h-10 w-auto" />
           <div>
             <h1 className="text-lg font-bold text-white">Gestão de Frutas</h1>
@@ -112,16 +152,13 @@ export function Sidebar({ isOpen, onClose }: Props) {
           </div>
         </Link>
 
-        {/* Navegação */}
         <nav className="flex flex-1 flex-col overflow-y-auto py-3">
-          {NAV_SIDEBAR.map((section) => {
+          {secoesVisiveis.map((section) => {
             const secAberta = abertos[section.section] ?? false
-            const secAtiva  = secaoTemAtivo(section.entries)
+            const secAtiva = secaoTemAtivo(section.entries)
 
             return (
               <div key={section.section} className="mb-0.5">
-
-                {/* Nível 1: Seção */}
                 <button
                   type="button"
                   onClick={() => toggle(section.section)}
@@ -138,8 +175,9 @@ export function Sidebar({ isOpen, onClose }: Props) {
                 {secAberta && (
                   <div className="flex flex-col gap-0.5 px-2 pb-1">
                     {section.entries.map((entry) => {
-
                       if (!isGroup(entry)) {
+                        if (!itemPodeVer(entry as NavItem)) return null
+
                         return (
                           <Link
                             key={entry.href}
@@ -156,15 +194,23 @@ export function Sidebar({ isOpen, onClose }: Props) {
                         )
                       }
 
+                      const itensVisiveis = entry.items.filter((item) =>
+                        isSubGroup(item)
+                          ? item.items.some((i) => itemPodeVer(i))
+                          : itemPodeVer(item as NavItem)
+                      )
+
+                      if (itensVisiveis.length === 0) return null
+
                       const grupoAberto = abertos[entry.group] ?? false
-                      const grupoAtivo  = grupoTemAtivo(entry)
+                      const grupoAtivo = grupoTemAtivo(entry)
 
                       return (
                         <div key={entry.group}>
                           <button
                             type="button"
                             onClick={() => toggle(entry.group)}
-                            className={`flex w-full items-center justify-between rounded-lg pl-2 pr-3 py-2 text-left text-sm transition-colors ${
+                            className={`flex w-full items-center justify-between rounded-lg py-2 pl-2 pr-3 text-left text-sm transition-colors ${
                               grupoAtivo
                                 ? 'font-semibold text-white'
                                 : 'text-[#4dd0e1] hover:bg-white/5'
@@ -176,11 +222,13 @@ export function Sidebar({ isOpen, onClose }: Props) {
 
                           {grupoAberto && (
                             <div className="ml-2 mt-0.5 flex flex-col gap-0.5 border-l-2 border-white/10 pl-3">
-                              {entry.items.map((item) => {
-
+                              {itensVisiveis.map((item) => {
                                 if (isSubGroup(item)) {
+                                  const subItensVisiveis = item.items.filter((i) => itemPodeVer(i))
+                                  if (subItensVisiveis.length === 0) return null
+
                                   const subAberto = abertos[item.subgroup] ?? false
-                                  const subAtivo  = item.items.some((i) => isAtivo(i.href))
+                                  const subAtivo = subItensVisiveis.some((i) => isAtivo(i.href))
 
                                   return (
                                     <div key={item.subgroup}>
@@ -199,7 +247,7 @@ export function Sidebar({ isOpen, onClose }: Props) {
 
                                       {subAberto && (
                                         <div className="ml-2 mt-0.5 flex flex-col gap-0.5 border-l-2 border-white/10 pl-3">
-                                          {item.items.map((i) => (
+                                          {subItensVisiveis.map((i) => (
                                             <Link
                                               key={i.href}
                                               href={i.href}
@@ -246,14 +294,13 @@ export function Sidebar({ isOpen, onClose }: Props) {
           })}
         </nav>
 
-        {/* Rodapé do usuário */}
         <div className="border-t border-white/10 p-4">
           <div className="flex items-center gap-3 rounded-xl px-3 py-2.5">
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0891b2] text-sm font-bold text-white">
               {user?.nome?.charAt(0).toUpperCase() ?? '?'}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-white leading-tight">
+              <p className="truncate text-sm font-semibold leading-tight text-white">
                 {user?.nome ?? '—'}
               </p>
               {user?.cargo && (
@@ -263,13 +310,18 @@ export function Sidebar({ isOpen, onClose }: Props) {
               )}
             </div>
           </div>
+
           <button
             type="button"
             onClick={handleLogout}
-            className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg py-2 text-xs font-semibold text-[#4dd0e1] hover:text-white hover:bg-white/5"
+            className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg py-2 text-xs font-semibold text-[#4dd0e1] hover:bg-white/5 hover:text-white"
           >
             <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
             </svg>
             Sair
           </button>

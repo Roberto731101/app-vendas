@@ -4,6 +4,8 @@ import { useEffect, useState, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
 import { USUARIO_SELECT, mapUsuario } from '@/lib/auth'
 import type { Usuario } from '@/lib/auth'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { MODULOS } from '@/lib/permissoes'
 
 // ─── Tipos auxiliares ─────────────────────────────────────────────────────────
 
@@ -293,6 +295,7 @@ function UsuarioModal({ usuario, departamentos, cargos, funcoes, onClose, onSalv
 // ─── Página principal ─────────────────────────────────────────────────────────
 
 export default function UsuariosPage() {
+  const { carregando: authCarregando, podeAcessar } = useAuthContext()
   const [usuarios,      setUsuarios]      = useState<Usuario[]>([])
   const [departamentos, setDepartamentos] = useState<Departamento[]>([])
   const [cargos,        setCargos]        = useState<Cargo[]>([])
@@ -369,6 +372,20 @@ export default function UsuariosPage() {
     await carregarUsuarios()
     setTogglingId(null)
   }
+
+  if (authCarregando) return (
+    <div className="flex min-h-screen items-center justify-center bg-[#f0f4f4]">
+      <p className="text-sm text-slate-400">Carregando...</p>
+    </div>
+  )
+  if (!podeAcessar(MODULOS.usuarios)) return (
+    <div className="flex min-h-screen items-center justify-center bg-[#f0f4f4]">
+      <div className="rounded-2xl bg-white p-8 text-center shadow-sm">
+        <p className="text-base font-bold text-slate-700">Acesso não autorizado</p>
+        <p className="mt-1 text-sm text-slate-400">Você não tem permissão para acessar esta página.</p>
+      </div>
+    </div>
+  )
 
   return (
     <div className="min-h-screen bg-[#f0f4f4] p-6">

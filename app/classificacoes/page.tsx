@@ -5,6 +5,8 @@ import { AppLayout } from '@/components/layout/AppLayout'
 import { useClassificacoes } from '@/hooks/useClassificacoes'
 import { ClassificacoesTable } from '@/components/classificacoes/ClassificacoesTable'
 import { NAV_SIDEBAR } from '@/lib/nav'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { MODULOS } from '@/lib/permissoes'
 
 const NAV_HEADER = [
   { label: 'Vendas' },
@@ -13,7 +15,29 @@ const NAV_HEADER = [
 ]
 
 export default function ClassificacoesPage() {
+  const { carregando: carregandoAuth, podeAcessar, podeCriar } = useAuthContext()
   const { registros, carregando, erro, mensagem, excluir } = useClassificacoes()
+
+  if (carregandoAuth) {
+    return (
+      <div className="flex h-screen items-center justify-center text-sm text-slate-500">
+        Carregando permissões...
+      </div>
+    )
+  }
+
+  if (!podeAcessar(MODULOS.classificacoes)) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="rounded-xl border bg-white p-6 text-center shadow-sm">
+          <h2 className="text-lg font-semibold text-slate-800">Acesso não autorizado</h2>
+          <p className="text-sm text-slate-500">
+            Você não tem permissão para acessar esta página.
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <AppLayout sidebarNavItems={NAV_SIDEBAR} headerNavItems={NAV_HEADER}>
@@ -24,14 +48,19 @@ export default function ClassificacoesPage() {
             <span>{'>'}</span>
             <span className="font-semibold text-[#0891b2]">Classificações</span>
           </nav>
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Classificações</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+            Classificações
+          </h1>
         </div>
-        <Link
-          href="/classificacoes/novo"
-          className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490]"
-        >
-          + Nova Classificação
-        </Link>
+
+        {podeCriar(MODULOS.classificacoes) && (
+          <Link
+            href="/classificacoes/novo"
+            className="rounded-xl bg-[#0891b2] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0e7490]"
+          >
+            + Nova Classificação
+          </Link>
+        )}
       </div>
 
       <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
@@ -39,6 +68,7 @@ export default function ClassificacoesPage() {
           <h3 className="text-sm font-bold uppercase tracking-wider text-[#0891b2]">
             Classificações Cadastradas
           </h3>
+
           {!carregando && (
             <span className="text-xs text-slate-400">
               {registros.length} {registros.length === 1 ? 'registro' : 'registros'}
@@ -47,14 +77,21 @@ export default function ClassificacoesPage() {
         </div>
 
         {erro && (
-          <div className="m-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{erro}</div>
+          <div className="m-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {erro}
+          </div>
         )}
+
         {mensagem && (
-          <div className="m-6 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">{mensagem}</div>
+          <div className="m-6 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+            {mensagem}
+          </div>
         )}
 
         {carregando ? (
-          <div className="px-6 py-12 text-center text-sm text-slate-500">Carregando...</div>
+          <div className="px-6 py-12 text-center text-sm text-slate-500">
+            Carregando...
+          </div>
         ) : (
           <ClassificacoesTable registros={registros} onExcluir={excluir} />
         )}

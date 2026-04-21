@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { MODULOS } from '@/lib/permissoes'
 
 // ─── Tipos ───────────────────────────────────────────────────────────────────
 
@@ -267,6 +269,7 @@ function FuncaoModal({ item, cargos, onClose, onSalvo }: ModalProps) {
 // ─── Página ───────────────────────────────────────────────────────────────────
 
 export default function FuncoesPage() {
+  const { carregando: authCarregando, podeAcessar } = useAuthContext()
   const [lista,       setLista]       = useState<Funcao[]>([])
   const [cargos,      setCargos]      = useState<CargoSimples[]>([])
   const [carregando,  setCarregando]  = useState(true)
@@ -337,6 +340,20 @@ export default function FuncoesPage() {
 
   const ativos   = lista.filter(f => f.ativo).length
   const inativos = lista.length - ativos
+
+  if (authCarregando) return (
+    <div className="flex min-h-screen items-center justify-center bg-[#f0f4f4]">
+      <p className="text-sm text-slate-400">Carregando...</p>
+    </div>
+  )
+  if (!podeAcessar(MODULOS.funcoes)) return (
+    <div className="flex min-h-screen items-center justify-center bg-[#f0f4f4]">
+      <div className="rounded-2xl bg-white p-8 text-center shadow-sm">
+        <p className="text-base font-bold text-slate-700">Acesso não autorizado</p>
+        <p className="mt-1 text-sm text-slate-400">Você não tem permissão para acessar esta página.</p>
+      </div>
+    </div>
+  )
 
   return (
     <div className="min-h-screen bg-[#f0f4f4] p-6">
