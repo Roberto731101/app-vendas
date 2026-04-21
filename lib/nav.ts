@@ -84,6 +84,15 @@ export const NAV_SIDEBAR: NavSection[] = [
       { href: '/produtos',       label: 'Produtos' },
       { href: '/tipos-caixa',    label: 'Tipos de Caixa' },
       { href: '/classificacoes', label: 'Classificações' },
+      {
+        group: 'Organograma',
+        items: [
+          { href: '/departamentos', label: 'Departamentos' },
+          { href: '/cargos',        label: 'Cargos' },
+          { href: '/funcoes',       label: 'Funções' },
+          { href: '/usuarios',      label: 'Usuários' },
+        ],
+      },
     ],
   },
 ]

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import type { Session } from '@supabase/supabase-js'
 import type { Usuario } from '@/lib/auth'
+import { USUARIO_SELECT, mapUsuario } from '@/lib/auth'
 
 export function useAuth() {
   const [user, setUser]       = useState<Usuario | null>(null)
@@ -13,10 +14,10 @@ export function useAuth() {
   async function carregarPerfil(authUserId: string) {
     const { data } = await supabase
       .from('usuarios')
-      .select('*')
+      .select(USUARIO_SELECT)
       .eq('auth_id', authUserId)
       .single()
-    setUser((data as Usuario) ?? null)
+    setUser(data ? mapUsuario(data as Record<string, unknown>) : null)
   }
 
   useEffect(() => {
