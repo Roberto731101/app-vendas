@@ -25,14 +25,7 @@ export default function Home() {
   const [areaSelecionadaId, setAreaSelecionadaId] = useState<number | null>(null)
 
   const carregando = carregandoAreas || carregandoFazendas || carregandoSafra
-
-  // useFazendas retorna Fazenda[], não FazendaComHierarquia[] — cast necessário para o mapa
   const fazendasGeo = fazendas as unknown as FazendaComHierarquia[]
-
-  const totalSetores = areas.reduce((acc: number, area) => {
-    // setores não estão no AreaGeo — estimativa via hierarquia não disponível aqui
-    return acc
-  }, 0)
 
   function handleSelecionarArea(area: AreaGeo) {
     setAreaSelecionadaId(area.id)
@@ -40,8 +33,8 @@ export default function Home() {
 
   return (
     <AppLayout headerNavItems={HEADER_NAV}>
-      {/* Cabeçalho da tela */}
-      <div className="mb-6">
+      {/* Cabeçalho */}
+      <div className="mb-4">
         <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
           Visão Geral da Propriedade
         </h1>
@@ -50,31 +43,30 @@ export default function Home() {
         )}
       </div>
 
-      {/* Cards de resumo rápido */}
-      <div className="mb-6">
+      {/* Cards de resumo — 3 colunas mobile, 4 desktop */}
+      <div className="mb-4">
         <ResumoRapido
           totalFazendas={fazendas.length}
           totalAreas={areas.length}
-          totalSetores={totalSetores}
           safraNome={safraAtiva?.nome ?? null}
           carregando={carregando}
         />
       </div>
 
-      {/* Layout principal: mapa + painel lateral */}
-      <div className="flex gap-4">
-        {/* Mapa central */}
-        <div className="flex-1 min-w-0">
+      {/* Layout principal: empilhado no mobile, lado a lado no desktop */}
+      <div className="flex flex-col gap-4 lg:flex-row">
+        {/* Mapa — altura fixa 288px mobile, 100% do wrapper desktop */}
+        <div className="w-full h-72 min-w-0 lg:flex-1 lg:h-[calc(100vh-260px)]">
           <MapaPropriedade
             areas={areas}
             fazendas={fazendasGeo}
             areaSelecionadaId={areaSelecionadaId}
-            altura="calc(100vh - 240px)"
+            altura="100%"
           />
         </div>
 
-        {/* Painel lateral */}
-        <div className="w-72 flex-shrink-0">
+        {/* Painel status — largura total mobile, 288px desktop */}
+        <div className="w-full lg:w-72 lg:flex-shrink-0">
           <PainelStatusAreas
             areas={areas}
             carregando={carregandoAreas}

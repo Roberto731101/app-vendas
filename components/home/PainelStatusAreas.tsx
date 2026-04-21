@@ -23,7 +23,7 @@ type Props = {
 
 export function PainelStatusAreas({ areas, carregando, onSelecionarArea }: Props) {
   return (
-    <div className="flex flex-col rounded-2xl bg-white shadow-lg" style={{ maxHeight: 'calc(100vh - 240px)' }}>
+    <div className="flex flex-col rounded-2xl bg-white shadow-lg max-h-64 lg:max-h-[calc(100vh-260px)]">
       <div className="border-b border-slate-100 px-4 py-3">
         <h3 className="text-sm font-bold text-slate-800">Status das Áreas</h3>
         <p className="text-xs text-slate-400">{areas.length} área{areas.length !== 1 ? 's' : ''}</p>
