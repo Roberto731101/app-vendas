@@ -180,6 +180,12 @@ export function useMovimentacoes() {
       return false
     }
 
+    if (payload.quantidade <= 0) {
+      setErro('A quantidade deve ser maior que zero.')
+      setSalvando(false)
+      return false
+    }
+
     const saldoAtual = Number((insumoData as { quantidade_atual: number }).quantidade_atual)
     const novoSaldo = payload.tipo_movimentacao === 'entrada'
       ? saldoAtual + payload.quantidade

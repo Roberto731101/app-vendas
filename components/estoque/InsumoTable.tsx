@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { Insumo } from '@/hooks/useInsumos'
 import { CategoriaPill } from './CategoriaPill'
 import { StatusBadge } from './StatusBadge'
@@ -57,6 +58,12 @@ export function InsumoTable({ registros, onEditar, onMovimentar, onExcluir }: Pr
               <td className="px-5 py-4 text-sm text-slate-600">{fmtData(i.data_validade)}</td>
               <td className="px-5 py-4">
                 <div className="flex justify-center gap-2">
+                  <Link
+                    href={`/estoque/insumos/${i.id}`}
+                    className="rounded-lg bg-[#0891b2]/10 px-3 py-1.5 text-xs font-semibold text-[#0891b2] hover:bg-[#0891b2]/20"
+                  >
+                    Detalhes
+                  </Link>
                   <button
                     onClick={() => onMovimentar(i)}
                     className="rounded-lg bg-[#1a3a2a]/10 px-3 py-1.5 text-xs font-semibold text-[#1a3a2a] hover:bg-[#1a3a2a]/20"

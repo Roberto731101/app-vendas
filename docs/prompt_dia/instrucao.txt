@@ -1,0 +1,16 @@
+Siga execution-pattern.
+
+Tarefa:
+[descreva tudo de uma vez]
+
+Domínio:
+[qual módulo]
+
+Escopo:
+[arquivos]
+
+Regras:
+[restrições]
+
+Execução:
+completa

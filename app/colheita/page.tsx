@@ -8,6 +8,8 @@ import { useProducaoPorSetor } from '@/hooks/useProducaoPorSetor'
 import { ColheitasHistoricoTable } from '@/components/colheita/ColheitasHistoricoTable'
 import { ResumoPorLote } from '@/components/colheita/ResumoPorLote'
 import { ProducaoPorSetor } from '@/components/colheita/ProducaoPorSetor'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { MODULOS } from '@/lib/permissoes'
 
 const NAV_SIDEBAR = [
   { href: '/vendas',     label: 'Vendas' },
@@ -24,6 +26,8 @@ const NAV_HEADER = [
 ]
 
 export default function ColheitaPage() {
+  const { podeEditar } = useAuthContext()
+
   const {
     colheitas,
     setores,
@@ -209,6 +213,7 @@ export default function ColheitaPage() {
           <ColheitasHistoricoTable
             colheitas={colheitas}
             filtrosAtivos={filtrosAtivos}
+            podeEditar={podeEditar(MODULOS.colheita)}
           />
         )}
       </div>

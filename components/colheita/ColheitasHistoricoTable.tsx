@@ -4,6 +4,7 @@ import type { ColheitaHistorico } from '@/hooks/useColheitasHistorico'
 type Props = {
   colheitas: ColheitaHistorico[]
   filtrosAtivos?: boolean
+  podeEditar?: boolean
 }
 
 function formatarData(data: string | null) {
@@ -19,7 +20,7 @@ function numero(valor: number) {
   })
 }
 
-export function ColheitasHistoricoTable({ colheitas, filtrosAtivos }: Props) {
+export function ColheitasHistoricoTable({ colheitas, filtrosAtivos, podeEditar = false }: Props) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full min-w-[640px] border-collapse text-left">
@@ -74,13 +75,15 @@ export function ColheitasHistoricoTable({ colheitas, filtrosAtivos }: Props) {
                   : '—'}
               </td>
               <td className="px-6 py-4 text-center">
-                {item.lote_id !== null ? (
+                {item.lote_id !== null && podeEditar ? (
                   <Link
                     href={`/colheita/${item.lote_id}`}
                     className="rounded-lg bg-[#0891b2]/10 px-3 py-1.5 text-xs font-bold text-[#0891b2] hover:bg-[#0891b2]/20"
                   >
                     Abrir
                   </Link>
+                ) : item.lote_id !== null ? (
+                  <span className="text-xs text-slate-400">Sem permissão</span>
                 ) : (
                   <span className="text-xs text-slate-400">Sem colheita-campo</span>
                 )}

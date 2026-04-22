@@ -7,6 +7,8 @@ import { ColheitaInfoForm } from '@/components/colheita/ColheitaInfoForm'
 import { ColheitaItemForm } from '@/components/colheita/ColheitaItemForm'
 import { ColheitasTable } from '@/components/colheita/ColheitasTable'
 import { ColheitaResumo } from '@/components/colheita/ColheitaResumo'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { MODULOS } from '@/lib/permissoes'
 
 const NAV_SIDEBAR = [
   { href: '/vendas',     label: 'Vendas' },
@@ -25,6 +27,7 @@ const NAV_HEADER = [
 export default function ColheitaDetalhePage() {
   const params = useParams()
   const router = useRouter()
+  const { podeEditar } = useAuthContext()
 
   const loteIdParam = Number(params.id)
   const loteIdValido = !Number.isNaN(loteIdParam) && loteIdParam > 0
@@ -114,19 +117,21 @@ export default function ColheitaDetalhePage() {
             mensagem={mensagem}
           />
 
-          <ColheitaItemForm
-            setores={setores}
-            setorId={setorId}
-            numeroCachos={numeroCachos}
-            amostraPesoCacho={amostraPesoCacho}
-            observacaoLinha={observacaoLinha}
-            setSetorId={setSetorId}
-            setNumeroCachos={setNumeroCachos}
-            setAmostraPesoCacho={setAmostraPesoCacho}
-            setObservacaoLinha={setObservacaoLinha}
-            salvando={salvando}
-            onAdicionarColheita={adicionarColheita}
-          />
+          {podeEditar(MODULOS.colheita) && (
+            <ColheitaItemForm
+              setores={setores}
+              setorId={setorId}
+              numeroCachos={numeroCachos}
+              amostraPesoCacho={amostraPesoCacho}
+              observacaoLinha={observacaoLinha}
+              setSetorId={setSetorId}
+              setNumeroCachos={setNumeroCachos}
+              setAmostraPesoCacho={setAmostraPesoCacho}
+              setObservacaoLinha={setObservacaoLinha}
+              salvando={salvando}
+              onAdicionarColheita={adicionarColheita}
+            />
+          )}
 
           <ColheitasTable
             colheitas={colheitas}

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Methodical Architect - Execução (Do)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed-dim": "#b2c5ff",
+              "on-tertiary-container": "#ffc8a4",
+              "on-secondary": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "secondary-container": "#90f4b5",
+              "on-secondary-fixed-variant": "#00522e",
+              "on-secondary-container": "#007242",
+              "tertiary-container": "#8f4800",
+              "on-error": "#ffffff",
+              "on-surface": "#191c1e",
+              "on-primary-fixed": "#001848",
+              "background": "#f8f9fb",
+              "surface-bright": "#f8f9fb",
+              "surface-container-highest": "#e1e2e4",
+              "tertiary-fixed-dim": "#ffb783",
+              "on-primary-container": "#c4d2ff",
+              "surface-dim": "#d9dadc",
+              "on-background": "#191c1e",
+              "tertiary-fixed": "#ffdcc5",
+              "primary": "#003d9b",
+              "inverse-surface": "#2e3132",
+              "surface-tint": "#0c56d0",
+              "on-primary": "#ffffff",
+              "secondary": "#006d3f",
+              "on-tertiary": "#ffffff",
+              "primary-fixed": "#dae2ff",
+              "inverse-primary": "#b2c5ff",
+              "secondary-fixed-dim": "#77da9d",
+              "tertiary": "#6c3500",
+              "inverse-on-surface": "#f0f1f3",
+              "error-container": "#ffdad6",
+              "surface-container-low": "#f3f4f6",
+              "surface-container": "#edeef0",
+              "on-error-container": "#93000a",
+              "on-primary-fixed-variant": "#0040a2",
+              "on-tertiary-fixed-variant": "#713700",
+              "on-surface-variant": "#434654",
+              "surface-variant": "#e1e2e4",
+              "surface-container-high": "#e7e8ea",
+              "surface": "#f8f9fb",
+              "primary-container": "#0052cc",
+              "outline-variant": "#c3c6d6",
+              "on-secondary-fixed": "#00210f",
+              "on-tertiary-fixed": "#301400",
+              "outline": "#737685",
+              "error": "#ba1a1a",
+              "secondary-fixed": "#93f7b8"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-manrope { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<div class="flex min-h-screen">
+<!-- SideNavBar Shared Component -->
+<aside class="hidden md:flex flex-col h-screen w-64 bg-slate-100 dark:bg-slate-950 font-manrope text-sm font-medium docked left-0 fixed z-30">
+<div class="p-6">
+<div class="text-lg font-bold text-blue-700 dark:text-blue-400 mb-1">Methodical Architect</div>
+<div class="text-xs text-slate-500 uppercase tracking-widest font-bold">Ciclo Ativo</div>
+<p class="text-[10px] text-slate-400">Q3 Crescimento Estratégico</p>
+</div>
+<nav class="flex flex-col h-full p-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-200 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-200 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">event_note</span>
+<span>Planejar</span>
+</a>
+<!-- Active Tab: Do -->
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-900 text-blue-700 dark:text-blue-400 shadow-sm rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+<span>Executar</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-200 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">fact_check</span>
+<span>Verificar</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-200 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">published_with_changes</span>
+<span>Agir</span>
+</a>
+<div class="pt-8 mt-auto border-t border-slate-200 dark:border-slate-800 space-y-2">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-slate-900" href="#">
+<span class="material-symbols-outlined text-lg">archive</span>
+<span>Arquivo</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-slate-900" href="#">
+<span class="material-symbols-outlined text-lg">help</span>
+<span>Ajuda</span>
+</a>
+</div>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 min-h-screen">
+<!-- TopNavBar Shared Component -->
+<header class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md font-manrope antialiased sticky top-0 z-50 flex justify-between items-center w-full px-8 py-4 no-border">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined md:hidden">menu</span>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Espaço de Execução</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-surface-container-low px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-slate-400 mr-2 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48" placeholder="Buscar tarefas..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-200/50 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-200/50 rounded-full transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-fixed-dim overflow-hidden">
+<img alt="Perfil do usuário" class="w-full h-full object-cover" data-alt="Portrait of a professional man in a studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBfPmDnjMjYYnx_fuP9l6cZ_I2Nuzjc34tTMdFrg_4ARzvl6j-4SVyntB657CgWEPLLEmq_0ucXJNvDiNJHmo49WsrwxLr2S96-C3YTFpaI2kMslcyDh-Gs25uWXaNLK7uYCDrKC8My4VSoysxJbW-z6WzPCdgOU8IwUOJmrx_tmnE4ehso5oSWeUtBiCOA1lk5KuDrI7e72l-nIoDXLzWDbJr5AKRxHxCoKY5E2w9PtqjE35WTuN6gWUJWNmbJrqtPwZeILlMsfo"/>
+</div>
+</div>
+</div>
+</header>
+<div class="p-8 space-y-8">
+<!-- Page Header & Action -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed text-[10px] font-bold uppercase tracking-wider rounded-full">Fase Ativa: Executar</span>
+<span class="text-sm text-outline font-medium tracking-tight">Projeto: Migração de Infraestrutura v4</span>
+</div>
+<h2 class="text-3xl font-extrabold text-on-surface tracking-tight font-manrope">Progresso da Execução</h2>
+</div>
+<button class="flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-md font-bold text-sm shadow-[0_2px_4px_rgba(0,0,0,0.1)] hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-lg">add</span>
+                        Nova Tarefa
+                    </button>
+</div>
+<!-- Kanban Board Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Column: To Do -->
+<div class="space-y-4">
+<div class="flex items-center justify-between px-2">
+<h3 class="font-manrope font-bold text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                                A Fazer
+                                <span class="text-xs font-normal text-outline bg-surface-container px-2 py-0.5 rounded-full">4</span>
+</h3>
+<button class="text-outline hover:text-on-surface transition-colors"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="space-y-4">
+<!-- Task Card -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/10 shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+<div class="flex justify-between items-start mb-3">
+<span class="text-[10px] font-bold text-primary px-2 py-0.5 bg-primary-fixed rounded">INFRA-201</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors text-sm">open_in_new</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2 leading-snug">Preparar documentação de sub-redes</h4>
+<p class="text-xs text-on-surface-variant mb-4 line-clamp-2">Mapeamento detalhado de todas as sub-redes existentes para a equipe de transição AWS.</p>
+<div class="flex items-center justify-between border-t border-outline-variant/10 pt-4">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-surface-container-lowest bg-slate-300 overflow-hidden" title="Usuário 1">
+<img alt="Membro da equipe" class="w-full h-full object-cover" data-alt="Avatar of a young professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhUvTsZpGSEVQGfT6VGK0aj21ZgKpb2p7vdZIsGvoGLL0D7AQU3-upacgYbpKNt3qaMRDjoQkq3rVDYsFud4eq8n-21vwpFFDv2tT9YWHmiQP2uGaAP4btb993R-ZeLCyFCy74OpwTs5Y8jUdl2KIry4OfR5_ju2vMHPb31nMOprFfvnvzVzPWk6B5Qh--2kZh4OWgUBJK1sqwuUaYLKWKGO4ojy6depTrTaE5IPvYi4p5gFSDVyOkpskIDpl7_oPf2G_pDvImaOI"/>
+</div>
+</div>
+<div class="flex items-center gap-3 text-outline">
+<span class="flex items-center gap-1 text-[10px]"><span class="material-symbols-outlined text-sm">attach_file</span> 3</span>
+<span class="flex items-center gap-1 text-[10px] font-medium"><span class="material-symbols-outlined text-sm text-error">calendar_today</span> 12 Out</span>
+</div>
+</div>
+</div>
+<!-- Task Card -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/10 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<span class="text-[10px] font-bold text-primary px-2 py-0.5 bg-primary-fixed rounded">SEC-09</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2 leading-snug">Revisar regras de firewall para staging</h4>
+<div class="flex items-center justify-between border-t border-outline-variant/10 pt-4 mt-4">
+<div class="w-6 h-6 rounded-full border-2 border-surface-container-lowest bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-500">+2</div>
+<div class="flex items-center gap-1 text-[10px] font-medium text-outline">
+<span class="material-symbols-outlined text-sm">calendar_today</span> 14 Out
+                                    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: In Progress -->
+<div class="space-y-4">
+<div class="flex items-center justify-between px-2">
+<h3 class="font-manrope font-bold text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                                Em Progresso
+                                <span class="text-xs font-normal text-outline bg-surface-container px-2 py-0.5 rounded-full">2</span>
+</h3>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="space-y-4">
+<!-- Active Task Card -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border-l-4 border-l-secondary shadow-md ring-1 ring-secondary/10">
+<div class="flex justify-between items-start mb-3">
+<span class="text-[10px] font-bold text-secondary-container bg-on-secondary-container text-white px-2 py-0.5 rounded">DEV-442</span>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-tighter animate-pulse">Em execução</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2 leading-snug">Script de Migração de Dados: PostgreSQL para RDS</h4>
+<div class="w-full bg-surface-container rounded-full h-1.5 mb-4">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 65%"></div>
+</div>
+<div class="flex items-center justify-between border-t border-outline-variant/10 pt-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img alt="Membro da equipe" class="w-full h-full object-cover" data-alt="Female software engineer portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0SvAiYEFo4eMiGgvTVc7yKkKife91PgENs3UVfVoqvHc9uzCsBHMoeYVswJRvcf6hLiu_Y3Yy74nfGw3CwgrkXqSeRkfpolVfziXW7SxkrQRObHc0xi-ErKTfkCn6BealsN_6RacP9KJPGr5UF3fB-5w-zMVnw4wwfN0SNS3ZflOpy2t8aQ4FLnMb_4OcpAff4UIc4S660iY4EU1ekmf1kDXBOpXL-EKHYv6j10AMhdLVqNnqsHcFQj4TT6ebUS3Bubn1IJySUw4"/>
+</div>
+<span class="text-[10px] font-medium text-on-surface-variant">Elena M.</span>
+</div>
+<span class="text-[10px] text-secondary font-bold">65% Concluído</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Done -->
+<div class="space-y-4">
+<div class="flex items-center justify-between px-2">
+<h3 class="font-manrope font-bold text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                                Concluído
+                                <span class="text-xs font-normal text-outline bg-surface-container px-2 py-0.5 rounded-full">12</span>
+</h3>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="space-y-4 opacity-75 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+<div class="bg-surface-container-low p-5 rounded-xl border border-transparent shadow-sm">
+<div class="flex justify-between items-start mb-3">
+<span class="text-[10px] font-bold text-outline-variant px-2 py-0.5 bg-surface-container-highest rounded line-through">ARCH-102</span>
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h4 class="font-bold text-on-surface-variant mb-2 leading-snug line-through">Aprovação do Blueprint da Arquitetura Cloud</h4>
+<p class="text-[10px] text-outline italic">Concluído por Sarah Connor em 8 Out</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Observations and Issues Section - Editorial Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-8 pt-8">
+<!-- Issue Logger - Main -->
+<div class="xl:col-span-8 bg-surface-container-low rounded-2xl p-8 relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="text-2xl font-extrabold font-manrope text-on-surface mb-2">Observações e Bloqueios</h3>
+<p class="text-sm text-on-surface-variant mb-8 max-w-lg">Registre insights críticos, variações inesperadas ou débitos técnicos encontrados durante a fase de 'Execução' para a próxima sessão de 'Verificação'.</p>
+<!-- Issue List (Asymmetric Editorial Style) -->
+<div class="space-y-6">
+<div class="group flex gap-6 p-4 rounded-xl hover:bg-white/50 transition-colors">
+<div class="flex-shrink-0 mt-1">
+<div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">warning</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h5 class="font-bold text-on-surface">Pico de Latência no DB de Staging</h5>
+<span class="text-[10px] font-bold text-tertiary bg-tertiary-fixed px-2 py-0.5 rounded uppercase">Alta Prioridade</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-3">Observado aumento de 200ms durante os testes de pico de migração. Potencial problema de indexação na origem legada.</p>
+<div class="flex items-center gap-4">
+<span class="text-[11px] text-outline flex items-center gap-1 font-medium"><span class="material-symbols-outlined text-xs">schedule</span> 2 horas atrás</span>
+<span class="text-[11px] text-outline flex items-center gap-1 font-medium"><span class="material-symbols-outlined text-xs">person</span> Marc Jenkins</span>
+</div>
+</div>
+</div>
+<div class="group flex gap-6 p-4 rounded-xl hover:bg-white/50 transition-colors">
+<div class="flex-shrink-0 mt-1">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">lightbulb</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h5 class="font-bold text-on-surface">Oportunidade de Otimização</h5>
+<span class="text-[10px] font-bold text-primary-container bg-primary-fixed px-2 py-0.5 rounded uppercase">Insight</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-3">As políticas de bucket S3 podem ser ainda mais restritas se usarmos endpoints VPC exclusivamente. Deve ser abordado na fase 'Agir'.</p>
+<div class="flex items-center gap-4">
+<span class="text-[11px] text-outline flex items-center gap-1 font-medium"><span class="material-symbols-outlined text-xs">schedule</span> 1 dia atrás</span>
+<span class="text-[11px] text-outline flex items-center gap-1 font-medium"><span class="material-symbols-outlined text-xs">person</span> Elena M.</span>
+</div>
+</div>
+</div>
+</div>
+<button class="mt-8 flex items-center gap-2 text-primary font-bold text-sm border-b-2 border-primary-fixed hover:border-primary transition-all pb-1">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+                                Registrar Nova Observação
+                            </button>
+</div>
+<!-- Abstract Background Decoration -->
+<div class="absolute -right-12 -bottom-12 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+</div>
+<!-- Metrics / Right Sidebar -->
+<div class="xl:col-span-4 space-y-6">
+<div class="bg-surface-container-highest/30 p-6 rounded-2xl border border-outline-variant/20">
+<h4 class="font-manrope font-extrabold text-on-surface mb-6 uppercase tracking-wider text-xs">Velocidade de Execução</h4>
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="h-12 w-1.5 bg-secondary rounded-full"></div>
+<div>
+<div class="text-2xl font-bold text-on-surface">82%</div>
+<div class="text-[10px] font-bold text-outline-variant uppercase">Conclusão de Tarefas</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="h-12 w-1.5 bg-tertiary rounded-full"></div>
+<div>
+<div class="text-2xl font-bold text-on-surface">14</div>
+<div class="text-[10px] font-bold text-outline-variant uppercase">Bloqueios Ativos</div>
+</div>
+</div>
+</div>
+<div class="mt-8 p-4 bg-white/50 rounded-xl">
+<p class="text-xs text-on-surface-variant leading-relaxed mb-4 italic">"Foco na migração do RDS hoje. Precisamos de alta disponibilidade confirmada até o final do dia."</p>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-slate-400">
+<img alt="Líder da Equipe" class="w-full h-full object-cover rounded-full" data-alt="Professional woman in a neutral office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCO9OgGioT-3-XQcdx1Rne0-anPDsgK2FNO1jG2IXOeCgdzrbMa4c2ZZe89RIj-y0cw5fTclyR3_xDan7rGHRdvkl6Dia1AmI2bBuLDx4vPpoCEFSbLjGeicEOrSDaZ83Q54AOiFQ82u8ePZpA_KgLvc_0OOt47RfhddbkirL2flkQ1po2LaCJLP8xWtTH8abuL7d3r6KoWClPizZc81mJ8B_H5sGCz1ig0NSLQZTczFYFnF_2ZPlOCkMKQJk52z5IGFOCsksWtAE"/>
+</div>
+<span class="text-[10px] font-bold text-on-surface">Líder de Projeto Sarah</span>
+</div>
+</div>
+</div>
+<!-- Mini Calendar/Deadlines -->
+<div class="bg-primary text-on-primary p-6 rounded-2xl shadow-lg relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-manrope font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">event</span>
+                                    Transição para Próxima Fase
+                                </h4>
+<div class="text-3xl font-extrabold mb-1">18 Out, 2023</div>
+<div class="text-xs font-medium opacity-80">Sessão de Revisão do Ciclo (Verificar)</div>
+<div class="mt-6 flex justify-between items-center text-[10px] font-bold bg-white/10 px-4 py-2 rounded-lg">
+<span>RESTAM 5 DIAS</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+<!-- Glassmorphism overlay for depth -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-xl"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { AppLayout } from '@/components/layout/AppLayout'
 import { useInsumos } from '@/hooks/useInsumos'
@@ -22,10 +21,7 @@ export default function EstoquePage() {
   const { totalHoje } = useMovimentacoes()
   const { registros: categorias } = useCategorias()
 
-  const [categoriaSelecionada, setCategoriaSelecionada] = useState('')
-
   function handleCategoria(id: string) {
-    setCategoriaSelecionada(id)
     setCategoriaId(id)
   }
 
@@ -83,7 +79,7 @@ export default function EstoquePage() {
             <button
               onClick={() => handleCategoria('')}
               className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${
-                categoriaSelecionada === ''
+                filtros.categoriaId === ''
                   ? 'bg-[#1a3a2a] text-white'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
@@ -95,7 +91,7 @@ export default function EstoquePage() {
                 key={c.id}
                 onClick={() => handleCategoria(String(c.id))}
                 className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${
-                  categoriaSelecionada === String(c.id)
+                  filtros.categoriaId === String(c.id)
                     ? 'bg-[#1a3a2a] text-white'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}

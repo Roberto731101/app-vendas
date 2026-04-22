@@ -7,6 +7,7 @@ import { AppHeader } from '@/components/layout/AppHeader'
 type HeaderNavItem = {
   label: string
   active?: boolean
+  href?: string
 }
 
 type Props = {

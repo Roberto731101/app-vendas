@@ -43,7 +43,15 @@ export default function CategoriasPage() {
   }
 
   async function salvar() {
-    const ok = await hook.salvar({ nome_categoria: nome, descricao: descricao || null, tipo: tipo || null, ativo }, editandoId)
+    if (!nome.trim()) {
+      hook.setErro('O nome da categoria é obrigatório.')
+      return
+    }
+    if (!tipo) {
+      hook.setErro('O tipo da categoria é obrigatório.')
+      return
+    }
+    const ok = await hook.salvar({ nome_categoria: nome.trim(), descricao: descricao || null, tipo, ativo }, editandoId)
     if (ok) fechar()
   }
 
@@ -75,7 +83,7 @@ export default function CategoriasPage() {
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:border-[#1a3a2a] focus:bg-white" />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-500">Tipo</label>
+              <label className="text-xs font-bold text-slate-500">Tipo <span className="text-red-500">*</span></label>
               <select value={tipo} onChange={(e) => setTipo(e.target.value)}
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:border-[#1a3a2a] focus:bg-white">
                 <option value="">— nenhum —</option>

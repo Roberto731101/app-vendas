@@ -66,7 +66,14 @@ function MovimentarContent() {
   }
 
   async function confirmar() {
-    if (!insumoId || !quantidade || !data) return
+    if (!insumoId || !data) {
+      movHook.setErro('Selecione o insumo e a data da movimentação.')
+      return
+    }
+    if (!quantidade || Number(quantidade) <= 0) {
+      movHook.setErro('A quantidade deve ser maior que zero.')
+      return
+    }
     const ok = await movHook.registrar({
       insumo_id: Number(insumoId),
       tipo_movimentacao: tipo,

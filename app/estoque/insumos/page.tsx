@@ -22,8 +22,6 @@ export default function InsumosPage() {
 
   const [modo, setModo] = useState<ModoForm>('oculto')
   const [editandoId, setEditandoId] = useState<number | undefined>(undefined)
-  const [categoriaSelecionada, setCategoriaSelecionada] = useState('')
-
   // Form state
   const [nome, setNome]             = useState('')
   const [categoriaId, setCatId]     = useState('')
@@ -64,9 +62,21 @@ export default function InsumosPage() {
   }
 
   async function salvar() {
+    if (!nome.trim()) {
+      hook.setErro('O nome do insumo é obrigatório.')
+      return
+    }
+    if (!categoriaId) {
+      hook.setErro('A categoria é obrigatória.')
+      return
+    }
+    if (!unidade) {
+      hook.setErro('A unidade é obrigatória.')
+      return
+    }
     const ok = await hook.salvar({
-      nome_insumo: nome,
-      categoria_id: categoriaId ? Number(categoriaId) : null,
+      nome_insumo: nome.trim(),
+      categoria_id: Number(categoriaId),
       marca_fornecedor: marca || null,
       unidade,
       quantidade_atual: Number(qtdAtual) || 0,
@@ -79,7 +89,6 @@ export default function InsumosPage() {
   }
 
   function handleCategoria(id: string) {
-    setCategoriaSelecionada(id)
     hook.setCategoriaId(id)
   }
 
@@ -117,10 +126,10 @@ export default function InsumosPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-500">Categoria</label>
+              <label className="text-xs font-bold text-slate-500">Categoria <span className="text-red-500">*</span></label>
               <select value={categoriaId} onChange={(e) => setCatId(e.target.value)}
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:border-[#1a3a2a] focus:bg-white">
-                <option value="">— nenhuma —</option>
+                <option value="">— selecione —</option>
                 {categorias.filter((c) => c.ativo).map((c) => (
                   <option key={c.id} value={c.id}>{c.nome_categoria}</option>
                 ))}
@@ -205,12 +214,12 @@ export default function InsumosPage() {
         />
         <div className="flex flex-wrap gap-2">
           <button onClick={() => handleCategoria('')}
-            className={`rounded-full px-4 py-1.5 text-xs font-semibold ${categoriaSelecionada === '' ? 'bg-[#1a3a2a] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+            className={`rounded-full px-4 py-1.5 text-xs font-semibold ${hook.filtros.categoriaId === '' ? 'bg-[#1a3a2a] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
             Todos
           </button>
           {categorias.filter((c) => c.ativo).map((c) => (
             <button key={c.id} onClick={() => handleCategoria(String(c.id))}
-              className={`rounded-full px-4 py-1.5 text-xs font-semibold ${categoriaSelecionada === String(c.id) ? 'bg-[#1a3a2a] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+              className={`rounded-full px-4 py-1.5 text-xs font-semibold ${hook.filtros.categoriaId === String(c.id) ? 'bg-[#1a3a2a] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
               {c.nome_categoria}
             </button>
           ))}
