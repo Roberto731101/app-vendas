@@ -67,6 +67,7 @@ export const NAV_SIDEBAR: NavSection[] = [
     section: 'Operacional',
     entries: [
       { href: '/pdca', label: 'PDCA', modulo: 'operacional' },
+      { href: '/operacional/avaliacao', label: 'Avaliação de Campo', modulo: 'operacional' },
     ],
   },
   {
